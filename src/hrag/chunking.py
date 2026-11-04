@@ -7,63 +7,88 @@ import numpy as np
 
 from hrag.types import Doc
 
-_HEADING_RE = re.compile(r"^\d+(\.\d+)*\.?\s+\S|^[A-Z][A-Za-z ]{2,60}$")
+_NUM_HEAD = re.compile(r"^\d+(\.\d+)*\.?\s+[A-Z]\S*")
+_WORD_HEAD = re.compile(r"^[A-Z][A-Za-z ]{2,60}$")
 _SENT_SPLIT = re.compile(r"(?<=[.!?])\s+")
+_WORD = re.compile(r"\S+")
+
+Span = tuple[int, int]
 
 
-def _chunk_doc(doc: Doc, i: int, text: str, section: str = "") -> Doc:
-    meta = {**doc.meta, "parent": doc.id, "section": section}
-    return Doc(id=f"{doc.id}#{i}", text=text, title=doc.title, meta=meta)
+def _is_heading(line: str) -> bool:
+    n = len(line.split())
+    if _NUM_HEAD.match(line) and n <= 12 and line[-1] not in ".:,":
+        return True
+    return bool(_WORD_HEAD.match(line)) and n <= 8
+
+
+def _make(doc: Doc, i: int, start: int, end: int, section: str = "") -> Doc:
+    meta = {
+        **doc.meta,
+        "parent": doc.id,
+        "section": section,
+        "char_start": start,
+        "char_end": end,
+    }
+    return Doc(id=f"{doc.id}#{i}", text=doc.text[start:end], title=doc.title, meta=meta)
+
+
+def _word_spans(text: str, start: int = 0, end: int | None = None) -> list[Span]:
+    end = len(text) if end is None else end
+    return [(start + m.start(), start + m.end()) for m in _WORD.finditer(text[start:end])]
 
 
 def fixed_chunks(doc: Doc, size: int = 256, overlap: int = 0) -> list[Doc]:
-    """Split into word windows of `size`, consecutive windows sharing `overlap` words."""
+    """Word windows of `size`, consecutive windows sharing `overlap` words; verbatim slices."""
     if size <= 0 or not 0 <= overlap < size:
         raise ValueError("require size > 0 and 0 <= overlap < size")
-    toks = doc.text.split()
+    ws = _word_spans(doc.text)
     step = size - overlap
     out: list[Doc] = []
     start = 0
-    while start < len(toks):
-        end = start + size
-        out.append(_chunk_doc(doc, len(out), " ".join(toks[start:end])))
-        if end >= len(toks):
+    while start < len(ws):
+        end = min(start + size, len(ws))
+        out.append(_make(doc, len(out), ws[start][0], ws[end - 1][1]))
+        if end >= len(ws):
             break
         start += step
     return out
 
 
-def _parse(text: str) -> list[tuple[str, str | int]]:
-    """Return events: ("head", heading) or ("para", paragraph_text)."""
-    events: list[tuple[str, str]] = []
-    for block in re.split(r"\n\s*\n", text):
-        buf: list[str] = []
-        for line in block.splitlines():
-            s = line.strip()
-            if not s:
-                continue
-            if _HEADING_RE.match(s):
-                if buf:
-                    events.append(("para", "\n".join(buf)))
-                    buf = []
-                events.append(("head", s))
-            else:
-                buf.append(s)
-        if buf:
-            events.append(("para", "\n".join(buf)))
+def _parse(text: str) -> list[tuple[str, int, int]]:
+    """Events ("head"|"para", start, end) as verbatim char spans, in document order."""
+    events: list[tuple[str, int, int]] = []
+    block: list[tuple[int, int]] = []  # stripped line spans of the current block
+
+    def close() -> None:
+        if block:
+            kind = "head" if len(block) == 1 and _is_heading(text[block[0][0]:block[0][1]]) else "para"
+            events.append((kind, block[0][0], block[-1][1]))
+            block.clear()
+
+    pos = 0
+    for line in text.splitlines(keepends=True):
+        stripped = line.strip()
+        if stripped:
+            s = pos + (len(line) - len(line.lstrip()))
+            block.append((s, s + len(stripped)))
+        else:
+            close()
+        pos += len(line)
+    close()
     return events
 
 
-def _split_long(par: str, target: int, max_words: int) -> list[str]:
-    """Split an over-long paragraph into units of <= max_words (sentence-aware)."""
-    units: list[str] = []
-    for sent in _SENT_SPLIT.split(par):
-        w = sent.split()
-        if len(w) > max_words:
-            units.extend(" ".join(w[k:k + target]) for k in range(0, len(w), target))
-        elif w:
-            units.append(" ".join(w))
-    return units
+def _split_long(text: str, start: int, end: int, target: int) -> list[Span]:
+    """Split an over-long paragraph span into sentence spans; over-long sentences by words."""
+    s = text[start:end]
+    sents: list[Span] = []
+    pos = 0
+    for m in _SENT_SPLIT.finditer(s):
+        sents.append((start + pos, start + m.start()))
+        pos = m.end()
+    sents.append((start + pos, end))
+    return sents
 
 
 def semantic_chunks(
@@ -74,59 +99,75 @@ def semantic_chunks(
     embed: Callable[[list[str]], np.ndarray] | None = None,
     break_threshold: float = 0.55,
 ) -> list[Doc]:
-    events = _parse(doc.text)
-    paras = [p for kind, p in events if kind == "para"]
+    text = doc.text
+    events = _parse(text)
+    paras = [text[s:e] for k, s, e in events if k == "para"]
     emb = None
     if embed is not None and paras:
         emb = np.asarray(embed(paras), dtype=float)
         norms = np.linalg.norm(emb, axis=1, keepdims=True)
         emb = emb / np.where(norms == 0, 1.0, norms)
 
-    # groups: (section, [unit strings]) -- each group becomes one chunk body
-    groups: list[tuple[str, list[str]]] = []
+    groups: list[tuple[str, int, int]] = []  # (section, char_start, char_end)
     section = ""
-    cur: list[str] = []
-    cur_words = 0
-    prev_idx: int | None = None  # index of previous paragraph within the section
+    start = end = -1
+    words = 0
+    has_body = False
+    prev_idx: int | None = None
 
     def flush() -> None:
-        nonlocal cur, cur_words
-        if cur:
-            groups.append((section, cur))
-        cur, cur_words = [], 0
+        nonlocal start, end, words, has_body
+        if start >= 0:
+            groups.append((section, start, end))
+        start = end = -1
+        words, has_body = 0, False
+
+    def add(s: int, e: int, body: bool) -> None:
+        nonlocal start, end, words, has_body
+        n = len(text[s:e].split())
+        if start >= 0 and ((has_body and words + n > target) or words + n > max_words):
+            flush()
+        if start < 0:
+            start = s
+        end = e
+        words += n
+        has_body = has_body or body
 
     pi = -1
-    for kind, val in events:
+    for kind, s, e in events:
         if kind == "head":
             flush()
-            section = val
+            section = text[s:e]
             prev_idx = None
+            add(s, e, False)
             continue
         pi += 1
-        units = [val] if len(val.split()) <= max_words else _split_long(val, target, max_words)
-        topical_break = (
-            emb is not None and prev_idx is not None
-            and float(emb[prev_idx] @ emb[pi]) < break_threshold
-        )
-        if topical_break:
+        if emb is not None and prev_idx is not None and float(emb[prev_idx] @ emb[pi]) < break_threshold:
             flush()
-        for u in units:
-            n = len(u.split())
-            if cur and cur_words + n > target:
-                flush()
-            cur.append(u)
-            cur_words += n
+        if len(text[s:e].split()) <= max_words:
+            units = [(s, e)]
+        else:
+            units = []
+            for us, ue in _split_long(text, s, e, target):
+                ws = _word_spans(text, us, ue)
+                if len(ws) > max_words:
+                    units.extend((ws[k][0], ws[min(k + target, len(ws)) - 1][1])
+                                 for k in range(0, len(ws), target))
+                elif ws:
+                    units.append((us, ue))
+        for us, ue in units:
+            add(us, ue, True)
         prev_idx = pi
     flush()
 
     out: list[Doc] = []
-    prev_body: list[str] = []
-    prev_section: str | None = None
-    for sec, units in groups:
-        body = "\n\n".join(units)
-        text = body
-        if overlap > 0 and prev_body and prev_section == sec:
-            text = " ".join(prev_body[-overlap:]) + " " + body
-        out.append(_chunk_doc(doc, len(out), text, sec))
-        prev_body, prev_section = body.split(), sec
+    prev: tuple[str, int, int] | None = None
+    for sec, s, e in groups:
+        cs = s
+        if overlap > 0 and prev is not None and prev[0] == sec:
+            pws = _word_spans(text, prev[1], prev[2])
+            if pws:
+                cs = pws[-overlap:][0][0]
+        out.append(_make(doc, len(out), cs, e, sec))
+        prev = (sec, s, e)
     return out

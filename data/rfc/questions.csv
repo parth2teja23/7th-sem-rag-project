@@ -1,0 +1,402 @@
+qid,question,answer,gold_chunk_id,gold_text_snippet,verified,notes,span_start,span_end,answer_start,answer_end
+rfcq001,What is the status code mentioned in the text?,421,rfc9113#145,"C 7540, such as the 421 status code or
+   c",0,rejected: deictic: refers to 'the text/example/title',191186,191229,191206,191209
+rfcq002,What are the currently defined opcodes for data frames?,"0x1 (Text), 0x2 (Binary)",rfc6455#68,"data frames include 0x1 (Text), 0x2 (Binary).  Opcodes
+   0x3-0x",1,"checked by AI assistant (Claude), approved by Parth",85962,86026,85982,86006
+rfcq003,What is the range for interoperable integers?,"[-(2**53)+1, (2**53)-1]",rfc8259#16,"   are in the range [-(2**53)+1, (2**53)-1] are interoperable i",1,"checked by AI assistant (Claude), approved by Parth",13347,13410,13367,13390
+rfcq004,What is the status code for client error responses?,4xx,rfc9112#38,"rate an appropriate 4xx (Client Error)
+   r",1,"checked by AI assistant (Claude), approved by Parth",51295,51338,51315,51318
+rfcq005,What section describes a potential security risk if redirection URI registration is not required?,Section 10.15,rfc6749#36," as
+   described in Section 10.15.",1,"checked by AI assistant (Claude), approved by Parth",45659,45693,45679,45692
+rfcq006,What is the program name mentioned in the title?,DARPA INTERNET PROGRAM,rfc791#10,"                    DARPA INTERNET PROGRAM
+                   ",0,rejected: deictic: refers to 'the text/example/title',2855,2917,2875,2897
+rfcq007,What Header Parameter value indicates an Unsecured JWT?,"""none""",rfc7519#24,"der Parameter value ""none"" and with
+   the emp",1,"checked by AI assistant (Claude), approved by Parth",24688,24734,24708,24714
+rfcq008,What type of numbers are used for RRs in zones?,positive 32 bit numbers,rfc1035#73,"o do this is to
+use positive 32 bit numbers for one type and ne",0,rejected: answer does not fit question,81377,81440,81397,81420
+rfcq009,"What is the length of Interface IDs for all unicast addresses, except those that start with 000?",64 bits,rfc4291#12," are required to be 64 bits long and to be
+   c",1,"checked by AI assistant (Claude), approved by Parth",14634,14681,14654,14661
+rfcq010,What is the first cipher suite listed?,TLS_ECDH_RSA_WITH_NULL_SHA,rfc7540#142,"o  TLS_ECDH_RSA_WITH_NULL_SHA
+
+   o  TLS_ECDH_RSA",0,rejected: deictic: refers to 'the text/example/title',187113,187162,187116,187142
+rfcq011,What is the exact term for a JSON text?,JSON-text,rfc8259#11," JSON texts.
+
+      JSON-text = ws value ws
+
+   T",0,rejected: boilerplate/low-value or weak,8590,8639,8610,8619
+rfcq012,What section discusses caching?,Section 5.1,rfc8484#15," of [RFC7540]).
+
+   Section 5.1 discusses the relat",0,rejected: ambiguous across RFCs,12621,12672,12641,12652
+rfcq013,What is the maximum length of the subject for a registration request?,"e.g., ""Request for parameter: example""",rfc6749#107,"opriate subject
+   (e.g., ""Request for parameter: example"").
+
+   Within the re",0,rejected: answer does not fit question,130873,130951,130893,130931
+rfcq014,What is the size of an IPv6 address in bits?,128 bits,rfc8200#7,"ize from 32 bits to 128 bits, to
+         suppor",1,"checked by AI assistant (Claude), approved by Parth",5000,5048,5020,5028
+rfcq015,What requirement applies to claim names within a JWT Claims Set?,MUST be unique,rfc7519#15,"a JWT Claims Set
+   MUST be unique; JWT parsers MUST e",1,"question reworded for clarity; checked by AI assistant (Claude), approved by Parth",15177,15231,15197,15211
+rfcq016,What is the most common use of a master file?,to define a zone,rfc1035#62," is most often used to define a zone, though it can be u",1,"checked by AI assistant (Claude), approved by Parth",69915,69971,69935,69951
+rfcq017,What is the prefix for Link-Local addresses?,1111111010,rfc4291#20,"--------------+
+   |1111111010|           0       ",1,"checked by AI assistant (Claude), approved by Parth",21728,21778,21748,21758
+rfcq018,What cannot be set by an attacker from a web browser using only HTML and JavaScript APIs such as XMLHttpRequest?,fields starting with |Sec-|,rfc6455#24,"s
+   specification, fields starting with |Sec-| cannot be set by an",1,"checked by AI assistant (Claude), approved by Parth",25059,25126,25079,25106
+rfcq019,What is the section number for Character Encoding?,8.1,rfc8259#5," . . . . .   9
+     8.1.  Character Encodin",0,rejected: table-of-contents trivia,3602,3645,3622,3625
+rfcq020,Change controller:,IESG,rfc8484#27, Change controller: IESG,0,rejected: boilerplate/low-value or weak,23116,23140,23136,23140
+rfcq021,How many values are there for the first digit of the status code?,five,rfc9110#263,"role.  There are
+   five values for the firs",1,"checked by AI assistant (Claude), approved by Parth",317968,318012,317988,317992
+rfcq022,What is the DOI for RFC 2018?,DOI 10.17487/RFC2018,rfc9000#296,"2018,
+              DOI 10.17487/RFC2018, October 1996,
+    ",0,rejected: reference-list fact repeated across RFCs,391868,391928,391888,391908
+rfcq023,What is the maximum length of the chunk-size field?,1*HEXDIG,rfc7230#57,"   chunk-size     = 1*HEXDIG
+     last-chunk    ",0,rejected: answer does not fit question,85974,86022,85994,86002
+rfcq024,What is the URI for Ian Fette's homepage?,http://www.ianfette.com/,rfc6455#136,"oogle.com
+   URI:   http://www.ianfette.com/
+
+   Alexey Melnikov",0,rejected: boilerplate/low-value or weak,150887,150951,150907,150931
+rfcq025,What section defines fingerprinting in this context?,Section 1.8,rfc7540#126,"t, as defined
+   in Section 1.8 of [HTML5].
+
+   HTT",0,rejected: deictic: refers to 'the text/example/title',164376,164427,164396,164407
+rfcq026,What is the HTTP status code for authorization failures?,401,rfc8484#16,"s (HTTP status code 401; see
+   Section 3.1",1,"checked by AI assistant (Claude), approved by Parth",13541,13584,13561,13564
+rfcq027,What must the authorization server consider when interacting with unauthenticated clients?,the security implications,rfc6749#86,"erver must consider the security implications of
+   interacting w",1,"checked by AI assistant (Claude), approved by Parth",109233,109298,109253,109278
+rfcq028,What is the email address of Robert M. Hinden?,bob.hinden@gmail.com,rfc8200#56," America
+
+   Email: bob.hinden@gmail.com",0,rejected: boilerplate/low-value or weak,86524,86564,86544,86564
+rfcq029,What is the binary prefix for Unspecified address type?,00...0,rfc4291#10,nspecified          00...0  (128 bits)   ::/12,1,"checked by AI assistant (Claude), approved by Parth",10460,10506,10480,10486
+rfcq030,What is the basic data block size?,one byte,rfc8446#24," data block size is one byte (i.e., 8 bits).  Mu",1,"checked by AI assistant (Claude), approved by Parth",36498,36546,36518,36526
+rfcq031,What is the ABNF rule for an OAuth 2.0 response-name?,1*response-char,rfc6749#81,"   response-name  = 1*response-char
+     response-char ",1,"question reworded for clarity; checked by AI assistant (Claude), approved by Parth",102765,102820,102785,102800
+rfcq032,What is the response for a successful send operation?,OK = datagram sent ok,rfc791#83," = response
+        OK = datagram sent ok
+        Error = err",1,"checked by AI assistant (Claude), approved by Parth",64461,64522,64481,64502
+rfcq033,What figure number is mentioned?,Figure 2.,rfc793#31,"                    Figure 2.
+
+  It is expected t",0,rejected: deictic: refers to 'the text/example/title',21548,21597,21568,21577
+rfcq034,What is the range of values for Snum?,0 through 255,rfc5321#99," value in the range 0 through 255
+
+   IPv6-addr      ",1,"checked by AI assistant (Claude), approved by Parth",102073,102126,102093,102106
+rfcq035,What is the hexadecimal representation of the literal name 'false'?,%x66.61.6c.73.65,rfc8259#12,"ring
+
+      false = %x66.61.6c.73.65   ; false
+
+      nu",1,"checked by AI assistant (Claude), approved by Parth",9635,9691,9655,9671
+rfcq036,What must authorization codes be?,short lived and single-use,rfc6749#90,"ation codes MUST be short lived and single-use.  If the
+   authori",1,"checked by AI assistant (Claude), approved by Parth",114422,114488,114442,114468
+rfcq037,What module would add the 1822 leader to the internet datagram?,local net module,rfc791#15,"Introduction
+
+  local net module which would add the",1,"checked by AI assistant (Claude), approved by Parth",4822,4874,4838,4854
+rfcq038,What is the name of the registry established by Section 10.1?,"IANA ""JSON Web Token Claims"" registry",rfc7519#19,"  registered in the IANA ""JSON Web Token Claims"" registry established
+   by S",1,"checked by AI assistant (Claude), approved by Parth",20105,20182,20125,20162
+rfcq039,What is the deprecated IPv4-Compatible IPv6 address prefix?,0000::/96,rfc4291#30," block.
+
+      [5]  0000::/96 was previously defi",1,"checked by AI assistant (Claude), approved by Parth",35459,35508,35479,35488
+rfcq040,What section of which RFC contains additional acknowledgements?,Section 16 of [RFC2616],rfc7230#128,"d Zhong Yu.
+
+   See Section 16 of [RFC2616] for additional ackn",0,rejected: boilerplate/low-value or weak,167319,167382,167339,167362
+rfcq041,What is the IANA registry name?,JSON Web Signature and Encryption Header Parameters,rfc7519#41,"4.1 in
+   the IANA ""JSON Web Signature and Encryption Header Parameters""
+   registry establ",0,rejected: deictic: refers to 'the text/example/title',40389,40480,40409,40460
+rfcq042,What section title is given?,DOMAIN NAME SPACE AND RR DEFINITIONS,rfc1035#17,3. DOMAIN NAME SPACE AND RR DEFINITIONS,0,rejected: deictic: refers to 'the text/example/title',23910,23949,23913,23949
+rfcq043,What does HTTP/2 obsolete?,RFCs 7540 and 8740,rfc9113#1, document obsoletes RFCs 7540 and 8740.,1,"checked by AI assistant (Claude), approved by Parth",773,812,793,811
+rfcq044,What is the section that describes starting the WebSocket Closing Handshake?,Section 7.1.2,rfc6455#89,Closing Handshake_ (Section 7.1.2).,1,"checked by AI assistant (Claude), approved by Parth",101133,101168,101153,101166
+rfcq045,What section discusses HTTP server push?,Section 8.2,rfc8484#23,"TP server push (see Section 8.2 of
+   [RFC7540]), e",0,rejected: ambiguous across RFCs,19869,19920,19889,19900
+rfcq046,What must the client NOT use in each request?,more than one authentication method,rfc6749#27,"client MUST NOT use more than one authentication method in each
+   request.",1,"checked by AI assistant (Claude), approved by Parth",36403,36478,36423,36458
+rfcq047,What is the range of the Internet precedence?,upper half of its range,rfc791#75,"recedence is in the upper half of its range, to select
+    stan",0,rejected: answer does not fit question,59861,59924,59881,59904
+rfcq048,What is the URI for the docbook DTD?,urn:oasis:names:specification:docbook:dtd:xml:4.1.2,rfc3986#17,"2.0.2.16:80/
+
+      urn:oasis:names:specification:docbook:dtd:xml:4.1.2",0,rejected: deictic: refers to 'the text/example/title',14955,15026,14975,15026
+rfcq049,What is the intended usage of the 'application/jwt' media type?,COMMON,rfc7519#40," o  Intended usage: COMMON
+   o  Restrictions ",1,"checked by AI assistant (Claude), approved by Parth",40101,40147,40121,40127
+rfcq050,What multicast addresses are required for a node to recognize?,The All-Nodes multicast addresses defined in Section 2.7.1.,rfc4291#28,"k address.
+
+      o The All-Nodes multicast addresses defined in Section 2.7.1.
+
+      o The Solici",1,"checked by AI assistant (Claude), approved by Parth",34131,34230,34151,34210
+rfcq051,What is the name of the message used for updating traffic keys?,KeyUpdate handshake message,rfc8446#126,"ffic keys using the KeyUpdate handshake message
+   defined in Secti",1,"checked by AI assistant (Claude), approved by Parth",189136,189203,189156,189183
+rfcq052,What is the email address for submitting IPR information?,ietf-ipr@ietf.org,rfc5321#239,"n to the IETF at
+   ietf-ipr@ietf.org.",0,rejected: boilerplate/low-value or weak,211222,211260,211242,211259
+rfcq053,What must a JSON parser accept?,all texts that conform to the JSON grammar,rfc8259#22," parser MUST accept all texts that conform to the JSON grammar.
+   A JSON parser M",1,"checked by AI assistant (Claude), approved by Parth",18055,18137,18075,18117
+rfcq054,What is the name of the flow illustrated in Figure 5?,Resource Owner Password Credentials Flow,rfc6749#58,"          Figure 5: Resource Owner Password Credentials Flow
+
+   The flow illust",1,"checked by AI assistant (Claude), approved by Parth",79776,79856,79796,79836
+rfcq055,What is the minimum overhead between each part of a 'multipart/byteranges'?,around 80 bytes,rfc9110#274,"part/byteranges"" is around 80 bytes, depending on the s",1,"checked by AI assistant (Claude), approved by Parth",335512,335567,335532,335547
+rfcq056,What is the RFC number for Internet Control Message Protocol?,792,rfc791#97,"Specification,"" RFC 792, USC/Information Sc",0,rejected: reference-list fact repeated across RFCs,82935,82978,82955,82958
+rfcq057,What is the IETF's online IPR repository address?,http://www.ietf.org/ipr,rfc3986#113,"PR repository at
+   http://www.ietf.org/ipr.
+
+   The IETF invit",0,rejected: boilerplate/low-value or weak,131861,131924,131881,131904
+rfcq058,What RFC number is referenced first?,RFC 1945,rfc7230#125,"s that went
+   into RFC 1945, RFC 2068, RFC 2145",0,rejected: reference-list fact repeated across RFCs,161824,161872,161844,161852
+rfcq059,What is the RFC number for 'IP Authentication Header'?,2402,rfc4291#34,""", RFC
+             2402, November 1998.
+
+  ",0,rejected: reference-list fact repeated across RFCs,36504,36548,36524,36528
+rfcq060,What is the status code in the example?,304 Not Modified,rfc9113#109,"lds.
+
+     HTTP/1.1 304 Not Modified        HEADERS
+    ",0,rejected: deictic: refers to 'the text/example/title',138490,138546,138510,138526
+rfcq061,What label is used for external PSKs?,ext binder,rfc8446#125,"_key, the label is ""ext binder"" for external PSKs ",1,"checked by AI assistant (Claude), approved by Parth",188318,188368,188338,188348
+rfcq062,What is the RFC number for 'SMTP Service Extensions'?,1869,rfc5321#226,"sions"", STD 10, RFC 1869,
+         November ",0,rejected: reference-list fact repeated across RFCs,188563,188607,188583,188587
+rfcq063,What is the maximum number of intermediate gateways allowed in a loose source route?,any number,rfc791#51,"to use any route of any number of other
+        in",0,rejected: answer does not fit question,35193,35243,35213,35223
+rfcq064,What section describes safe methods?,4.2.1 of [RFC7231],rfc7230#91,"fe methods (Section 4.2.1 of [RFC7231]),
+   but it MUST se",0,rejected: ambiguous across RFCs,124734,124792,124754,124772
+rfcq065,What is the section number for this control description?,6.1.1,rfc1035#70,"6.1.1. Control
+
+A name se",0,rejected: table-of-contents trivia,76729,76754,76729,76734
+rfcq066,What MUST NOT be offered or negotiated by any implementation?,"MD5 [SLOTH], SHA-224, and DSA",rfc8446#56,"on.  In particular, MD5 [SLOTH], SHA-224, and DSA
+      MUST NOT be u",1,"checked by AI assistant (Claude), approved by Parth",86068,86137,86088,86117
+rfcq067,What must header field names be converted to in HTTP/2?,lowercase,rfc7540#87,"UST be converted to lowercase prior to their
+   e",1,"checked by AI assistant (Claude), approved by Parth",117540,117589,117560,117569
+rfcq068,What is the ISSN of this RFC?,2070-1721,rfc8259#0,"andards Track
+ISSN: 2070-1721
+
+     The JavaScrip",0,rejected: boilerplate/low-value or weak,231,280,251,260
+rfcq069,What is the alternative name for response splitting mentioned in the RFC?,CRLF injection,rfc9112#63,e splitting (a.k.a. CRLF injection) is a common techni,1,"checked by AI assistant (Claude), approved by Parth",79241,79295,79261,79275
+rfcq070,What is the page number of the Preface?,iii,rfc791#3,................... iii,0,rejected: table-of-contents trivia,739,762,759,762
+rfcq071,What is the STD number for HTTP/1.1?,STD 99,rfc9113#140,"   Ed., ""HTTP/1.1"", STD 99, RFC 9112, DOI 10.1",0,rejected: reference-list fact repeated across RFCs,174608,174654,174628,174634
+rfcq072,Who was the responsible Area Director for the WebSocket Protocol RFC?,Peter Saint-Andre,rfc6455#132,"sible Area Director Peter Saint-Andre.
+
+   Thank you to t",1,"question reworded for clarity; checked by AI assistant (Claude), approved by Parth",145225,145282,145245,145262
+rfcq073,"When an HTTP/2 proxy establishes a CONNECT tunnel, what class of status code does it send in the HEADERS frame?",2xx series,rfc7540#104, frame containing a 2xx series status code to the ,1,"question reworded for clarity; checked by AI assistant (Claude), approved by Parth",141622,141672,141642,141652
+rfcq074,What mechanism allows a point in the data stream to be designated as the end of urgent information?,This mechanism,rfc793#135,"ved by the user.
+
+  This mechanism permits a point in ",0,rejected: boilerplate/low-value or weak,87710,87764,87730,87744
+rfcq075,What RFC numbers describe optional completion services?,RFC-882 and RFC-883,rfc1035#80,"rvices described in RFC-882 and RFC-883 have
+been deleted. ",1,"checked by AI assistant (Claude), approved by Parth",89576,89635,89596,89615
+rfcq076,What standard did JSON derive from?,ECMAScript Programming Language Standard,rfc8259#1,"derived from
+   the ECMAScript Programming Language Standard.  JSON defines a sm",1,"checked by AI assistant (Claude), approved by Parth",464,544,484,524
+rfcq077,What HTTP/2 feature can DoH clients use like other HTTP/2 clients?,padding and compression,rfc8484#12,"ents can use HTTP/2 padding and compression [RFC7540] in the
+  ",1,"checked by AI assistant (Claude), approved by Parth",9513,9576,9533,9556
+rfcq078,What is a common attack mentioned in the RFC?,SQL injection,rfc9110#329,"e.
+
+   For example, SQL injection is a common attack ",0,rejected: deictic: refers to 'the text/example/title',402819,402872,402839,402852
+rfcq079,What is the total length in the example?,216,rfc791#88,"     Total Length = 216      |
+   +-+-+-+-+",0,rejected: deictic: refers to 'the text/example/title',72471,72514,72491,72494
+rfcq080,What is the assumed maximum segment lifetime?,two minutes.,rfc793#158,"segment lifetime is two minutes.
+        Here we exp",1,"checked by AI assistant (Claude), approved by Parth",110803,110855,110823,110835
+rfcq081,What is the acronym for the IETF Trust's Legal Provisions?,BCP 78,rfc7519#3,ument is subject to BCP 78 and the IETF Trust',0,rejected: boilerplate/low-value or weak,1661,1707,1681,1687
+rfcq082,What is the deprecated IPv6 address type mentioned?,Site-Local unicast prefix,rfc4291#38,   o Deprecated the Site-Local unicast prefix.  Changes include t,1,"checked by AI assistant (Claude), approved by Parth",45057,45122,45077,45102
+rfcq083,What is the copyright year mentioned?,2017,rfc8259#3,"e
+
+   Copyright (c) 2017 IETF Trust and the ",0,rejected: boilerplate/low-value or weak,1400,1444,1420,1424
+rfcq084,What is the name of the registry for transfer coding names?,HTTP Transfer Coding registry,rfc9112#36,"gistered within the HTTP Transfer Coding registry, as defined in
+   S",1,"checked by AI assistant (Claude), approved by Parth",47919,47988,47939,47968
+rfcq085,What is the expected future work to achieve full web-scale interoperability?,define prescriptive profiles and extensions,rfc6749#21,"future
+   work will define prescriptive profiles and extensions necessary to
+   ach",1,"checked by AI assistant (Claude), approved by Parth",29552,29635,29572,29615
+rfcq086,What is the type range for ACK frames?,0x02..0x03,rfc9000#212,"e {
+     Type (i) = 0x02..0x03,
+     Largest Ackno",1,"checked by AI assistant (Claude), approved by Parth",288653,288703,288673,288683
+rfcq087,What is the maximum number of connections per server now allowed?,not need to generate Via header fields anymore.,rfc7230#137,"not need to generate Via header fields anymore.
+   (Section 5.7.1)
+",0,rejected: answer does not fit question,182427,182494,182427,182474
+rfcq088,What header field is used to guide caching of pushed responses?,Cache-Control,rfc7540#119,"rigin server in the Cache-Control header field.
+   Ho",1,"checked by AI assistant (Claude), approved by Parth",155785,155838,155805,155818
+rfcq089,What must the resulting text strictly conform to?,the JSON grammar,rfc8259#23,strictly conform to the JSON grammar.,0,rejected: boilerplate/low-value or weak,18573,18610,18593,18609
+rfcq090,What is the DOI for RFC 6891?,DOI 10.17487/RFC6891,rfc8484#40,"6891,
+              DOI 10.17487/RFC6891, April 2013,
+      ",0,rejected: reference-list fact repeated across RFCs,38830,38890,38850,38870
+rfcq091,How must an OAuth 2.0 authorization server compare redirection URIs?,simple string comparison,rfc6749#37,"e two URIs
+   using simple string comparison as defined in [RFC3",1,"question reworded for clarity; checked by AI assistant (Claude), approved by Parth",46416,46480,46436,46460
+rfcq092,What is the maximum range of characters for field values?,"visible US-ASCII octets (VCHAR), SP, and HTAB",rfc9110#55,"mit their values to visible US-ASCII octets (VCHAR), SP, and HTAB.
+   A recipient SHO",1,"checked by AI assistant (Claude), approved by Parth",74372,74457,74392,74437
+rfcq093,What must be case-insensitive in URI comparisons?,host names,rfc2616#31,   - Comparisons of host names MUST be case-insens,1,"checked by AI assistant (Claude), approved by Parth",49637,49687,49657,49667
+rfcq094,What member values do not use the comparison rules?,"the ""typ"" and ""cty"" member values",rfc7519#30,"specification, only the ""typ"" and ""cty"" member values
+   do not use these",1,"checked by AI assistant (Claude), approved by Parth",31041,31114,31061,31094
+rfcq095,What reply does the SMTP server return if the recipient is known not to be a deliverable address?,550 reply,rfc5321#51,"server
+   returns a 550 reply, typically with a s",1,"checked by AI assistant (Claude), approved by Parth",48734,48783,48754,48763
+rfcq096,"What is the acronym for 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED', 'MAY', and 'OPTIONAL'?",BCP 14,rfc8484#8," as described in
+   BCP 14 [RFC2119] [RFC8174]",0,rejected: boilerplate/low-value or weak,5966,6012,5986,5992
+rfcq097,What HTTP status code is mentioned in the examples?,HTTP 302,rfc6749#20,"show the use of the HTTP 302 status code, any ot",0,rejected: ambiguous across RFCs,28623,28671,28643,28651
+rfcq098,What section describes recommendations for defining new extension headers and options?,Section 4.8,rfc8200#54,"C 6564 to add a new Section 4.8
+      that describe",1,"checked by AI assistant (Claude), approved by Parth",83148,83199,83168,83179
+rfcq099,What module controls the actual interface to the network?,device driver module,rfc793#27,"e
+  controlled by a device driver module.  The TCP does not ",1,"checked by AI assistant (Claude), approved by Parth",19483,19543,19503,19523
+rfcq100,What is the managed namespace for URI scheme names?,registered namespace,rfc3986#96,"tion 3.1, form a
+   registered namespace that is managed by ",1,"checked by AI assistant (Claude), approved by Parth",104898,104958,104918,104938
+rfcq101,What field carries the final size in a RESET_STREAM frame?,Final Size field,rfc9000#37," Alternatively, the Final Size field of a RESET_STREAM f",1,"checked by AI assistant (Claude), approved by Parth",52909,52965,52929,52945
+rfcq102,What is the section number for the Address Type Identification?,2.4,rfc4291#4,"............5
+      2.4. Address Type Ident",0,rejected: table-of-contents trivia,1569,1612,1589,1592
+rfcq103,What is the initial value of SETTINGS_HEADER_TABLE_SIZE?,"4,096",rfc9113#23,"l
+      |  value of 4,096 is somewhat better ",1,"checked by AI assistant (Claude), approved by Parth",27051,27096,27071,27076
+rfcq104,What is the STD number for RFC 5234?,STD 68,rfc6455#135,"cifications: ABNF"", STD 68, RFC 5234, January ",0,rejected: reference-list fact repeated across RFCs,148440,148486,148460,148466
+rfcq105,What defines how HTTPS verifies the DoH server's identity?,[RFC2818],rfc8484#9,"ed for resolution.  [RFC2818] defines how
+   HTTP",1,"checked by AI assistant (Claude), approved by Parth",6868,6917,6888,6897
+rfcq106,What is the maximum number of digits allowed in Content-Length?,1*DIGIT,rfc7230#48,   Content-Length = 1*DIGIT,0,rejected: answer does not fit question,71919,71946,71939,71946
+rfcq107,What status code indicates the server is refusing to process a request due to the request content being too large?,413 Content Too Large,rfc9110#290,"  state.
+
+15.5.14.  413 Content Too Large
+
+   The 413 (Conten",1,"checked by AI assistant (Claude), approved by Parth",362448,362509,362468,362489
+rfcq108,What section describes relative references?,Section 4.2,rfc3986#26,relative reference (Section 4.2) refers to a resour,1,"checked by AI assistant (Claude), approved by Parth",24067,24118,24087,24098
+rfcq109,What codepoint is never applied according to the text?,ECT(0) or ECT(1),rfc9000#162,"
+   are remarked to ECT(0) or ECT(1) in the network.",0,rejected: answer does not fit question,225284,225336,225304,225320
+rfcq110,What section describes risks related to cache poisoning attacks?,Section 8 of [RFC7234],rfc7230#117,"ks, as described in Section 8 of [RFC7234].
+
+   Implementers n",1,"checked by AI assistant (Claude), approved by Parth",153669,153731,153689,153711
+rfcq111,What is the two-octet sequence for 'h2'?,"0x68, 0x32",rfc9113#12,"two-octet sequence: 0x68, 0x32.
+
+   *  The ""h2c"" s",1,"checked by AI assistant (Claude), approved by Parth",13953,14003,13973,13983
+rfcq112,What symbol represents the start of an array?,begin-array,rfc8259#14,"commas.
+
+   array = begin-array [ value *( value-se",1,"checked by AI assistant (Claude), approved by Parth",11229,11280,11249,11260
+rfcq113,What is the sequence number in SYN-SENT state?,<SEQ=400>,rfc793#104,3.  SYN-SENT --> <SEQ=400><CTL=SYN>           ,0,rejected: answer does not fit question,72136,72182,72153,72162
+rfcq114,What section details the automatic retry of streams?,Section 8.7,rfc9113#45,ically retried (see Section 8.7 for details).,0,rejected: ambiguous across RFCs,55764,55809,55784,55795
+rfcq115,What attack is not mentioned as being resisted by SHA-1 in the handshake?,second pre-image attack,rfc6455#110,"  resistance to the second pre-image attack (as described in
+  ",0,rejected: answer does not fit question,120504,120567,120524,120547
+rfcq116,What are MUAs also referred to as?,MUAs or UAs,rfc5321#33,"il User
+   Agents"" (MUAs or UAs) are normally thoug",0,rejected: boilerplate/low-value or weak,29875,29926,29895,29906
+rfcq117,What section defines valid characters for header field values?,Section 3.2 of [RFC7230],rfc7540#118,"ntent"" ABNF rule in Section 3.2 of [RFC7230].",1,"checked by AI assistant (Claude), approved by Parth",155468,155513,155488,155512
+rfcq118,What is the ABNF rule for an OAuth 2.0 scope-token?,1*( %x21 / %x23-5B / %x5D-7E ),rfc6749#42,"
+     scope-token = 1*( %x21 / %x23-5B / %x5D-7E )
+
+   The authorizati",1,"question reworded for clarity; checked by AI assistant (Claude), approved by Parth",51398,51468,51418,51448
+rfcq119,What are the bits inserted to create an IEEE EUI-64 identifier from an IEEE MAC-48 identifier?,0xFF and 0xFF,rfc4291#37,"4] actually defines 0xFF and 0xFF as the bits to be
+ ",1,"checked by AI assistant (Claude), approved by Parth",43911,43964,43931,43944
+rfcq120,What is the maximum length for the per-record nonce?,N_MAX bytes,rfc8446#110,from N_MIN bytes to N_MAX bytes of input [RFC5116].,0,rejected: answer does not fit question,166211,166262,166231,166242
+rfcq121,What RFC discusses the problem of minimizing response time?,RFC 1047,rfc5321#202,"ata indicator.  See RFC 1047 [40] for
+   a discu",1,"checked by AI assistant (Claude), approved by Parth",163698,163746,163718,163726
+rfcq122,What is the value of the 'Width' field in the Thumbnail object?,100,rfc8259#26,"          ""Width"":  100
+            },
+    ",0,rejected: deictic: refers to 'the text/example/title',20923,20966,20943,20946
+rfcq123,What is the DOI for RFC 2460?,10.17487/RFC2460,rfc8200#49,"ion"", RFC 2460, DOI 10.17487/RFC2460,
+              Dece",0,rejected: reference-list fact repeated across RFCs,68782,68838,68802,68818
+rfcq124,What is the JOSE Header value in the example?,eyJhbGciOiJSU0ExXzUiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwiY3R5IjoiSldUIn0,rfc7519#51,"Header value:
+
+     eyJhbGciOiJSU0ExXzUiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwiY3R5IjoiSldUIn0
+
+   The computation",0,rejected: deictic: refers to 'the text/example/title',52302,52409,52322,52389
+rfcq125,What is the responsible person mailbox in the SOA record?,Action.domains@E.ISI.EDU,rfc1035#67,"ble
+person mailbox ""Action.domains@E.ISI.EDU"".",0,rejected: deictic: refers to 'the text/example/title',76223,76269,76243,76267
+rfcq126,What separates a name from the value in a member?,single colon,rfc8259#13," is a
+   string.  A single colon comes after each na",1,"checked by AI assistant (Claude), approved by Parth",9910,9962,9930,9942
+rfcq127,What is the default port for HTTPS?,443,rfc8484#29," HTTPS default port 443 and the ability
+   ",1,"checked by AI assistant (Claude), approved by Parth",23934,23977,23954,23957
+rfcq128,What is the most efficient mechanism for HTTP cache updates?,Conditional GET requests,rfc9110#229,"ion is present.
+
+   Conditional GET requests are the most effici",1,"checked by AI assistant (Claude), approved by Parth",271513,271577,271533,271557
+rfcq129,What must an endpoint send before closing the WebSocket Connection if the connection is established?,a Close frame with an appropriate status code,rfc6455#84,"ndpoint SHOULD send a Close frame with an appropriate status code
+   (Section 7.4) be",1,"checked by AI assistant (Claude), approved by Parth",97831,97916,97851,97896
+rfcq130,What is the DOI for RFC 1950?,10.17487/RFC1950,rfc9110#364,",
+              DOI 10.17487/RFC1950, May 1996,
+        ",0,rejected: reference-list fact repeated across RFCs,444576,444632,444596,444612
+rfcq131,What section number is associated with Equivalence?,6.1,rfc3986#7,". . . . . 38
+       6.1.  Equivalence  . . ",0,rejected: table-of-contents trivia,5129,5172,5149,5152
+rfcq132,"How many authors contributed ideas, feedback, and wording?",dozens,rfc7519#53,", which
+   includes dozens of active and dedic",0,rejected: boilerplate/low-value or weak,57109,57155,57129,57135
+rfcq133,What type of error can an endpoint treat a HEADERS frame causing a stream limit exceedance as?,PROTOCOL_ERROR or REFUSED_STREAM,rfc9113#33,"tion 5.4.2) of type PROTOCOL_ERROR or REFUSED_STREAM.  The choice
+   of ",1,"checked by AI assistant (Claude), approved by Parth",43235,43307,43255,43287
+rfcq134,What HTTP error code should the server return if the requested service is not available?,404 Not Found,rfc6455#44,"error code (such as 404 Not Found) and abort
+        ",1,"checked by AI assistant (Claude), approved by Parth",53439,53492,53459,53472
+rfcq135,What is the title of RFC-1010?,Assigned Numbers,rfc1035#96,"ds, and J. Postel, ""Assigned Numbers"", RFC-1010,
+       ",0,rejected: reference-list fact repeated across RFCs,111896,111952,111916,111932
+rfcq136,What is the Solicited-Node multicast address prefix?,FF02:0:0:0:0:1:FF00::/104,rfc4291#27,"ts to the prefix
+   FF02:0:0:0:0:1:FF00::/104 resulting in a mult",1,"checked by AI assistant (Claude), approved by Parth",32953,33018,32973,32998
+rfcq137,What RFC specifies the current use of the Traffic Class field?,[RFC2474] and [RFC3168],rfc8200#36," is specified in
+   [RFC2474] and [RFC3168].",1,"checked by AI assistant (Claude), approved by Parth",53230,53274,53250,53273
+rfcq138,What is the acronym for Real Time Protocol?,RTP,rfc793#202,"a RST in response.
+
+RTP
+          Real Time",0,rejected: boilerplate/low-value or weak,148481,148524,148501,148504
+rfcq139,What section describes percent-encoding mechanism?,Section 2.1,rfc3986#83,encoding mechanism (Section 2.1) is a frequent sour,1,"checked by AI assistant (Claude), approved by Parth",91363,91414,91383,91394
+rfcq140,What is the preferred syntax for the ARPA Internet given in?,[RFC-822],rfc1035#90,"nternet is given in [RFC-822].
+
+The DNS encodes t",1,"checked by AI assistant (Claude), approved by Parth",102081,102130,102101,102110
+rfcq141,What is the maximum size of the DNS message in bytes?,65535 bytes,rfc8484#25," the DNS message to 65535 bytes.
+
+   Note that the ",1,"checked by AI assistant (Claude), approved by Parth",21130,21181,21150,21161
+rfcq142,What does JWE only support?,authenticated encryption algorithms,rfc7519#45,"supports the use of authenticated encryption algorithms,
+   cryptographic c",1,"checked by AI assistant (Claude), approved by Parth",43095,43170,43115,43150
+rfcq143,What is the typical size of the interface ID field for Global Unicast addresses starting with binary 000?,no such constraint,rfc4291#16,"
+   binary 000 have no such constraint on the size or stru",0,rejected: answer does not fit question,19309,19367,19329,19347
+rfcq144,How many frame types are defined in this version of the protocol?,six,rfc6455#16,he protocol defines six frame types and lea,1,"checked by AI assistant (Claude), approved by Parth",13662,13705,13682,13685
+rfcq145,What parameters SHOULD NOT include sensitive client or resource owner information in plain text?,"""state"" and ""scope"" parameters",rfc6749#94," the clear.
+
+   The ""state"" and ""scope"" parameters SHOULD NOT include ",1,"checked by AI assistant (Claude), approved by Parth",118378,118448,118398,118428
+rfcq146,What is the deprecated format for userinfo?,user:password,rfc3986#40," Use of the format ""user:password"" in the userinfo fi",1,"checked by AI assistant (Claude), approved by Parth",42592,42645,42612,42625
+rfcq147,What are Private Claim Names also called?,Private Names,rfc7519#20,"m Names that
+   are Private Names: names that are not",0,rejected: answer does not fit question,20544,20597,20564,20577
+rfcq148,What is the RFC number for IPv6 specification?,RFC 2460,rfc4291#33,"v6) Specification"", RFC 2460, December 1998.",0,rejected: reference-list fact repeated across RFCs,36364,36408,36384,36392
+rfcq149,What range is the WebSocket version number limited to?,0-255 range,rfc6455#49,"       ; Limited to 0-255 range, with no leading ze",1,"question reworded for clarity; checked by AI assistant (Claude), approved by Parth",60332,60383,60352,60363
+rfcq150,What is the maximum age of the RRset in the example?,250 seconds,rfc8484#21,"has been cached for 250 seconds,
+   the remaining l",0,rejected: deictic: refers to 'the text/example/title',17960,18011,17980,17991
+rfcq151,What is the acronym for cross-site request forgery?,CSRF,rfc9000#259,te request forgery [CSRF] exploits on the We,0,rejected: boilerplate/low-value or weak,345825,345869,345845,345849
+rfcq152,What is the DOI for the paper by Canetti and Krawczyk?,10.1007/3-540-44987-6_28,rfc8446#153,",
+              DOI 10.1007/3-540-44987-6_28, April 2001.
+
+   [C",0,rejected: reference-list fact repeated across RFCs,229179,229243,229199,229223
+rfcq153,What is the second digit used for in SMTP responses?,encodes responses in specific categories,rfc5321#108,   The second digit encodes responses in specific categories:,1,"checked by AI assistant (Claude), approved by Parth",114398,114459,114418,114458
+rfcq154,What is the client connection preface string in hex notation?,0x505249202a20485454502f322e300d0a0d0a534d0d0a0d0a,rfc7540#17," notation is:
+
+     0x505249202a20485454502f322e300d0a0d0a534d0d0a0d0a
+
+   That is, the co",1,"checked by AI assistant (Claude), approved by Parth",23597,23687,23617,23667
+rfcq155,What header fields indicate HTTP authentication is in use?,Authentication-Info and Proxy-Authentication-Info,rfc9110#347," presence of the
+   Authentication-Info and Proxy-Authentication-Info header fields alone",1,"checked by AI assistant (Claude), approved by Parth",422680,422769,422700,422749
+rfcq156,What is the state in FIN-WAIT-1 STATE?,state = FIN-WAIT-1,rfc793#178,"TATE
+
+      Return ""state = FIN-WAIT-1"", and the TCB point",0,rejected: answer does not fit question,123620,123678,123640,123658
+rfcq157,What was HTTP created for?,World Wide Web (WWW),rfc7230#10,was created for the World Wide Web (WWW) architecture and ha,1,"checked by AI assistant (Claude), approved by Parth",14653,14713,14673,14693
+rfcq158,What is the equivalent definition for NumericDate?,Seconds Since the Epoch,rfc7519#11,"OSIX.1] definition ""Seconds Since the Epoch"", in
+      which ea",1,"checked by AI assistant (Claude), approved by Parth",10058,10121,10078,10101
+rfcq159,What RFC discusses the prohibition on labels resolving to CNAMEs?,RFC 2181,rfc5321#196,"d in more detail in RFC 2181, Section 10.3 [38].",1,"checked by AI assistant (Claude), approved by Parth",156875,156923,156895,156903
+rfcq160,What TLS version must HTTP/2 implementations use?,TLS version 1.2 [TLS12] or higher,rfc7540#111," of HTTP/2 MUST use TLS version 1.2 [TLS12] or higher
+   for HTTP/2 over ",1,"checked by AI assistant (Claude), approved by Parth",148058,148131,148078,148111
+rfcq161,What is the RFC number for DNS Privacy Considerations?,RFC 7626,rfc8484#39,"cy Considerations"", RFC 7626,
+              DOI ",0,rejected: reference-list fact repeated across RFCs,37031,37079,37051,37059
+rfcq162,What header field is echoed in the response?,Location header field,rfc7230#120,"echoed in the Location header field of the
+   response.",0,rejected: deictic: refers to 'the text/example/title',156723,156778,156737,156758
+rfcq163,What is the minimum output length from HKDF-Expand in bits?,256 bits,rfc8446#178,"of size at
+   least 256 bits (or as much as need",1,"checked by AI assistant (Claude), approved by Parth",290189,290237,290209,290217
+rfcq164,What registry was updated by IANA?,"""Media Types"" registry",rfc9112#70,"ANA has updated the ""Media Types"" registry at
+   <https://www.",0,rejected: boilerplate/low-value or weak,85403,85465,85423,85445
+rfcq165,What frame can remove the restriction mentioned in the text?,ORIGIN frame,rfc9110#44,"ng an equivalent
+   ORIGIN frame [RFC8336].
+
+   The ",0,rejected: deictic: refers to 'the text/example/title',61708,61760,61728,61740
+rfcq166,What is the binary representation for Top Secret?,01101011 11000101,rfc791#48," Secret
+            01101011 11000101 - Top Secret
+      ",1,"checked by AI assistant (Claude), approved by Parth",31486,31543,31506,31523
+rfcq167,What is the section number for inverse query processing?,6.4.3,rfc1035#3,"       41
+          6.4.3. Inverse query proc",0,rejected: table-of-contents trivia,5707,5752,5727,5732
+rfcq168,What should the gateway set in accordance with an error message return address?,the envelope return path,rfc5321#73," gateway SHOULD set the envelope return path in
+   accordance wi",1,"checked by AI assistant (Claude), approved by Parth",73237,73301,73257,73281
+rfcq169,What is the format of the Request-Line?,Method SP Request-URI SP HTTP-Version CRLF,rfc2616#62,   Request-Line   = Method SP Request-URI SP HTTP-Version CRLF,1,"checked by AI assistant (Claude), approved by Parth",85266,85328,85286,85328
+rfcq170,What is the state called when the WebSocket Closing Handshake is started?,CLOSING state,rfc6455#80,onnection is in the CLOSING state.,1,"checked by AI assistant (Claude), approved by Parth",94157,94191,94177,94190
+rfcq171,What protocol is HTTP/2 more friendly to?,the network,rfc7540#6,"is more friendly to the network because fewer
+   TC",0,rejected: answer does not fit question,10708,10759,10728,10739
+rfcq172,What term is used for interconnected systems of packet-switched computer communication networks?,catenet,rfc791#12,"as
+  been called a ""catenet"" [1].  The internet",1,"checked by AI assistant (Claude), approved by Parth",3151,3198,3171,3178
+rfcq173,What should a resolver not cache when a response is truncated?,a possibly partial set of RRs,rfc1035#89,"ould
+     not cache a possibly partial set of RRs.
+
+   - Cached data ",1,"checked by AI assistant (Claude), approved by Parth",100023,100092,100043,100072
+rfcq174,What is the email address of Dan Simon?,dansimon@microsoft.com,rfc8446#191," Microsoft, Inc.
+   dansimon@microsoft.com
+
+   Brian Smith
+   ",0,rejected: boilerplate/low-value or weak,311238,311300,311258,311280
+rfcq175,What header field allows discovery of accepted content types in PATCH requests?,Accept-Patch,rfc9110#212,"C5789] defines the ""Accept-Patch""
+   response header",1,"checked by AI assistant (Claude), approved by Parth",252430,252482,252450,252462
+rfcq176,What type indicates the end of the option list?,Type=0,rfc791#45,"--------+
+          Type=0
+
+        This optio",1,"checked by AI assistant (Claude), approved by Parth",29702,29748,29722,29728
+rfcq177,What status code indicates a protocol switch?,101 Switching Protocols,rfc7230#97,"est:
+
+     HTTP/1.1 101 Switching Protocols
+     Connection: up",1,"checked by AI assistant (Claude), approved by Parth",135361,135424,135381,135404
+rfcq178,What section details automatic retry of streams?,Section 8.1.4,rfc7540#48,ically retried (see Section 8.1.4 for details).,0,rejected: ambiguous across RFCs,64729,64776,64749,64762
+rfcq179,What is the maximum number of header field lines?,zero or more,rfc9112#9,"ormat
+   [RFC5322]: zero or more header field lines ",0,rejected: deictic: refers to 'the text/example/title',8939,8991,8959,8971
+rfcq180,What must an HTTP server disallow in the Request-URI?,any such construct,rfc2616#284,erver MUST disallow any such construct in the Request-URI ,0,rejected: boilerplate/low-value or weak,350055,350113,350075,350093

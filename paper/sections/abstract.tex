@@ -1,7 +1,6 @@
 \begin{abstract}
 Retrieval-augmented generation (RAG) can only be as good as the passages it
-retrieves. Dense retrievers handle paraphrase but miss exact identifiers;
-BM25 finds identifiers but not paraphrases. We build a local hybrid RAG
+retrieves. We build a local hybrid RAG
 pipeline (structural chunking, BM25 and HNSW dense indexes, weighted reciprocal
 rank fusion, cross-encoder reranking and a 7B generator) and test whether the
 fusion weight can be predicted per query from cheap features. Our
@@ -9,11 +8,13 @@ Query-Adaptive Fusion (QAF) uses a ridge regression over 12 query and score
 statistics, adds \QAFlatencyMs{}~ms per query and needs no LLM call. We
 evaluate on SciFact, FiQA, HotpotQA and a new set of 101 verified questions
 over 20 IETF RFCs, with BGE-small and EmbeddingGemma~2. Fixed-weight fusion
-beats the best single retriever when the two are comparably strong, as on
-FiQA, but not when one dominates: on the RFC set BM25 alone is stronger. QAF
-does not reliably beat a well-chosen fixed weight (\QAFgainRFC{} nDCG@10 on
-RFC, confidence interval including zero; no reliable gain elsewhere), although a
-per-query oracle shows \OracleHeadroomRFC{} of headroom there. The features
+beats the best single retriever on FiQA with both encoders and on the other
+collections with BGE-small, but not when the dense model is much stronger
+(EmbeddingGemma~2 on SciFact and HotpotQA) or when the weight was tuned on
+other collections (RFC, where BM25 alone is stronger). QAF does not reliably
+beat a dev-tuned fixed weight (\QAFgainRFC{} nDCG@10 on RFC, confidence
+interval including zero; no reliable gain elsewhere), although a per-query
+oracle shows \OracleHeadroomRFC{} of headroom there before reranking. The features
 explain little of the oracle weight. Cross-encoder reranking gives the largest
 gains on HotpotQA and RFC but lowers scores on strong first stages and
 accounts for almost all of the latency.

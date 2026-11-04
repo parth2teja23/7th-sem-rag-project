@@ -32,7 +32,7 @@ method, Query-Adaptive Fusion (QAF), feeds 12 such features to a ridge
 regression that outputs the fusion weight. It is trained once on development
 queries, needs no LLM at query time, and its coefficients can be read off
 directly. In our experiments the answer is mostly no. QAF is cheap and
-readable, but it does not reliably beat a well-chosen fixed weight, and we
+readable, but it does not reliably beat a dev-tuned fixed weight, and we
 report this result together with an analysis of why.
 
 We build a complete pipeline, from structural
@@ -53,12 +53,12 @@ are:
   spans.
   \item \textbf{A controlled comparison} of sparse, dense, fixed-weight hybrid
   and QAF retrieval, with and without reranking, on four collections and two
-  encoders, with paired bootstrap tests. It shows that fusion helps when the
-  two retrievers are comparably strong, that BM25 is the strongest single
+  encoders, with paired bootstrap tests. It shows that fusion helps unless the
+  dense model is much stronger or the weight was tuned elsewhere, that BM25 is the strongest single
   retriever on identifier-heavy RFC text, and that reranking can hurt a
   strong first stage. It includes an ablation and EmbeddingGemma~2 at four
   embedding sizes.
-  \item \textbf{An end-to-end account} of per-stage latency and answer
+  \item \textbf{An end-to-end account} of latency (reranking, QAF and total) and answer
   quality (exact match, F1, citation accuracy) on a laptop with no paid API,
   showing that better retrieval does not always give better answers.
 \end{itemize}

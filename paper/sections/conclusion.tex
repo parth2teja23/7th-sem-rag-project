@@ -1,12 +1,11 @@
 \section{Conclusion}
 \label{sec:conclusion}
 We built a hybrid RAG pipeline that runs entirely on a laptop and asked
-whether the dense/sparse balance should be set per query. Fusion helps when
-the two retrievers are comparably strong; on identifier-heavy RFC text BM25 is
-hard to beat. Our LLM-free QAF model is cheap and readable but does not
+whether the dense/sparse balance should be set per query. Fixed-weight fusion helps
+unless the dense model is much stronger or the weight was tuned on other
+collections; on identifier-heavy RFC text, BM25 beat the dev-tuned hybrid. Our LLM-free QAF model is cheap and readable but does not
 reliably beat a fixed weight, behaving mostly like a shrunk constant, although
 the oracle headroom is real. Answers from a local 7B generator do not simply
 track retrieval quality: hybrids gave the best answers on RFC, dense retrieval
-on HotpotQA. Next we plan to compare against LLM-based weighting such as DAT,
-add post-retrieval features and in-domain supervision for the weight, and
-grow the human-checked RFC question set.
+on HotpotQA. Next we plan to compare against LLM-based weighting such as DAT and to
+add post-retrieval features to the weight predictor.

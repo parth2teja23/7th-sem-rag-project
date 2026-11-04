@@ -223,8 +223,9 @@ jointly as in monoBERT~\cite{nogueira2019passage}; the top five passages of the
 new order form the context. The interactive pipeline can also drop near
 duplicates (Jaccard similarity of word 5-gram sets $\ge 0.9$) and apply a
 metadata filter before reranking; both are disabled in the reported
-experiments. Optional query expansion, used only in the ablation, asks the
-local LLM for at most 20 keywords or synonyms and appends them to the query.
+experiments. Optional query expansion, available in the demo but not evaluated
+in this paper, asks the local LLM for at most 20 keywords or synonyms and
+appends them to the query.
 
 Answers come from Qwen2.5-7B-Instruct~\cite{qwen2024qwen25} served by Ollama
 at temperature 0 with a fixed seed. The prompt numbers the passages

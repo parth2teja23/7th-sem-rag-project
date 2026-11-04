@@ -17,18 +17,18 @@ evaluation are sound.
 \subsection{Hybrid fusion against single retrievers}
 Fixed-weight fusion is significantly better than the stronger single
 retriever on FiQA with both encoders, and on SciFact and HotpotQA with
-BGE-small (second block of Table~\ref{tab:significance}). With EmbeddingGemma~2
-on SciFact and HotpotQA it brings nothing: the dense run alone is already
-strong (\BestNDCGSciFact{} on SciFact). On RFC, BM25 is the best single
-retriever, well ahead of either dense encoder, and Hybrid-fixed without
-reranking trails it by \HybridGainOverBMRFC{} while improving on dense by
-\HybridGainOverDenseRFC. Fig.~\ref{fig:alpha_sweep} shows why: SciFact and
+BGE-small (second block of Table~\ref{tab:significance}). FiQA shows that the
+two sides need not be equally strong: BM25 is far behind dense there, yet
+fusion still helps. With EmbeddingGemma~2, whose dense run is much stronger
+(\BestNDCGSciFact{} on SciFact), fusion significantly lowers SciFact and is
+level on HotpotQA (same block). On RFC, BM25 is the best single retriever,
+well ahead of either dense encoder; Hybrid-fixed without reranking differs
+from it by \HybridGainOverBMRFC{} and from dense by \HybridGainOverDenseRFC. Fig.~\ref{fig:alpha_sweep} shows why: SciFact and
 HotpotQA improve toward the dense end, FiQA peaks in the interior, and RFC
 peaks near the sparse end, so $\alpha^{*}=\AlphaStarGemma$, chosen on the SciFact
-and FiQA dev queries, sits on the wrong side of the curve for RFC. Fusion
-helps most when the two retrievers are comparably strong and fail on
-different queries; when one of them dominates, a fixed weight tuned elsewhere
-tends to dilute it.
+and FiQA dev queries, sits on the wrong side of the curve for RFC. At low
+dense weights the RFC curve rises above BM25 alone, so the problem there is
+the transferred weight, not fusion itself.
 
 \inputfigure{alpha_sweep}{nDCG@10 of fixed-weight fusion as a function of the
 dense weight $\alpha$ on each test collection (EmbeddingGemma~2, no
@@ -118,8 +118,9 @@ SciFact and RFC, with RFC losing more, and the loss grows at 128
 flat, so on these two collections a 256-dimensional index costs nothing
 measurable in the full pipeline.
 The index file shrinks less than the dimension does, because the HNSW graph,
-which does not depend on the dimension, is part of it. The query times in the
-table barely change with the dimension.
+which does not depend on the dimension, is part of it. Dense query latency
+stays in the tens of milliseconds at every size (Table~\ref{tab:matryoshka})
+and is dominated by query encoding.
 
 \inputtable{matryoshka}
 

@@ -1,0 +1,15 @@
+# Separate environment for the RAGAS pass only. ragas does not import in the main venv
+# because of a langchain_community version clash.
+#   python3 -m venv .venv-ragas
+#   .venv-ragas/bin/pip install -r requirements-ragas.txt
+#   export RAGAS_PYTHON=$PWD/.venv-ragas/bin/python
+# The scorer (src/hrag/eval/ragas_eval.py) is run as a subprocess of $RAGAS_PYTHON; it only
+# needs the packages below (hrag itself is reached through PYTHONPATH=src).
+ragas==0.3.9
+langchain==0.3.30
+langchain-community==0.3.31
+langchain-core==0.3.86
+langchain-ollama==0.3.10
+langchain-openai==0.3.35
+langchain-text-splitters==0.3.11
+datasets==5.1.0

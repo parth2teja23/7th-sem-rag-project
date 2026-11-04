@@ -1,63 +1,43 @@
 \section{Related Work}
 \label{sec:related}
 
-\subsection{Sparse and dense retrieval}
-BM25~\cite{robertson2009bm25} remains a strong baseline; on the BEIR
-zero-shot benchmark~\cite{thakur2021beir} it beats many neural retrievers
-outside their training domain. Its weakness is vocabulary mismatch, which dense
-retrievers address by encoding queries and passages into one vector space. DPR~\cite{karpukhin2020dpr} trained a BERT bi-encoder on
-question--passage pairs and clearly outperformed BM25 on open-domain QA, and
-Sentence-BERT~\cite{reimers2019sbert} made such bi-encoders easy to train and
-use. ColBERT~\cite{khattab2020colbert} keeps one vector per token and scores
-by late interaction, which recovers some exact-match behaviour at the price of
-a much larger index. Among general-purpose embedders, the BGE models from the
-C-Pack release~\cite{xiao2024cpack} are small and strong on English retrieval,
-and EmbeddingGemma~\cite{vera2025embeddinggemma}
-and its multimodal successor EmbeddingGemma~2~\cite{vera2026embeddinggemma2}
-target on-device use. Both Gemma models are trained with Matryoshka
-representation learning~\cite{kusupati2022matryoshka}, so the embedding can be
-truncated to trade accuracy for memory. We use one encoder from each family and measure that
-trade-off on our own collections.
+\textit{Sparse and dense retrieval.} BM25~\cite{robertson2009bm25} remains a
+strong baseline; on BEIR~\cite{thakur2021beir} it beats many neural
+retrievers outside their training domain. Dense retrievers address its
+vocabulary mismatch: DPR~\cite{karpukhin2020dpr} trained a BERT bi-encoder
+that outperformed BM25 on open-domain QA, Sentence-BERT~\cite{reimers2019sbert}
+made such encoders easy to train, and ColBERT~\cite{khattab2020colbert} keeps
+one vector per token to recover some exact matching at the cost of a larger
+index. Among general-purpose embedders, BGE~\cite{xiao2024cpack} is small and
+strong on English, while EmbeddingGemma~\cite{vera2025embeddinggemma} and its
+multimodal successor EmbeddingGemma~2~\cite{vera2026embeddinggemma2} target
+on-device use and are trained with Matryoshka representation
+learning~\cite{kusupati2022matryoshka}, so their embeddings can be truncated.
 
-\subsection{Hybrid retrieval and fusion}
-Because the two families fail on different queries, combining them is an old
-idea. Reciprocal Rank Fusion~\cite{cormack2009rrf} merges ranked lists using
-only ranks and needs no score calibration. Kuzi et al.~\cite{kuzi2020hybrid} showed that lexical and semantic
-matching find different relevant documents, so running both raises recall, and Pyserini~\cite{lin2021pyserini} made sparse, dense and hybrid runs
-reproducible with one toolkit. Bruch et al.~\cite{bruch2023fusion} compared
-fusion functions in detail and found that a tuned convex combination of
-normalised scores can beat RRF, and that RRF is sensitive to its parameters.
-All of these use one setting for every query.
+\textit{Hybrid retrieval and fusion.} Reciprocal Rank
+Fusion~\cite{cormack2009rrf} merges ranked lists using ranks alone.
+Kuzi et al.~\cite{kuzi2020hybrid} showed that lexical and semantic matching
+find different relevant documents, so running both raises recall, and
+Pyserini~\cite{lin2021pyserini} made sparse, dense and hybrid runs
+reproducible. Bruch et al.~\cite{bruch2023fusion} found that a tuned convex
+combination of normalised scores can beat RRF and that RRF is sensitive to
+its parameters. All of these use one setting for every query. DAT~\cite{hsu2025dat},
+the closest work to ours, asks an LLM to rate the top-1 dense and sparse
+results of each query and turns the ratings into the fusion weight. It
+reports gains over fixed weighting, at the price of LLM calls on the
+retrieval path. QAF targets the same decision with a linear model over cheap
+statistics and no model call at query time.
 
-Per-query weighting is the closest prior work to ours. DAT~\cite{hsu2025dat}
-asks an LLM to rate the top-1 result of the dense and the sparse retriever for
-each query and turns the two ratings into the fusion weight. It reports gains
-over fixed weighting, but every query costs extra LLM calls, which adds
-latency and makes the system depend on a generator being available at
-retrieval time. QAF targets the same decision with a different budget: a
-linear model over cheap query and score statistics, trained once on dev
-labels, with no model call at query time and coefficients that can be read
-directly.
-
-\subsection{Reranking and retrieval-augmented generation}
-A cross-encoder runs a full transformer pass over every query--passage pair,
-so its cost grows with the number of candidates scored, whereas a bi-encoder
-embeds passages once, offline. Nogueira and Cho~\cite{nogueira2019passage}
-therefore applied BERT only to a short candidate list from a first-stage
-retriever, the pattern we follow. On the generation side,
-DrQA~\cite{chen2017drqa} paired a TF-IDF retriever with a neural reader, and
-RAG~\cite{lewis2020rag} trained a dense retriever and a generator together.
-Gao et al.~\cite{gao2023ragsurvey} survey the pipeline variants that
-followed, and Ji et al.~\cite{ji2023hallucination} review the unsupported
-content that grounding is meant to reduce. Ma et al.~\cite{ma2023rewriting} rewrite the query before
-retrieval; our optional expansion step is a simpler, untrained form of the
-same idea. For evaluation without reference answers, RAGAS~\cite{es2024ragas}
-uses an LLM judge to score faithfulness and relevance.
-
-\subsection{Vectorless retrieval}
-PageIndex~\cite{vectify2025pageindex} skips both indexes: an LLM builds a
-table-of-contents tree for each long document and then reasons down the tree to
-find the relevant section. This suits long, well-structured documents such as
-RFCs, but every query costs several LLM calls. We cite it as the reasoning-based
-extreme of the design space; our pipeline sits at the other end, where each
-query costs two index look-ups, a linear model and one reranker pass.
+\textit{Reranking and RAG.} A cross-encoder runs a full transformer pass per
+query--passage pair, so its cost grows with the number of candidates, whereas
+a bi-encoder embeds passages once, offline; Nogueira and
+Cho~\cite{nogueira2019passage} therefore applied BERT only to a short
+first-stage list, the pattern we follow. DrQA~\cite{chen2017drqa} paired a
+TF-IDF retriever with a neural reader, RAG~\cite{lewis2020rag} trained a
+dense retriever and generator together, and Gao et al.~\cite{gao2023ragsurvey}
+survey later variants. Ma et al.~\cite{ma2023rewriting} rewrite queries before
+retrieval; our optional expansion is a simpler, untrained form of that idea.
+RAGAS~\cite{es2024ragas} scores faithfulness with an LLM judge.
+PageIndex~\cite{vectify2025pageindex} drops both indexes and lets an LLM
+navigate a table-of-contents tree of each document, which suits structured
+texts such as RFCs but costs several LLM calls per query.

@@ -6,11 +6,10 @@ time. They have not seen documents written after their cutoff or anything
 kept inside an organisation, and when a question falls outside what they
 learned they tend to produce a confident wrong
 answer~\cite{ji2023hallucination}. Retrieval-augmented generation
-(RAG)~\cite{lewis2020rag,gao2023ragsurvey} addresses this by fetching relevant
-passages at query time and asking the model to answer from them. The idea is
-simple, and it moves the burden onto the retriever. If the passage that holds
-the answer is not in the context, the generator cannot recover it, however
-capable it is.
+(RAG)~\cite{lewis2020rag,gao2023ragsurvey} fetches relevant passages at query
+time and asks the model to answer from them, which moves the burden onto the
+retriever: if the passage that holds the answer is not retrieved, the
+generator cannot recover it.
 
 The two common retriever families fail in different places. Dense
 retrievers~\cite{karpukhin2020dpr} match meaning and handle paraphrase well,
@@ -20,11 +19,9 @@ be answered from one line of one specification, and to an embedding model
 that line may look much like dozens of other passages on the same topic. BM25~\cite{robertson2009bm25} finds such
 strings easily, but it fails when the question and the source use different
 words. Hybrid retrieval runs both and merges the results, usually with
-Reciprocal Rank Fusion (RRF)~\cite{cormack2009rrf}. In most systems the
-balance between the two sides is one constant, tuned once and applied to every
-query. That constant is a compromise between queries that need exact matching
-and queries that need semantic matching, and a technical corpus contains both
-kinds.
+Reciprocal Rank Fusion (RRF)~\cite{cormack2009rrf}, with one constant
+balance between the two sides. That constant is a compromise between queries
+that need exact matching and queries that need semantic matching.
 
 Choosing the balance per query is not a new idea. DAT~\cite{hsu2025dat} asks
 an LLM to judge the top result of each retriever and sets the weight from
@@ -34,7 +31,9 @@ candidate lists are enough. Our
 method, Query-Adaptive Fusion (QAF), feeds 12 such features to a ridge
 regression that outputs the fusion weight. It is trained once on development
 queries, needs no LLM at query time, and its coefficients can be read off
-directly.
+directly. In our experiments the answer is mostly no. QAF is cheap and
+readable, but it does not reliably beat a well-chosen fixed weight, and we
+report this result together with an analysis of why.
 
 We build a complete pipeline, from structural
 chunking through BM25 and dense indexing, weighted RRF and cross-encoder
@@ -45,17 +44,23 @@ are:
 \begin{itemize}
   \item \textbf{QAF}, an LLM-free, interpretable predictor of the per-query
   dense/sparse fusion weight, trained on a plateau-centre regression
-  target derived from per-query weight sweeps.
+  target derived from per-query weight sweeps, together with an analysis of
+  why it does not reliably beat a tuned fixed weight even though per-query
+  headroom exists.
   \item \textbf{An identifier-heavy RFC test collection} of 2{,}973 chunks and
   101 questions, generated with a local LLM, filtered automatically and
   checked by all three authors, with relevance labels derived from answer
   spans.
-  % NOTE(results): revise if not run (LODO, Matryoshka sizes).
+  % NOTE(results, part 2): add "an ablation" / "EmbeddingGemma 2 at four
+  % embedding sizes" back to this bullet only if Task 14 produces them.
   \item \textbf{A controlled comparison} of sparse, dense, fixed-weight hybrid
   and QAF retrieval, with and without reranking, on four collections and two
-  encoders, including a per-query oracle weight, leave-one-dataset-out transfer,
-  an ablation, and EmbeddingGemma~2 at four embedding sizes.
-  % NOTE(results): revise if not run (RAGAS faithfulness).
+  encoders, with paired bootstrap tests. It shows that fusion helps when the
+  two retrievers are comparably strong, that BM25 is the strongest single
+  retriever on identifier-heavy RFC text, and that reranking can hurt a
+  strong first stage.
+  % NOTE(results, part 2): keep "answer quality ... judged faithfulness" only if
+  % Task 15 (generation, RAGAS) produces results.
   \item \textbf{An end-to-end account of cost}: per-stage latency and answer
   quality (exact match, F1 and judged faithfulness) on commodity hardware
   with no paid API.

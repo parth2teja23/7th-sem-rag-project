@@ -1,8 +1,15 @@
 \section{Conclusion}
 \label{sec:conclusion}
-% TODO (after results): one paragraph restating what we built and the main
-% finding on QAF vs fixed-weight fusion (macros only); one paragraph of future
-% work: DAT-style LLM weighting as a direct comparison if not run, learning the
-% weight jointly with reranking depth, PageIndex-style navigation on the RFC
-% corpus, a larger human-checked question set.
-\textbf{[Conclusion pending results.]}
+We built a hybrid RAG pipeline that runs entirely on a laptop and used it to
+ask whether the balance between dense and sparse retrieval should be set per
+query. Fusion helps when the two retrievers are comparably strong and fail on
+different queries; on identifier-heavy RFC text BM25 is hard to beat, and a
+weight tuned on other collections hurts. Our LLM-free QAF model is cheap and
+easy to inspect, but it does not reliably beat a fixed weight: its features
+explain little of the oracle weight, and it behaves mostly like a shrunk
+constant. The oracle headroom is real, so the problem is worth more work.
+% NOTE(results, part 2): one sentence on answer quality once Task 15 finishes.
+
+Next, we plan to compare against LLM-based weighting such as DAT, to add
+post-retrieval features and some in-domain supervision for the weight, and to
+grow the human-checked RFC question set.

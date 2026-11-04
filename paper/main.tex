@@ -32,7 +32,7 @@
     \begin{table}[t]\centering\caption{[\detokenize{#1} table pending]}\label{tab:#1}\fbox{\parbox{0.9\columnwidth}{\centering\small Table \texttt{tables/\detokenize{#1}.tex} not generated yet.}}\end{table}}}
 \newcommand{\inputfigure}[2]{%
   \IfFileExists{figures/#1.pdf}{%
-    \begin{figure}[t]\centering\includegraphics[width=\columnwidth]{figures/#1}\caption{#2}\label{fig:#1}\end{figure}}{%
+    \begin{figure}[t]\centering\includegraphics[width=0.72\columnwidth]{figures/#1}\caption{#2}\label{fig:#1}\end{figure}}{%
     \begin{figure}[t]\centering\fbox{\parbox{0.9\columnwidth}{\centering\small Figure \texttt{figures/\detokenize{#1}.pdf} not generated yet.}}\caption{#2}\label{fig:#1}\end{figure}}}
 
 \begin{document}

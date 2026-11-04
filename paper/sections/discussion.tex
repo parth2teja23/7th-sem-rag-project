@@ -1,23 +1,35 @@
 \section{Discussion}
 \label{sec:discussion}
 
-\subsection{When does adaptive weighting pay off?}
-% TODO (after results): relate QAF gains to query type (identifier share),
-% to how far apart the dense and sparse curves in the alpha sweep are, and to
-% the oracle headroom. Discuss transfer to the unseen RFC and HotpotQA sets.
+\subsection{Why per-query weighting is hard to learn}
+We expected identifier-heavy queries to want a low dense weight and cheap
+features to detect them. The first half holds at the collection level, since
+the RFC sweep favours the sparse side; the second does not, as the identifier
+share carries almost no signal. We see three reasons. Many training queries
+have the same nDCG@10 at every weight, presumably because both retrievers
+already rank a relevant passage first or neither finds one, so their targets
+are uninformative. The oracle is defined on a coarse grid of a rank-based
+fusion, where small rank changes can move the longest plateau, so the targets
+are likely noisy. And the model was trained on SciFact and FiQA, where the
+dense side is usually right, never on text like RFC. A predictor with some
+in-domain labels, or with post-retrieval evidence as in DAT~\cite{hsu2025dat},
+may close more of the headroom; pre-retrieval lexical statistics alone did not.
 
 \subsection{Cost and deployment guidance}
-% TODO (after results): practical advice the approved abstract promised:
-% which alpha to use without QAF, whether reranking is worth its latency on a
-% laptop, which encoder and Matryoshka size to pick under a memory budget.
+Three practical points follow. Sweep $\alpha$ on a small labelled sample of
+the target collection before fixing it, since a weight chosen on other domains
+landed on the wrong side of the curve for RFC. Keep BM25 for identifier-heavy
+text even with a strong dense encoder. Measure the reranker before adopting
+it: on our laptop it multiplies latency many times over and lowered nDCG@10
+where the first stage was already strong. QAF costs well under a millisecond,
+but on our evidence it does not replace tuning.
+% NOTE(results, part 2): add encoder / Matryoshka-size advice once Task 14 runs.
 
 \subsection{Limitations}
 Several choices limit how far our results generalise. All experiments run on
-subsets: FiQA uses 20{,}000 of its 57{,}638 passages, HotpotQA 500 questions
-with only their own distractor paragraphs as the corpus, and our RFC set has
-101 questions. Absolute scores on the subsets are not comparable with
-full-benchmark numbers, and on the RFC set a handful of questions can move
-the mean noticeably. The RFC questions were drafted by the same model
+subsets (FiQA 20{,}000 passages, HotpotQA 500 questions with their own
+paragraphs as the corpus, RFC 101 questions), so absolute scores are not
+comparable with full-benchmark numbers (Section~\ref{sec:results}). The RFC questions were drafted by the same model
 (Qwen2.5-7B) that later generates answers, filtered automatically, screened with AI
 assistance and then verified by all three authors. Every row was checked, but
 the set still favours questions that a 7B model finds easy to write, namely
@@ -27,18 +39,11 @@ retrieving a near-duplicate passage from a superseded RFC counts as a miss.
 Questions whose answer was ambiguous across RFCs were removed during
 verification, but this scoring effect remains for the rest.
 
-QAF is trained on only two development sets. Its features use the target
-corpus's BM25 IDF table and the dense encoder's tokenizer vocabulary (which is
-fixed by the encoder, not by the corpus), so the model is cheap to apply
-anywhere, but the coefficients were fitted on scientific and
-financial queries and may not suit other domains. % NOTE: revise the next sentence if the DAT-style baseline (Task 16) is run.
-We compare QAF with a fixed
-weight and with the oracle but not with a learned or LLM-based weighting
+QAF was fitted on scientific and financial dev queries only. % NOTE: revise the next sentence if the DAT-style baseline (Task 16) is run.
+We compare it with a fixed weight and the oracle but not with an LLM-based
 scheme such as DAT, so we cannot say how much accuracy the LLM-free design
-gives up. Generation and faithfulness are judged by a local 7B model, the
-same model that writes the answers. RAGAS scores from such a judge are noisier
-and possibly more lenient than those from a stronger model or from human
-raters, so we treat them as a relative signal between configurations. Finally,
-all latencies were measured on one laptop with an MPS backend; the ordering of
-stages by cost should carry over to other hardware, but the absolute numbers
-will not.
+gives up. Answers and their faithfulness are judged by the same local 7B model,
+so we treat RAGAS scores only as a relative signal. Latencies come from one
+laptop and will differ elsewhere in absolute terms. We also cannot rule out
+that EmbeddingGemma~2 saw SciFact or HotpotQA text during training, which would
+flatter its dense scores there.

@@ -9,18 +9,19 @@ corpus full of protocol identifiers.
 
 \begin{table}[t]
 \centering
-\caption{Test collections. Dev queries are used only to fit QAF and to choose
-the fixed weight $\alpha^{*}$.}
+\caption{Test collections. Dev-query counts and length statistics are in
+Table~\ref{tab:dataset_stats}; dev queries are used only to fit QAF and to
+choose the fixed weight $\alpha^{*}$.}
 \label{tab:data}
 \small
-\begin{tabular}{@{}lrrrl@{}}
+\begin{tabular}{@{}lrrl@{}}
 \toprule
-Collection & Passages & Test q. & Dev q. & Used for \\
+Collection & Passages & Test q. & Used for \\
 \midrule
-SciFact & 5{,}183 & 300 & 162 & retrieval \\
-FiQA (subset) & 20{,}000 & 648 & 500 & retrieval \\
-HotpotQA (distr.) & 4{,}955 & 500 & -- & retrieval, QA \\
-RFC (ours) & 2{,}973 & 101 & -- & retrieval, QA \\
+SciFact & 5{,}183 & 300 & retrieval \\
+FiQA (subset) & 20{,}000 & 648 & retrieval \\
+HotpotQA (distr.) & 4{,}955 & 500 & retrieval, QA \\
+RFC (ours) & 2{,}973 & 101 & retrieval, QA \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -46,15 +47,13 @@ RFCs, from IP and TCP (RFC~791, 793) through DNS, HTTP/1.1, URI syntax, IPv6,
 SMTP, WebSocket, OAuth~2.0, JWT, JSON and TLS~1.3 to QUIC and the 2022 HTTP
 documents (RFC~9110, 9112, 9113). After removing page headers and footers, the
 chunker of Section~\ref{sec:chunking} yields 2{,}973 chunks of about 180 words
-on average. Qwen2.5-7B drafted one question per sampled chunk that contained at
-least two identifier-like tokens, with an answer of at most eight words copied
-verbatim from the chunk. Automatic filters rejected malformed or truncated
-answers, questions pointing at the text itself (``this document''), duplicate
-questions or answers, and answers occurring more than once in their chunk or
-more than three times in the parent RFC; we also capped each RFC at 12
-questions and each section at two. The 180 drafts that passed went through an
-AI-assisted screening pass, after which all three authors checked every row
-against the RFC text and kept 101. For example, one question asks for the
+on average. Qwen2.5-7B drafted one question per sampled chunk with at least
+two identifier-like tokens, whose answer (at most eight words) had to be
+copied verbatim from the chunk. Automatic filters rejected malformed answers,
+questions pointing at the text itself (``this document''), duplicates, and
+answers occurring more than once in their chunk or more than three times in
+the parent RFC. All three authors checked the 180 surviving drafts against the
+RFC text after an AI-assisted screening pass, and kept 101. For example, one question asks for the
 length of the interface identifier in IPv6 unicast addresses (``64 bits'').
 A chunk is relevant if its character span overlaps the answer span in the
 source, which covers answers that fall inside an overlap region.
@@ -98,18 +97,18 @@ and report QAF's gap to it. $\alpha^{*}$ is the grid
 value with the best mean nDCG@10 over the pooled SciFact and FiQA dev queries
 (ties go to the value nearest 0.5) and is applied unchanged to all test sets
 ($\alpha^{*}=\AlphaStarBge$ for BGE, $\AlphaStarGemma$ for EmbeddingGemma~2).
-We also sweep the fixed $\alpha$ over the grid on every test set, and test
-transfer by fitting QAF on one dev set and evaluating on the other dataset
-(leave-one-dataset-out).
-% NOTE(results): revise if not run (ablation).
+We also sweep the fixed $\alpha$ over the grid on every test set.
+% Leave-one-dataset-out QAF runs exist (results/qaf/lodo_*.json) but are not
+% reported: make_paper_assets emits no table for them.
+% NOTE(results, part 2): revise if not run (ablation).
 The ablation removes one component at a time from the
 full system: structural chunking (RFC only), query expansion, QAF (replaced by
 $\alpha^{*}$) and the reranker.
-% NOTE(results): revise if not run (Matryoshka).
+% NOTE(results, part 2): revise if not run (Matryoshka).
 For EmbeddingGemma~2 we repeat Dense and QAF+RR at 512, 256 and 128
 dimensions; at each size QAF is retrained on the same pooled dev queries and
 $\alpha^{*}$ is re-selected.
-% NOTE(results): revise if not run (generation).
+% NOTE(results, part 2): revise if not run (generation).
 Generation is evaluated on HotpotQA and
 RFC for BM25, Dense (stronger encoder), Hybrid-fixed+RR and QAF+RR.
 
@@ -125,7 +124,7 @@ returned passages scores zero rather than being dropped. Answers are scored by
 SQuAD-style~\cite{rajpurkar2016squad} exact match (EM) and token F1 after
 lowercasing and removing punctuation and articles, and we record whether any
 cited passage is relevant.
-% NOTE(results): revise if not run (RAGAS).
+% NOTE(results, part 2): revise if not run (RAGAS).
 Faithfulness to the retrieved context is judged with
 RAGAS~\cite{es2024ragas} on \RagasN{} answers, with the local Qwen2.5-7B as
 judge. Every gain is reported as a mean per-query difference in nDCG@10 with a 95\%
@@ -143,8 +142,6 @@ code uses Python~3.12, sentence-transformers, FAISS, bm25s and scikit-learn.
 Encoding dominates offline cost: EmbeddingGemma~2 encodes about
 \GemmaDocsPerSec{} passages per second and BGE-small \BGEDocsPerSec{}, so
 encoding the FiQA subset with the larger model takes about
-\FiQAEncodeMinGemma{} minutes. Each query's two top-100 lists are computed
-once and cached, all fusion variants are derived from them, and cross-encoder
-scores are cached per query--passage pair; a test confirms that this path gives
-the same rankings as the end-to-end pipeline. Latency is recorded per stage as
-mean and 95th percentile. All sampling uses seed 42.
+\FiQAEncodeMinGemma{} minutes. All fusion variants are derived from cached
+top-100 lists, which a test confirms match the end-to-end pipeline. All
+sampling uses seed 42.

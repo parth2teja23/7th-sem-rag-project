@@ -83,7 +83,7 @@ def main():
         mode = st.radio("Alpha mode", modes)
         if be.qaf is None:
             st.caption(f"No trained QAF model for {encoder}.")
-        alpha = st.slider("alpha (dense weight)", 0.0, 1.0, 0.5, 0.05,
+        alpha = st.slider("alpha (dense weight)", 0.0, 1.0, 0.9, 0.05,
                           disabled=(mode != "Fixed alpha"))
         rerank = st.checkbox("Rerank", value=True)
         expand = st.checkbox("Query expansion (LLM)", value=False)

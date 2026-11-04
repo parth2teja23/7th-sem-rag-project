@@ -7,9 +7,10 @@ BATCH ?= 16
 .PHONY: setup test indexes experiments-a experiments-b generation assets paper demo
 
 setup:
-	python3 -m venv .venv
+	python3.12 -m venv .venv
 	$(PY) -m pip install --upgrade pip
-	$(PY) -m pip install -e ".[dev]"
+	$(PY) -m pip install -r requirements.lock
+	$(PY) -m pip install --no-deps -e ".[dev]"
 
 test:
 	$(PY) -m pytest -q
@@ -32,7 +33,7 @@ experiments-b:
 # Tier B: EM / F1 generation (Ollama), then RAGAS (needs RAGAS_PYTHON, see README).
 generation:
 	$(PY) experiments/run_generation.py
-	$(PY) experiments/run_generation.py --ragas
+	$(PY) experiments/run_generation.py --ragas --dataset hotpot --configs dense qaf+rr
 
 assets:
 	$(PY) experiments/make_paper_assets.py --results results/ --out paper/ --dataset-stats

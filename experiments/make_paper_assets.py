@@ -321,7 +321,7 @@ def significance_table(R: dict, head: tuple | None = None) -> str | None:
     header = ["Dataset & $\\Delta$nDCG@10 & 95\\% CI & $p$ (boot.) & $p$ ($t$-test) & $n$ \\\\"]
     cap = ("Paired significance of the main comparisons (treatment minus baseline, nDCG@10). CI: 95\\% "
            "paired-bootstrap interval (10{,}000 resamples, seed 42); $p$: one-sided, treatment better than "
-           "baseline, floored at $10^{-4}$ by the 10{,}000 resamples. $\\dagger$: bootstrap $p<0.05$. "
+           "baseline, resolution $10^{-4}$ (10{,}000 resamples). $\\dagger$: bootstrap $p<0.05$. "
            "Comparisons 1--3 are shown for each encoder. " + _head_note(head))
     return table("significance", cap, "lccccr", header, body, resize=True)
 
@@ -928,7 +928,10 @@ def compute_macros(results: Path, R: dict) -> dict[str, str]:
             M["GenN"] = str(max(n))
         fa: dict = {}
         cnt = []
-        for ds in G.values():
+        # RAGAS was run on HotpotQA only; restrict to it so the macros keep that meaning
+        for ds_name, ds in G.items():
+            if ds_name != "hotpot":
+                continue
             for cfg, d in ds.items():
                 v = [q["faithfulness"] for q in (d.get("per_query") or {}).values()
                      if isinstance(q, dict) and q.get("faithfulness") is not None]

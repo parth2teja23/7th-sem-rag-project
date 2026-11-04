@@ -14,4 +14,4 @@ Panels:
 
 Indexes and models load once via `st.cache_resource` (`app/backend.py`).
 
-Limitations: only datasets and encoders whose indexes exist on disk are offered (for example rfc/fiqa have no gemma index, so gemma does not appear for them). The first load of gemma is slow (large model plus index); later reruns reuse the cache.
+Limitations: only datasets and encoders whose indexes exist on disk are offered (FiQA is not offered by the demo). The first load of gemma is slow (large model plus index); later reruns reuse the cache.

@@ -35,6 +35,7 @@ Models:
   ollama serve
   ```
 - RAGAS needs its own environment (see below).
+- `make setup` installs the exact versions we ran with from `requirements.lock` (Python 3.12).
 
 Tectonic builds the paper: `brew install tectonic`. Without it, upload `paper/` to Overleaf and compile `main.tex` with pdfLaTeX and BibTeX.
 

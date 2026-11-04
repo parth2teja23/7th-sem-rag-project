@@ -140,6 +140,8 @@ def ragas_pass(datasets: list[str], configs: list[str], n: int) -> None:
                 subprocess.run([py, "-m", "hrag.eval.ragas_eval", str(src), str(dst)], check=True, env=env)
                 rows = json.loads(dst.read_text())
             names = sorted({k for r in rows for k in r})
+            if len(rows) != len(qids):
+                raise RuntimeError(f"ragas returned {len(rows)} rows for {len(qids)} queries")
             for q, r in zip(qids, rows):
                 res["per_query"][q].update({k: r.get(k) for k in names})
             means = {}

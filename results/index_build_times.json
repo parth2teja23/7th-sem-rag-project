@@ -1,0 +1,82 @@
+{
+ "scifact": {
+  "bm25": {
+   "seconds": 0.77,
+   "n_docs": 5183
+  },
+  "bge-small": {
+   "seconds": 79.32,
+   "n_docs": 5183,
+   "docs_per_s": 65.34,
+   "device": "mps",
+   "batch_size": 64
+  },
+  "gemma": {
+   "seconds": 901.39,
+   "n_docs": 5183,
+   "docs_per_s": 5.75,
+   "device": "mps",
+   "batch_size": 8
+  }
+ },
+ "fiqa": {
+  "bm25": {
+   "seconds": 1.59,
+   "n_docs": 20000
+  },
+  "bge-small": {
+   "seconds": 179.17,
+   "n_docs": 20000,
+   "docs_per_s": 111.63,
+   "device": "mps",
+   "batch_size": 64
+  },
+  "gemma": {
+   "seconds": 2252.76,
+   "n_docs": 20000,
+   "docs_per_s": 8.88,
+   "device": "mps",
+   "batch_size": 16
+  }
+ },
+ "hotpot": {
+  "bm25": {
+   "seconds": 0.39,
+   "n_docs": 4955
+  },
+  "bge-small": {
+   "seconds": 29.38,
+   "n_docs": 4955,
+   "docs_per_s": 168.63,
+   "device": "mps",
+   "batch_size": 64
+  },
+  "gemma": {
+   "seconds": 593.22,
+   "n_docs": 4955,
+   "docs_per_s": 8.35,
+   "device": "mps",
+   "batch_size": 16
+  }
+ },
+ "rfc": {
+  "bm25": {
+   "seconds": 0.27,
+   "n_docs": 2973
+  },
+  "bge-small": {
+   "seconds": 27.89,
+   "n_docs": 2973,
+   "docs_per_s": 106.62,
+   "device": "mps",
+   "batch_size": 64
+  },
+  "gemma": {
+   "seconds": 979.51,
+   "n_docs": 2973,
+   "docs_per_s": 3.04,
+   "device": "mps",
+   "batch_size": 16
+  }
+ }
+}

@@ -2,7 +2,7 @@
 
 Existing indexes are skipped unless --force (or unless their doc ids no longer match the
 corpus, in which case they are rebuilt). Build times are merged into
-results/indexes/build_times.json.
+results/index_build_times.json.
 
     python experiments/build_indexes.py --datasets scifact fiqa hotpot rfc --encoders bge-small gemma
 """
@@ -35,7 +35,7 @@ def main(argv=None) -> int:
     from hrag.dense import DenseIndex
     from hrag.sparse import SparseIndex
 
-    times_path = common.RESULTS_DIR / "indexes" / "build_times.json"
+    times_path = common.RESULTS_DIR / "index_build_times.json"
     times = json.loads(times_path.read_text()) if times_path.exists() else {}
     encoders: dict = {}
 

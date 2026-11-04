@@ -2,15 +2,21 @@ from __future__ import annotations
 
 import json
 import math
+import re
 from pathlib import Path
 
 import bm25s
 import numpy as np
 import Stemmer
 
+from bm25s.stopwords import STOPWORDS_EN
+
 from hrag.types import Doc, Ranking, sort_ranking
 
 _K1, _B = 1.2, 0.75
+_COMPOUND = re.compile(r"[a-z0-9]+(?:[._/:-][a-z0-9]+)*")
+_PART = re.compile(r"[a-z0-9]+")
+_STOP = frozenset(STOPWORDS_EN)
 
 
 class SparseIndex:
@@ -26,11 +32,28 @@ class SparseIndex:
         self._ids: list[str] = []
         self._df: dict[str, int] = {}
 
+    def _term(self, t: str) -> str | None:
+        if t.isalpha():
+            return None if t in _STOP else self._stemmer.stemWord(t)
+        return t  # digits/separators: never stemmed or stop-filtered
+
+    def _tok_one(self, text: str) -> list[str]:
+        out: list[str] = []
+        for m in _COMPOUND.findall(text.lower()):
+            whole = self._term(m)
+            if whole is not None:
+                out.append(whole)
+            if m != whole or not m.isalnum():
+                parts = _PART.findall(m)
+                if len(parts) > 1:
+                    for part in parts:
+                        t = self._term(part)
+                        if t is not None:
+                            out.append(t)
+        return out
+
     def _tok(self, texts: list[str]) -> list[list[str]]:
-        return bm25s.tokenize(
-            texts, stopwords="en", stemmer=self._stemmer,
-            return_ids=False, show_progress=False,
-        )
+        return [self._tok_one(t) for t in texts]
 
     def build(self, docs: dict[str, Doc]) -> None:
         self._ids = list(docs)
@@ -42,7 +65,7 @@ class SparseIndex:
                 df[t] = df.get(t, 0) + 1
         self._df = df
         r = bm25s.BM25(k1=_K1, b=_B, method="lucene")
-        r.index(tokens, show_progress=False)
+        r.index(tokens, show_progress=False)  # pre-tokenised lists
         self._retriever = r
 
     def search(self, query: str, k: int = 100) -> Ranking:
@@ -63,6 +86,7 @@ class SparseIndex:
         return sort_ranking(out)[:k]
 
     def idf(self, term: str) -> float:
+        """IDF of a single raw term (tokenised the same way; only the first token is used)."""
         toks = self._tok([term])[0]
         if not toks:
             return 0.0
@@ -73,7 +97,8 @@ class SparseIndex:
         return math.log(1.0 + (n - df + 0.5) / (df + 0.5))
 
     def save(self, path) -> None:
-        assert self._retriever is not None, "build() first"
+        if self._retriever is None:
+            raise RuntimeError("build() first")
         p = Path(path)
         p.mkdir(parents=True, exist_ok=True)
         self._retriever.save(str(p / "bm25"))

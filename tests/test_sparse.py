@@ -54,3 +54,39 @@ def test_idf():
     assert i.idf("the") == 0.0
     assert i.idf("zzzxqv") == 0.0
     assert i.idf("rfc") > i.idf("the")
+
+
+def _ident():
+    i = SparseIndex()
+    i.build({
+        "h2": Doc("h2", "Support for HTTP/2 multiplexing."),
+        "h3": Doc("h3", "Support for HTTP/3 over QUIC."),
+        "tls": Doc("tls", "Handshake in TLS1.3 is faster."),
+        "old": Doc("old", "Handshake in SSL is slow."),
+        "s155": Doc("s155", "See section 15.5.1 for redirects."),
+        "s154": Doc("s154", "See section 15.4 for other things."),
+    })
+    return i
+
+
+def test_http3_beats_http2():
+    r = _ident().search("HTTP/3")
+    assert r[0][0] == "h3"
+
+
+def test_tls_spacing_variants():
+    i = _ident()
+    assert "tls" in [d for d, _ in i.search("TLS 1.3")]
+    assert i.search("TLS1.3")[0][0] == "tls"
+
+
+def test_section_number():
+    r = _ident().search("section 15.5.1")
+    ids = [d for d, _ in r]
+    assert ids[0] == "s155" and ids.index("s155") < ids.index("s154")
+
+
+def test_build_first_error(tmp_path):
+    import pytest
+    with pytest.raises(RuntimeError):
+        SparseIndex().save(tmp_path / "x")

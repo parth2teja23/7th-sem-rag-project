@@ -1,6 +1,6 @@
 \begin{table}[t]
 \centering
-\caption{EmbeddingGemma 2 with Matryoshka truncation: nDCG@10 (best per column in bold), mean dense-index size (FAISS HNSW file) and query latency.}
+\caption{EmbeddingGemma 2 with Matryoshka truncation: nDCG@10 (best per column in bold). Index MB: dense FAISS HNSW file (vectors plus graph), mean over the datasets shown. Query ms: mean dense-retrieval latency per query, mean over the datasets shown.}
 \label{tab:matryoshka}
 \scriptsize
 \setlength{\tabcolsep}{3pt}
@@ -9,10 +9,10 @@
 \toprule
 Dims & SciFact Dense & SciFact QAF+RR & RFC Dense & RFC QAF+RR & Index MB & Query ms \\
 \midrule
-768 & \textbf{0.851} & 0.729 & \textbf{0.694} & 0.843 & 13.0 & 1032 \\
-512 & 0.851 & 0.727 & 0.669 & 0.843 & 9.0 & 1044 \\
-256 & 0.836 & \textbf{0.730} & 0.640 & \textbf{0.852} & 5.0 & 1029 \\
-128 & 0.792 & 0.727 & 0.539 & 0.846 & 3.0 & 1006 \\
+768 & \textbf{0.851} & 0.729 & \textbf{0.694} & 0.843 & 13.0 & 17 \\
+512 & 0.851 & 0.727 & 0.669 & 0.843 & 9.0 & 17 \\
+256 & 0.836 & \textbf{0.730} & 0.640 & \textbf{0.852} & 5.0 & 17 \\
+128 & 0.792 & 0.727 & 0.539 & 0.846 & 3.0 & 17 \\
 \bottomrule
 \end{tabular}}
 \end{table}

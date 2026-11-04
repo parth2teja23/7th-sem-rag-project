@@ -1,0 +1,1656 @@
+{
+ "config": {
+  "name": "hybrid_fixed+rr",
+  "dataset": "rfc",
+  "split": "test",
+  "encoder": "gemma",
+  "encoder_selected_by": "pooled dev nDCG@10 (headline_encoder)",
+  "llm": "qwen2.5:7b-instruct",
+  "temperature": 0,
+  "seed": 42,
+  "final_k": 5,
+  "n": 101,
+  "n_requested": 200,
+  "sampling": "all evaluated questions",
+  "alpha_star": 0.9
+ },
+ "metrics": {
+  "em": 0.24752475247524752,
+  "f1": 0.5344499061920686,
+  "citation_hit": 0.7128712871287128
+ },
+ "per_query": {
+  "rfcq002": {
+   "em": 0.0,
+   "f1": 0.5333333333333333,
+   "citation_hit": 1.0,
+   "answer": "The currently defined opcodes for data frames include 0x1 (Text), 0x2 (Binary). [1]",
+   "cited": [
+    "rfc6455#68"
+   ],
+   "retrieved": [
+    "rfc6455#68",
+    "rfc6455#63",
+    "rfc6455#128",
+    "rfc9113#49",
+    "rfc6455#72"
+   ]
+  },
+  "rfcq003": {
+   "em": 0.0,
+   "f1": 0.4444444444444445,
+   "citation_hit": 1.0,
+   "answer": "The range for interoperable integers is [-(2**53)+1, (2**53)-1]. [1][2]",
+   "cited": [
+    "rfc8259#16",
+    "rfc8259#15"
+   ],
+   "retrieved": [
+    "rfc8259#16",
+    "rfc8259#15",
+    "rfc791#41",
+    "rfc9110#252",
+    "rfc9110#253"
+   ]
+  },
+  "rfcq004": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 0.0,
+   "answer": "4xx [1]",
+   "cited": [
+    "rfc9110#263"
+   ],
+   "retrieved": [
+    "rfc9110#263",
+    "rfc9110#286",
+    "rfc6749#70",
+    "rfc2616#70",
+    "rfc6749#76"
+   ]
+  },
+  "rfcq005": {
+   "em": 0.0,
+   "f1": 0.17391304347826084,
+   "citation_hit": 1.0,
+   "answer": "Lack of a redirection URI registration requirement can enable an attacker to use the authorization endpoint as an open redirector as described in Section 10.15. [1]",
+   "cited": [
+    "rfc6749#36"
+   ],
+   "retrieved": [
+    "rfc6749#36",
+    "rfc9110#334",
+    "rfc6749#34",
+    "rfc9110#279",
+    "rfc9110#8"
+   ]
+  },
+  "rfcq007": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 1.0,
+   "answer": "\"alg\":\"none\"[1]",
+   "cited": [
+    "rfc7519#24"
+   ],
+   "retrieved": [
+    "rfc7519#24",
+    "rfc7519#10",
+    "rfc7519#5",
+    "rfc7519#25",
+    "rfc7519#21"
+   ]
+  },
+  "rfcq009": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "64 bits [2]",
+   "cited": [
+    "rfc4291#12"
+   ],
+   "retrieved": [
+    "rfc4291#16",
+    "rfc4291#12",
+    "rfc4291#11",
+    "rfc4291#21",
+    "rfc4291#20"
+   ]
+  },
+  "rfcq014": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "128 bits [1]",
+   "cited": [
+    "rfc8200#7"
+   ],
+   "retrieved": [
+    "rfc8200#7",
+    "rfc4291#19",
+    "rfc4291#10",
+    "rfc4291#18",
+    "rfc3986#43"
+   ]
+  },
+  "rfcq015": {
+   "em": 0.0,
+   "f1": 0.5,
+   "citation_hit": 1.0,
+   "answer": "Claim names within a JWT Claims Set MUST be unique. [1]",
+   "cited": [
+    "rfc7519#15"
+   ],
+   "retrieved": [
+    "rfc7519#15",
+    "rfc7519#20",
+    "rfc7519#10",
+    "rfc7519#19",
+    "rfc7519#23"
+   ]
+  },
+  "rfcq016": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "to define a zone [1][2].",
+   "cited": [
+    "rfc1035#62",
+    "rfc1035#66"
+   ],
+   "retrieved": [
+    "rfc1035#62",
+    "rfc1035#66",
+    "rfc1035#90",
+    "rfc1035#2",
+    "rfc1035#67"
+   ]
+  },
+  "rfcq017": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 0.0,
+   "answer": "1111111010",
+   "cited": [],
+   "retrieved": [
+    "rfc4291#20",
+    "rfc3986#110",
+    "rfc4291#11",
+    "rfc4291#10",
+    "rfc5321#164"
+   ]
+  },
+  "rfcq018": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "fields starting with |Sec-| [1]",
+   "cited": [
+    "rfc6455#24"
+   ],
+   "retrieved": [
+    "rfc6455#24",
+    "rfc6455#18",
+    "rfc6455#2",
+    "rfc9110#329",
+    "rfc6749#100"
+   ]
+  },
+  "rfcq021": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 1.0,
+   "answer": "5 [1][2]",
+   "cited": [
+    "rfc9110#263",
+    "rfc2616#70"
+   ],
+   "retrieved": [
+    "rfc9110#263",
+    "rfc2616#70",
+    "rfc9110#303",
+    "rfc5321#107",
+    "rfc2616#71"
+   ]
+  },
+  "rfcq026": {
+   "em": 0.0,
+   "f1": 0.6666666666666666,
+   "citation_hit": 0.0,
+   "answer": "401 Unauthorized [2][3]",
+   "cited": [
+    "rfc9110#7",
+    "rfc6749#70"
+   ],
+   "retrieved": [
+    "rfc8484#16",
+    "rfc9110#7",
+    "rfc6749#70",
+    "rfc9110#383",
+    "rfc6749#20"
+   ]
+  },
+  "rfcq027": {
+   "em": 0.0,
+   "f1": 0.13333333333333333,
+   "citation_hit": 1.0,
+   "answer": "The authorization server must consider the security implications of interacting with unauthenticated clients and take measures to limit the potential exposure of other credentials (e.g., refresh tokens) issued to such clients. [1]",
+   "cited": [
+    "rfc6749#86"
+   ],
+   "retrieved": [
+    "rfc6749#86",
+    "rfc6749#87",
+    "rfc6749#41",
+    "rfc6749#27",
+    "rfc6749#97"
+   ]
+  },
+  "rfcq029": {
+   "em": 0.0,
+   "f1": 0.2222222222222222,
+   "citation_hit": 1.0,
+   "answer": "The binary prefix for Unspecified address type is 00...0 [1][2].",
+   "cited": [
+    "rfc4291#10",
+    "rfc4291#14"
+   ],
+   "retrieved": [
+    "rfc4291#10",
+    "rfc4291#14",
+    "rfc3986#110",
+    "rfc4291#8",
+    "rfc4291#4"
+   ]
+  },
+  "rfcq030": {
+   "em": 0.0,
+   "f1": 0.33333333333333337,
+   "citation_hit": 1.0,
+   "answer": "The basic data block size is one byte (i.e., 8 bits). [1]",
+   "cited": [
+    "rfc8446#24"
+   ],
+   "retrieved": [
+    "rfc8446#24",
+    "rfc8446#26",
+    "rfc791#39",
+    "rfc9000#225",
+    "rfc791#30"
+   ]
+  },
+  "rfcq031": {
+   "em": 0.0,
+   "f1": 0.6666666666666666,
+   "citation_hit": 1.0,
+   "answer": "response-name = 1*response-char [1][3]",
+   "cited": [
+    "rfc6749#81",
+    "rfc6749#22"
+   ],
+   "retrieved": [
+    "rfc6749#81",
+    "rfc6749#120",
+    "rfc6749#22",
+    "rfc6749#79",
+    "rfc6749#119"
+   ]
+  },
+  "rfcq032": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 0.0,
+   "answer": "The call returns successfully. not in context [4][5]",
+   "cited": [
+    "rfc793#149",
+    "rfc791#84"
+   ],
+   "retrieved": [
+    "rfc5321#23",
+    "rfc5321#53",
+    "rfc5321#38",
+    "rfc793#149",
+    "rfc791#84"
+   ]
+  },
+  "rfcq034": {
+   "em": 0.0,
+   "f1": 0.4615384615384615,
+   "citation_hit": 0.0,
+   "answer": "Snum represents a decimal integer value in the range 0 through 255. [4]",
+   "cited": [
+    "rfc5321#170"
+   ],
+   "retrieved": [
+    "rfc8446#26",
+    "rfc5321#99",
+    "rfc9110#215",
+    "rfc5321#170",
+    "rfc9110#259"
+   ]
+  },
+  "rfcq035": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 1.0,
+   "answer": "The hexadecimal representation of the literal name 'false' is 66.61.6c.73.65. [4]",
+   "cited": [
+    "rfc8259#12"
+   ],
+   "retrieved": [
+    "rfc8446#26",
+    "rfc8259#17",
+    "rfc3986#43",
+    "rfc8259#12",
+    "rfc5321#99"
+   ]
+  },
+  "rfcq036": {
+   "em": 0.0,
+   "f1": 0.6666666666666666,
+   "citation_hit": 1.0,
+   "answer": "Authorization codes must be short lived and single-use. [1]",
+   "cited": [
+    "rfc6749#90"
+   ],
+   "retrieved": [
+    "rfc6749#90",
+    "rfc6749#96",
+    "rfc6749#94",
+    "rfc6749#117",
+    "rfc6749#47"
+   ]
+  },
+  "rfcq037": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "local net module [1]",
+   "cited": [
+    "rfc791#15"
+   ],
+   "retrieved": [
+    "rfc791#15",
+    "rfc791#93",
+    "rfc793#198",
+    "rfc791#29",
+    "rfc793#199"
+   ]
+  },
+  "rfcq038": {
+   "em": 0.0,
+   "f1": 0.9090909090909091,
+   "citation_hit": 0.0,
+   "answer": "JSON Web Token Claims Registry [4]",
+   "cited": [
+    "rfc7519#34"
+   ],
+   "retrieved": [
+    "rfc7519#19",
+    "rfc9112#70",
+    "rfc5321#221",
+    "rfc7519#34",
+    "rfc7519#38"
+   ]
+  },
+  "rfcq039": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "0000::/96 [1][2]",
+   "cited": [
+    "rfc4291#30",
+    "rfc4291#18"
+   ],
+   "retrieved": [
+    "rfc4291#30",
+    "rfc4291#18",
+    "rfc4291#11",
+    "rfc4291#39",
+    "rfc4291#17"
+   ]
+  },
+  "rfcq043": {
+   "em": 0.0,
+   "f1": 0.8,
+   "citation_hit": 1.0,
+   "answer": "HTTP/2 obsoletes RFCs 7540 and 8740 [1].",
+   "cited": [
+    "rfc9113#1"
+   ],
+   "retrieved": [
+    "rfc9113#1",
+    "rfc7540#1",
+    "rfc9113#5",
+    "rfc9110#11",
+    "rfc9113#135"
+   ]
+  },
+  "rfcq044": {
+   "em": 0.0,
+   "f1": 0.6666666666666666,
+   "citation_hit": 0.0,
+   "answer": "7.1.2",
+   "cited": [],
+   "retrieved": [
+    "rfc6455#89",
+    "rfc6455#79",
+    "rfc6455#80",
+    "rfc6455#8",
+    "rfc6455#82"
+   ]
+  },
+  "rfcq046": {
+   "em": 0.0,
+   "f1": 0.5882352941176471,
+   "citation_hit": 1.0,
+   "answer": "The client MUST NOT use more than one authentication method in each request. [1]",
+   "cited": [
+    "rfc6749#27"
+   ],
+   "retrieved": [
+    "rfc6749#27",
+    "rfc9110#174",
+    "rfc9110#177",
+    "rfc6749#94",
+    "rfc6455#96"
+   ]
+  },
+  "rfcq049": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "COMMON [1]",
+   "cited": [
+    "rfc7519#40"
+   ],
+   "retrieved": [
+    "rfc7519#40",
+    "rfc7519#21",
+    "rfc7519#32",
+    "rfc7519#22",
+    "rfc9112#61"
+   ]
+  },
+  "rfcq050": {
+   "em": 0.0,
+   "f1": 0.1176470588235294,
+   "citation_hit": 1.0,
+   "answer": "A node is required to recognize its Link-Local address, any Unicast and Anycast addresses configured for its interfaces, the loopback address, All-Nodes multicast addresses, Solicited-Node multicast address for each of its unicast and anycast addresses, and multicast addresses of all other groups to which the node belongs. [1][2]",
+   "cited": [
+    "rfc4291#28",
+    "rfc4291#27"
+   ],
+   "retrieved": [
+    "rfc4291#28",
+    "rfc4291#27",
+    "rfc4291#25",
+    "rfc4291#3",
+    "rfc4291#26"
+   ]
+  },
+  "rfcq051": {
+   "em": 0.0,
+   "f1": 0.5,
+   "citation_hit": 0.0,
+   "answer": "KeyUpdate",
+   "cited": [],
+   "retrieved": [
+    "rfc8446#126",
+    "rfc8446#102",
+    "rfc8446#35",
+    "rfc8446#38",
+    "rfc8446#5"
+   ]
+  },
+  "rfcq053": {
+   "em": 0.0,
+   "f1": 0.7777777777777778,
+   "citation_hit": 1.0,
+   "answer": "A JSON parser MUST accept all texts that conform to the JSON grammar. [1]",
+   "cited": [
+    "rfc8259#22"
+   ],
+   "retrieved": [
+    "rfc8259#22",
+    "rfc7519#15",
+    "rfc8259#11",
+    "rfc8259#15",
+    "rfc8259#12"
+   ]
+  },
+  "rfcq054": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 0.0,
+   "answer": "Figure 5: Example 1-RTT Handshake",
+   "cited": [],
+   "retrieved": [
+    "rfc9000#59",
+    "rfc7540#41",
+    "rfc9113#26",
+    "rfc7230#14",
+    "rfc9110#29"
+   ]
+  },
+  "rfcq055": {
+   "em": 0.0,
+   "f1": 0.42857142857142855,
+   "citation_hit": 1.0,
+   "answer": "The minimum overhead between each part of a 'multipart/byteranges' is around 80 bytes. [1][2]",
+   "cited": [
+    "rfc9110#275",
+    "rfc9110#274"
+   ],
+   "retrieved": [
+    "rfc9110#275",
+    "rfc9110#274",
+    "rfc2616#58",
+    "rfc2616#300",
+    "rfc9110#261"
+   ]
+  },
+  "rfcq061": {
+   "em": 0.0,
+   "f1": 0.4,
+   "citation_hit": 1.0,
+   "answer": "The label used for external PSKs is \"ext binder\". [2]",
+   "cited": [
+    "rfc8446#125"
+   ],
+   "retrieved": [
+    "rfc8446#72",
+    "rfc8446#125",
+    "rfc8446#100",
+    "rfc8446#176",
+    "rfc8446#6"
+   ]
+  },
+  "rfcq066": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 0.0,
+   "answer": "MUST NOT offer or negotiate unknown or unsupported error codes [3][4].",
+   "cited": [
+    "rfc9113#80",
+    "rfc7540#82"
+   ],
+   "retrieved": [
+    "rfc9110#17",
+    "rfc2616#12",
+    "rfc9113#80",
+    "rfc7540#82",
+    "rfc6455#97"
+   ]
+  },
+  "rfcq067": {
+   "em": 0.0,
+   "f1": 0.13333333333333333,
+   "citation_hit": 1.0,
+   "answer": "Header field names MUST be converted to lowercase prior to their encoding in HTTP/2. [1][2]",
+   "cited": [
+    "rfc7540#87",
+    "rfc9113#87"
+   ],
+   "retrieved": [
+    "rfc7540#87",
+    "rfc9113#87",
+    "rfc9113#92",
+    "rfc9113#90",
+    "rfc7540#89"
+   ]
+  },
+  "rfcq069": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "CRLF injection [3][4]",
+   "cited": [
+    "rfc7230#119",
+    "rfc9112#63"
+   ],
+   "retrieved": [
+    "rfc7230#131",
+    "rfc9112#75",
+    "rfc7230#119",
+    "rfc9112#63",
+    "rfc2616#21"
+   ]
+  },
+  "rfcq072": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "Peter Saint-Andre [1][2]",
+   "cited": [
+    "rfc6455#132",
+    "rfc6455#131"
+   ],
+   "retrieved": [
+    "rfc6455#132",
+    "rfc6455#131",
+    "rfc6455#1",
+    "rfc6455#124",
+    "rfc6455#14"
+   ]
+  },
+  "rfcq073": {
+   "em": 0.0,
+   "f1": 0.6666666666666666,
+   "citation_hit": 1.0,
+   "answer": "2xx [1][2][3]",
+   "cited": [
+    "rfc9113#103",
+    "rfc7540#104",
+    "rfc9110#268"
+   ],
+   "retrieved": [
+    "rfc9113#103",
+    "rfc7540#104",
+    "rfc9110#268",
+    "rfc9113#112",
+    "rfc9110#170"
+   ]
+  },
+  "rfcq075": {
+   "em": 0.0,
+   "f1": 0.4,
+   "citation_hit": 1.0,
+   "answer": "RFC-882 and RFC-883 describe optional completion services, but they have been deleted [1].",
+   "cited": [
+    "rfc1035#80"
+   ],
+   "retrieved": [
+    "rfc1035#80",
+    "rfc5321#226",
+    "rfc9110#377",
+    "rfc5321#18",
+    "rfc1035#3"
+   ]
+  },
+  "rfcq076": {
+   "em": 0.0,
+   "f1": 0.7272727272727273,
+   "citation_hit": 1.0,
+   "answer": "JSON derived from the ECMAScript Programming Language Standard [1][2].",
+   "cited": [
+    "rfc8259#1",
+    "rfc8259#7"
+   ],
+   "retrieved": [
+    "rfc8259#1",
+    "rfc8259#7",
+    "rfc6749#117",
+    "rfc8259#17",
+    "rfc8259#28"
+   ]
+  },
+  "rfcq077": {
+   "em": 0.0,
+   "f1": 0.5454545454545454,
+   "citation_hit": 1.0,
+   "answer": "DoH clients can use HTTP/2 padding and compression [1].",
+   "cited": [
+    "rfc8484#12"
+   ],
+   "retrieved": [
+    "rfc8484#12",
+    "rfc8484#22",
+    "rfc8484#31",
+    "rfc8484#32",
+    "rfc8484#16"
+   ]
+  },
+  "rfcq080": {
+   "em": 0.0,
+   "f1": 0.4444444444444445,
+   "citation_hit": 1.0,
+   "answer": "The assumed maximum segment lifetime is two minutes. [1][5]",
+   "cited": [
+    "rfc793#158",
+    "rfc793#74"
+   ],
+   "retrieved": [
+    "rfc793#158",
+    "rfc793#71",
+    "rfc793#76",
+    "rfc793#75",
+    "rfc793#74"
+   ]
+  },
+  "rfcq082": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 0.0,
+   "answer": "IPv4-Compatible IPv6 address [3]",
+   "cited": [
+    "rfc4291#18"
+   ],
+   "retrieved": [
+    "rfc4291#30",
+    "rfc4291#11",
+    "rfc4291#18",
+    "rfc4291#39",
+    "rfc4291#21"
+   ]
+  },
+  "rfcq084": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 0.0,
+   "answer": "The HTTP Transfer Coding Registry [1][2].",
+   "cited": [
+    "rfc7230#107",
+    "rfc9112#42"
+   ],
+   "retrieved": [
+    "rfc7230#107",
+    "rfc9112#42",
+    "rfc9112#36",
+    "rfc7230#56",
+    "rfc2616#40"
+   ]
+  },
+  "rfcq085": {
+   "em": 0.0,
+   "f1": 0.5263157894736842,
+   "citation_hit": 1.0,
+   "answer": "Future work will define prescriptive profiles and extensions necessary to achieve full web-scale interoperability. [1]",
+   "cited": [
+    "rfc6749#21"
+   ],
+   "retrieved": [
+    "rfc6749#21",
+    "rfc9110#11",
+    "rfc7540#86",
+    "rfc2616#10",
+    "rfc6455#23"
+   ]
+  },
+  "rfcq086": {
+   "em": 0.0,
+   "f1": 0.5,
+   "citation_hit": 1.0,
+   "answer": "Type (i) = 0x02..0x03[1]",
+   "cited": [
+    "rfc9000#211"
+   ],
+   "retrieved": [
+    "rfc9000#211",
+    "rfc9000#212",
+    "rfc9000#215",
+    "rfc9000#6",
+    "rfc9000#214"
+   ]
+  },
+  "rfcq088": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "Cache-Control [1]",
+   "cited": [
+    "rfc7540#119"
+   ],
+   "retrieved": [
+    "rfc7540#119",
+    "rfc9113#125",
+    "rfc9110#160",
+    "rfc2616#154",
+    "rfc2616#201"
+   ]
+  },
+  "rfcq091": {
+   "em": 0.0,
+   "f1": 0.23076923076923078,
+   "citation_hit": 1.0,
+   "answer": "The authorization server must compare the redirection URI received in the authorization request against the registered redirection URIs using simple string comparison if the full URI was registered [1].",
+   "cited": [
+    "rfc6749#37"
+   ],
+   "retrieved": [
+    "rfc6749#37",
+    "rfc6749#92",
+    "rfc6749#34",
+    "rfc6749#90",
+    "rfc6749#45"
+   ]
+  },
+  "rfcq092": {
+   "em": 0.0,
+   "f1": 0.3888888888888889,
+   "citation_hit": 1.0,
+   "answer": "Field values are usually constrained to the range of US-ASCII characters [USASCII], with specifications for newly defined fields SHOULD limit their values to visible US-ASCII octets (VCHAR), SP, and HTAB. [1][3]",
+   "cited": [
+    "rfc9110#55",
+    "rfc7230#44"
+   ],
+   "retrieved": [
+    "rfc9110#55",
+    "rfc9113#88",
+    "rfc7230#44",
+    "rfc9110#54",
+    "rfc1035#18"
+   ]
+  },
+  "rfcq093": {
+   "em": 0.0,
+   "f1": 0.15384615384615385,
+   "citation_hit": 1.0,
+   "answer": "Scheme, host, and query components must be case-insensitive in URI comparisons. [1][2][3][5]",
+   "cited": [
+    "rfc2616#31",
+    "rfc9110#38",
+    "rfc3986#82",
+    "rfc7230#30"
+   ],
+   "retrieved": [
+    "rfc2616#31",
+    "rfc9110#38",
+    "rfc3986#82",
+    "rfc3986#41",
+    "rfc7230#30"
+   ]
+  },
+  "rfcq094": {
+   "em": 0.0,
+   "f1": 0.625,
+   "citation_hit": 1.0,
+   "answer": "\"typ\" and \"cty\" member values do not use these comparison rules. [1]",
+   "cited": [
+    "rfc7519#30"
+   ],
+   "retrieved": [
+    "rfc7519#30",
+    "rfc6455#58",
+    "rfc9110#234",
+    "rfc8259#13",
+    "rfc9110#227"
+   ]
+  },
+  "rfcq095": {
+   "em": 0.0,
+   "f1": 0.2666666666666667,
+   "citation_hit": 0.0,
+   "answer": "550 reply, typically with a string such as \"no such user - \" and the mailbox name.",
+   "cited": [],
+   "retrieved": [
+    "rfc5321#50",
+    "rfc5321#51",
+    "rfc5321#65",
+    "rfc5321#49",
+    "rfc5321#52"
+   ]
+  },
+  "rfcq098": {
+   "em": 0.0,
+   "f1": 0.6666666666666666,
+   "citation_hit": 0.0,
+   "answer": "4.8 [1]",
+   "cited": [
+    "rfc8200#31"
+   ],
+   "retrieved": [
+    "rfc8200#31",
+    "rfc8200#5",
+    "rfc8200#14",
+    "rfc8200#12",
+    "rfc8200#4"
+   ]
+  },
+  "rfcq099": {
+   "em": 0.0,
+   "f1": 0.16666666666666666,
+   "citation_hit": 1.0,
+   "answer": "The internet datagram protocol module controls the actual interface to the network. [1]",
+   "cited": [
+    "rfc793#27"
+   ],
+   "retrieved": [
+    "rfc793#27",
+    "rfc791#15",
+    "rfc793#158",
+    "rfc793#199",
+    "rfc793#141"
+   ]
+  },
+  "rfcq100": {
+   "em": 0.0,
+   "f1": 0.2222222222222222,
+   "citation_hit": 1.0,
+   "answer": "The managed namespace for URI scheme names is registered by IANA according to the procedures defined in [BCP35]. [1]",
+   "cited": [
+    "rfc3986#96"
+   ],
+   "retrieved": [
+    "rfc3986#96",
+    "rfc3986#111",
+    "rfc3986#100",
+    "rfc7230#29",
+    "rfc9110#36"
+   ]
+  },
+  "rfcq101": {
+   "em": 0.0,
+   "f1": 0.8,
+   "citation_hit": 0.0,
+   "answer": "Final Size [2]",
+   "cited": [
+    "rfc9000#216"
+   ],
+   "retrieved": [
+    "rfc9000#37",
+    "rfc9000#216",
+    "rfc9000#220",
+    "rfc9000#23",
+    "rfc9000#38"
+   ]
+  },
+  "rfcq103": {
+   "em": 0.0,
+   "f1": 0.25,
+   "citation_hit": 1.0,
+   "answer": "The initial value of SETTINGS_HEADER_TABLE_SIZE is 4,096 octets. [1][2]",
+   "cited": [
+    "rfc9113#59",
+    "rfc9113#23"
+   ],
+   "retrieved": [
+    "rfc9113#59",
+    "rfc9113#23",
+    "rfc7540#62",
+    "rfc9113#61",
+    "rfc9113#22"
+   ]
+  },
+  "rfcq105": {
+   "em": 0.0,
+   "f1": 0.2222222222222222,
+   "citation_hit": 1.0,
+   "answer": "RFC2818 defines how HTTPS verifies the DoH server's identity. [1]",
+   "cited": [
+    "rfc8484#9"
+   ],
+   "retrieved": [
+    "rfc8484#9",
+    "rfc8484#31",
+    "rfc8484#35",
+    "rfc8484#34",
+    "rfc8484#7"
+   ]
+  },
+  "rfcq107": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "413 Content Too Large [1][2]",
+   "cited": [
+    "rfc9110#290",
+    "rfc2616#128"
+   ],
+   "retrieved": [
+    "rfc9110#290",
+    "rfc2616#128",
+    "rfc9110#291",
+    "rfc9110#286",
+    "rfc9110#294"
+   ]
+  },
+  "rfcq108": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 0.0,
+   "answer": "Section 4.2 [1]",
+   "cited": [
+    "rfc3986#54"
+   ],
+   "retrieved": [
+    "rfc3986#54",
+    "rfc3986#64",
+    "rfc3986#58",
+    "rfc3986#56",
+    "rfc3986#26"
+   ]
+  },
+  "rfcq110": {
+   "em": 0.0,
+   "f1": 0.26666666666666666,
+   "citation_hit": 0.0,
+   "answer": "Section 7 of [CACHING] describes risks related to cache poisoning attacks.",
+   "cited": [],
+   "retrieved": [
+    "rfc9110#327",
+    "rfc7230#117",
+    "rfc6455#103",
+    "rfc9110#324",
+    "rfc2616#289"
+   ]
+  },
+  "rfcq111": {
+   "em": 0.0,
+   "f1": 0.2666666666666667,
+   "citation_hit": 1.0,
+   "answer": "The \"h2\" string is serialized into an ALPN protocol identifier as the two-octet sequence: 0x68, 0x32. [1][2][4]",
+   "cited": [
+    "rfc9113#12",
+    "rfc7540#11",
+    "rfc7540#128"
+   ],
+   "retrieved": [
+    "rfc9113#12",
+    "rfc7540#11",
+    "rfc9113#9",
+    "rfc7540#128",
+    "rfc7540#15"
+   ]
+  },
+  "rfcq112": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 0.0,
+   "answer": "[",
+   "cited": [],
+   "retrieved": [
+    "rfc8259#14",
+    "rfc8446#27",
+    "rfc8259#11",
+    "rfc8259#7",
+    "rfc8259#15"
+   ]
+  },
+  "rfcq117": {
+   "em": 0.0,
+   "f1": 0.5333333333333333,
+   "citation_hit": 0.0,
+   "answer": "Section 3.2 of [RFC7230] defines valid characters for header field values.",
+   "cited": [],
+   "retrieved": [
+    "rfc9110#76",
+    "rfc9113#88",
+    "rfc2616#187",
+    "rfc9112#24",
+    "rfc7540#118"
+   ]
+  },
+  "rfcq118": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 0.0,
+   "answer": "scope-token = 1*NQCHAR [2][3]",
+   "cited": [
+    "rfc6749#120",
+    "rfc6749#22"
+   ],
+   "retrieved": [
+    "rfc6749#119",
+    "rfc6749#120",
+    "rfc6749#22",
+    "rfc6455#48",
+    "rfc6749#103"
+   ]
+  },
+  "rfcq119": {
+   "em": 0.0,
+   "f1": 0.2222222222222222,
+   "citation_hit": 0.0,
+   "answer": "The bits inserted to create an IEEE EUI-64 identifier from an IEEE MAC-48 identifier are 0xFF and 0xFE.",
+   "cited": [],
+   "retrieved": [
+    "rfc4291#37",
+    "rfc4291#38",
+    "rfc4291#35",
+    "rfc4291#36",
+    "rfc4291#12"
+   ]
+  },
+  "rfcq121": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 0.0,
+   "answer": "RFC 1047 [40]",
+   "cited": [],
+   "retrieved": [
+    "rfc7230#131",
+    "rfc1035#84",
+    "rfc2616#294",
+    "rfc5321#227",
+    "rfc5321#202"
+   ]
+  },
+  "rfcq126": {
+   "em": 0.0,
+   "f1": 0.5,
+   "citation_hit": 1.0,
+   "answer": "A single colon separates a name from the value. [1]",
+   "cited": [
+    "rfc8259#13"
+   ],
+   "retrieved": [
+    "rfc8259#13",
+    "rfc7519#12",
+    "rfc9110#227",
+    "rfc7519#30",
+    "rfc9110#56"
+   ]
+  },
+  "rfcq127": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 0.0,
+   "answer": "443[4]",
+   "cited": [
+    "rfc7540#10"
+   ],
+   "retrieved": [
+    "rfc2616#19",
+    "rfc9113#144",
+    "rfc9113#143",
+    "rfc7540#10",
+    "rfc6455#30"
+   ]
+  },
+  "rfcq128": {
+   "em": 0.0,
+   "f1": 0.42857142857142855,
+   "citation_hit": 1.0,
+   "answer": "Conditional GET requests are the most efficient mechanism for HTTP cache updates [1].",
+   "cited": [
+    "rfc9110#229"
+   ],
+   "retrieved": [
+    "rfc9110#229",
+    "rfc2616#241",
+    "rfc2616#19",
+    "rfc9110#237",
+    "rfc2616#144"
+   ]
+  },
+  "rfcq129": {
+   "em": 0.0,
+   "f1": 0.5714285714285715,
+   "citation_hit": 1.0,
+   "answer": "An endpoint SHOULD send a Close frame with an appropriate status code before proceeding to Close the WebSocket Connection. [1]",
+   "cited": [
+    "rfc6455#84"
+   ],
+   "retrieved": [
+    "rfc6455#84",
+    "rfc6455#79",
+    "rfc6455#65",
+    "rfc6455#66",
+    "rfc6455#109"
+   ]
+  },
+  "rfcq133": {
+   "em": 0.0,
+   "f1": 0.6,
+   "citation_hit": 1.0,
+   "answer": "A stream error of type PROTOCOL_ERROR or REFUSED_STREAM. [1][2]",
+   "cited": [
+    "rfc7540#32",
+    "rfc9113#33"
+   ],
+   "retrieved": [
+    "rfc7540#32",
+    "rfc9113#33",
+    "rfc9113#50",
+    "rfc9113#28",
+    "rfc7540#55"
+   ]
+  },
+  "rfcq134": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "404 Not Found [1][5]",
+   "cited": [
+    "rfc6455#44",
+    "rfc2616#226"
+   ],
+   "retrieved": [
+    "rfc6455#44",
+    "rfc6455#45",
+    "rfc6749#56",
+    "rfc6749#48",
+    "rfc2616#226"
+   ]
+  },
+  "rfcq136": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "FF02:0:0:0:0:1:FF00::/104 [1]",
+   "cited": [
+    "rfc4291#27"
+   ],
+   "retrieved": [
+    "rfc4291#27",
+    "rfc4291#28",
+    "rfc4291#25",
+    "rfc4291#6",
+    "rfc4291#26"
+   ]
+  },
+  "rfcq137": {
+   "em": 0.0,
+   "f1": 0.13333333333333333,
+   "citation_hit": 1.0,
+   "answer": "RFC 2474 and RFC 3168 specify the current use of the Traffic Class field [1].",
+   "cited": [
+    "rfc8200#36"
+   ],
+   "retrieved": [
+    "rfc8200#36",
+    "rfc1035#95",
+    "rfc9000#293",
+    "rfc9000#294",
+    "rfc9000#296"
+   ]
+  },
+  "rfcq139": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 0.0,
+   "answer": "[2]",
+   "cited": [
+    "rfc3986#29"
+   ],
+   "retrieved": [
+    "rfc3986#83",
+    "rfc3986#29",
+    "rfc3986#31",
+    "rfc3986#91",
+    "rfc3986#33"
+   ]
+  },
+  "rfcq140": {
+   "em": 0.0,
+   "f1": 0.19999999999999998,
+   "citation_hit": 0.0,
+   "answer": "The preferred syntax for the ARPA Internet is given in [RFC-822].",
+   "cited": [],
+   "retrieved": [
+    "rfc1035#90",
+    "rfc1035#2",
+    "rfc7230#140",
+    "rfc3986#100",
+    "rfc1035#12"
+   ]
+  },
+  "rfcq141": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "65535 bytes [1]",
+   "cited": [
+    "rfc8484#25"
+   ],
+   "retrieved": [
+    "rfc8484#25",
+    "rfc5321#176",
+    "rfc8484#13",
+    "rfc5321#171",
+    "rfc8484#17"
+   ]
+  },
+  "rfcq142": {
+   "em": 0.0,
+   "f1": 0.5454545454545454,
+   "citation_hit": 1.0,
+   "answer": "JWE only supports the use of authenticated encryption algorithms. [1][4]",
+   "cited": [
+    "rfc7519#45",
+    "rfc7519#10"
+   ],
+   "retrieved": [
+    "rfc7519#45",
+    "rfc7519#1",
+    "rfc7519#8",
+    "rfc7519#10",
+    "rfc7519#12"
+   ]
+  },
+  "rfcq144": {
+   "em": 0.0,
+   "f1": 0.18181818181818182,
+   "citation_hit": 1.0,
+   "answer": "Six frame types are defined in this version of the protocol. [2]",
+   "cited": [
+    "rfc6455#16"
+   ],
+   "retrieved": [
+    "rfc7540#51",
+    "rfc6455#16",
+    "rfc9000#137",
+    "rfc9000#5",
+    "rfc6455#57"
+   ]
+  },
+  "rfcq145": {
+   "em": 0.0,
+   "f1": 0.4,
+   "citation_hit": 1.0,
+   "answer": "The \"state\" and \"scope\" parameters SHOULD NOT include sensitive client or resource owner information in plain text. [1]",
+   "cited": [
+    "rfc6749#94"
+   ],
+   "retrieved": [
+    "rfc6749#94",
+    "rfc2616#281",
+    "rfc6749#96",
+    "rfc6749#87",
+    "rfc6749#60"
+   ]
+  },
+  "rfcq146": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "\"user:password\" [1]",
+   "cited": [
+    "rfc3986#40"
+   ],
+   "retrieved": [
+    "rfc3986#40",
+    "rfc3986#94",
+    "rfc9110#40",
+    "rfc7230#29",
+    "rfc7540#90"
+   ]
+  },
+  "rfcq149": {
+   "em": 0.0,
+   "f1": 0.11764705882352941,
+   "citation_hit": 0.0,
+   "answer": "The WebSocket version number is limited to a non-negative integer in the range between 0 and 255 (inclusive) [2].",
+   "cited": [
+    "rfc6455#124"
+   ],
+   "retrieved": [
+    "rfc6455#58",
+    "rfc6455#124",
+    "rfc6455#134",
+    "rfc6455#127",
+    "rfc6455#126"
+   ]
+  },
+  "rfcq153": {
+   "em": 0.0,
+   "f1": 0.8333333333333333,
+   "citation_hit": 1.0,
+   "answer": "The second digit encodes responses in specific categories [2].",
+   "cited": [
+    "rfc5321#108"
+   ],
+   "retrieved": [
+    "rfc5321#107",
+    "rfc5321#108",
+    "rfc5321#53",
+    "rfc5321#98",
+    "rfc5321#38"
+   ]
+  },
+  "rfcq154": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 0.0,
+   "answer": "0x505249202a20485454502f322e300d0a0d0a534d0d0a0d0a",
+   "cited": [],
+   "retrieved": [
+    "rfc9113#15",
+    "rfc7540#17",
+    "rfc9113#14",
+    "rfc7540#18",
+    "rfc9113#13"
+   ]
+  },
+  "rfcq155": {
+   "em": 0.0,
+   "f1": 0.42857142857142855,
+   "citation_hit": 1.0,
+   "answer": "Authentication-Info and Proxy-Authentication-Info header fields indicate HTTP authentication is in use. [1]",
+   "cited": [
+    "rfc9110#347"
+   ],
+   "retrieved": [
+    "rfc9110#347",
+    "rfc9110#385",
+    "rfc9110#388",
+    "rfc9110#384",
+    "rfc9110#198"
+   ]
+  },
+  "rfcq157": {
+   "em": 0.0,
+   "f1": 0.6153846153846153,
+   "citation_hit": 1.0,
+   "answer": "HTTP was created for the World Wide Web (WWW) architecture [2][3].",
+   "cited": [
+    "rfc9110#22",
+    "rfc7230#10"
+   ],
+   "retrieved": [
+    "rfc2616#11",
+    "rfc9110#22",
+    "rfc7230#10",
+    "rfc2616#10",
+    "rfc2616#294"
+   ]
+  },
+  "rfcq158": {
+   "em": 0.0,
+   "f1": 0.1,
+   "citation_hit": 1.0,
+   "answer": "A JSON numeric value representing the number of seconds from 1970-01-01T00:00:00Z UTC until the specified UTC date/time, ignoring leap seconds. [1][4]",
+   "cited": [
+    "rfc7519#11",
+    "rfc7519#18"
+   ],
+   "retrieved": [
+    "rfc7519#11",
+    "rfc8446#26",
+    "rfc3986#99",
+    "rfc7519#18",
+    "rfc3986#110"
+   ]
+  },
+  "rfcq159": {
+   "em": 0.0,
+   "f1": 0.6666666666666666,
+   "citation_hit": 0.0,
+   "answer": "RFC 2181, Section 10.3 [3]",
+   "cited": [
+    "rfc5321#98"
+   ],
+   "retrieved": [
+    "rfc5321#196",
+    "rfc5321#35",
+    "rfc5321#98",
+    "rfc8484#28",
+    "rfc1035#1"
+   ]
+  },
+  "rfcq160": {
+   "em": 0.0,
+   "f1": 0.6666666666666667,
+   "citation_hit": 1.0,
+   "answer": "HTTP/2 implementations MUST use TLS version 1.2 or higher [1][2].",
+   "cited": [
+    "rfc7540#111",
+    "rfc9113#116"
+   ],
+   "retrieved": [
+    "rfc7540#111",
+    "rfc9113#116",
+    "rfc9113#144",
+    "rfc9113#143",
+    "rfc7540#82"
+   ]
+  },
+  "rfcq163": {
+   "em": 0.0,
+   "f1": 0.6666666666666666,
+   "citation_hit": 1.0,
+   "answer": "At least 256 bits [2].",
+   "cited": [
+    "rfc8446#178"
+   ],
+   "retrieved": [
+    "rfc8446#123",
+    "rfc8446#178",
+    "rfc8446#124",
+    "rfc8446#127",
+    "rfc8446#100"
+   ]
+  },
+  "rfcq166": {
+   "em": 0.0,
+   "f1": 0.5,
+   "citation_hit": 1.0,
+   "answer": "11010111 11000101 [1]",
+   "cited": [
+    "rfc791#48"
+   ],
+   "retrieved": [
+    "rfc791#48",
+    "rfc8446#26",
+    "rfc7519#14",
+    "rfc7519#13",
+    "rfc7519#51"
+   ]
+  },
+  "rfcq168": {
+   "em": 0.0,
+   "f1": 0.2857142857142857,
+   "citation_hit": 1.0,
+   "answer": "The gateway SHOULD set the envelope return path in accordance with an error message return address, if supplied by the foreign environment [1].",
+   "cited": [
+    "rfc5321#73"
+   ],
+   "retrieved": [
+    "rfc5321#73",
+    "rfc5321#72",
+    "rfc5321#22",
+    "rfc5321#161",
+    "rfc5321#66"
+   ]
+  },
+  "rfcq169": {
+   "em": 0.0,
+   "f1": 0.28571428571428575,
+   "citation_hit": 1.0,
+   "answer": "The Request-Line begins with a method token, followed by the Request-URI and the protocol version, and ending with CRLF. [1][2][3]",
+   "cited": [
+    "rfc9112#14",
+    "rfc7230#34",
+    "rfc2616#62"
+   ],
+   "retrieved": [
+    "rfc9112#14",
+    "rfc7230#34",
+    "rfc2616#62",
+    "rfc9112#77",
+    "rfc2616#61"
+   ]
+  },
+  "rfcq170": {
+   "em": 0.0,
+   "f1": 0.6666666666666666,
+   "citation_hit": 1.0,
+   "answer": "CLOSING [1]",
+   "cited": [
+    "rfc6455#80"
+   ],
+   "retrieved": [
+    "rfc6455#80",
+    "rfc6455#89",
+    "rfc6455#8",
+    "rfc6455#81",
+    "rfc6455#79"
+   ]
+  },
+  "rfcq172": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "catenet [1]",
+   "cited": [
+    "rfc791#12"
+   ],
+   "retrieved": [
+    "rfc791#12",
+    "rfc793#12",
+    "rfc793#24",
+    "rfc793#198",
+    "rfc793#199"
+   ]
+  },
+  "rfcq173": {
+   "em": 0.0,
+   "f1": 0.37037037037037035,
+   "citation_hit": 1.0,
+   "answer": "When a response is truncated, and a resolver doesn't know whether it has a complete set, it should not cache a possibly partial set of RRs. [1]",
+   "cited": [
+    "rfc1035#89"
+   ],
+   "retrieved": [
+    "rfc1035#89",
+    "rfc2616#170",
+    "rfc2616#203",
+    "rfc1035#86",
+    "rfc2616#146"
+   ]
+  },
+  "rfcq175": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "Accept-Patch [1]",
+   "cited": [
+    "rfc9110#212"
+   ],
+   "retrieved": [
+    "rfc9110#212",
+    "rfc9110#260",
+    "rfc9110#385",
+    "rfc9110#218",
+    "rfc9110#384"
+   ]
+  },
+  "rfcq176": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 1.0,
+   "answer": "0 for Internet Protocol and 0 for Transmission Control Protocol [1][2].",
+   "cited": [
+    "rfc791#45",
+    "rfc793#50"
+   ],
+   "retrieved": [
+    "rfc791#45",
+    "rfc793#50",
+    "rfc793#48",
+    "rfc791#43",
+    "rfc791#78"
+   ]
+  },
+  "rfcq177": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 0.0,
+   "answer": "101 Switching Protocols [1][2][3]",
+   "cited": [
+    "rfc9110#267",
+    "rfc7540#86",
+    "rfc9113#105"
+   ],
+   "retrieved": [
+    "rfc9110#267",
+    "rfc7540#86",
+    "rfc9113#105",
+    "rfc9110#266",
+    "rfc9110#382"
+   ]
+  }
+ },
+ "latency_ms": {}
+}

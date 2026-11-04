@@ -1,0 +1,3471 @@
+{
+ "config": {
+  "name": "dense",
+  "dataset": "hotpot",
+  "split": "test",
+  "encoder": "gemma",
+  "encoder_selected_by": "pooled dev nDCG@10 (headline_encoder)",
+  "llm": "qwen2.5:7b-instruct",
+  "temperature": 0,
+  "seed": 42,
+  "final_k": 5,
+  "n": 200,
+  "n_requested": 200,
+  "sampling": "seed 42 sample of evaluated test questions",
+  "alpha_star": null
+ },
+ "metrics": {
+  "em": 0.215,
+  "f1": 0.40991174749264836,
+  "citation_hit": 0.855
+ },
+ "per_query": {
+  "5a71231a5542994082a3e5c4": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "Peach [1][2]",
+   "cited": [
+    "Pesco::4",
+    "Peach::9"
+   ],
+   "retrieved": [
+    "Pesco::4",
+    "Peach::9",
+    "Apple::6",
+    "Quince::5",
+    "Lycium cooperi::8"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a7137dc5542994082a3e68a": {
+   "em": 0.0,
+   "f1": 0.4,
+   "citation_hit": 1.0,
+   "answer": "Kevin Wayne Durant was named NBA Rookie of the Year [2].",
+   "cited": [
+    "Kevin Durant::4"
+   ],
+   "retrieved": [
+    "NBA Rookie of the Year Award::2",
+    "Kevin Durant::4",
+    "1952\u201353 Baltimore Bullets season::9",
+    "1952\u201353 Fort Wayne Pistons season::5",
+    "1953 NBA All-Star Game::7"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 0.75
+  },
+  "5a7153d05542994082a3e7dc": {
+   "em": 0.0,
+   "f1": 0.25,
+   "citation_hit": 1.0,
+   "answer": "The Nusretiye Mosque is unique for retaining a Baroque style of architecture, not the Bayezid II Mosque [1].",
+   "cited": [
+    "Nusretiye Mosque::1"
+   ],
+   "retrieved": [
+    "Nusretiye Mosque::1",
+    "Bayezid II Mosque::7",
+    "Bayezid II Mosque (Amasya)::4",
+    "Beyaz\u0131t Square::8",
+    "Nusretiye Clock Tower::9"
+   ],
+   "faithfulness": 0.5,
+   "nv_context_relevance": 1.0
+  },
+  "5a721a7655429971e9dc9271": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 0.0,
+   "answer": "Jay Thomas, who appeared in Murphy Brown, also had a role in a show with Steve Howey, as Steve Howey played Eddie LeBec on Cheers alongside Jay Thomas. [2]",
+   "cited": [
+    "Jay Thomas::7"
+   ],
+   "retrieved": [
+    "Christopher Rich (actor)::1",
+    "Jay Thomas::7",
+    "Doug Dale::2",
+    "Rock Me Baby (TV series)::8",
+    "Shawn Harrison (actor)::9"
+   ],
+   "faithfulness": 0.25,
+   "nv_context_relevance": 0.5
+  },
+  "5a727e1b5542991f9a20c497": {
+   "em": 0.0,
+   "f1": 0.4615384615384615,
+   "citation_hit": 0.0,
+   "answer": "\"Shake It Off\" shares the optimistic lyrical message with \"Yodel It!\".",
+   "cited": [],
+   "retrieved": [
+    "Yodel It!::2",
+    "Shake It Off::1",
+    "White Horse (Taylor Swift song)::0",
+    "Change (Taylor Swift song)::5",
+    "Our Song (Taylor Swift song)::8"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 0.5
+  },
+  "5a72b3335542994cef4bc3dc": {
+   "em": 0.0,
+   "f1": 0.3333333333333333,
+   "citation_hit": 1.0,
+   "answer": "The Irish Parliamentary Party campaigned for the Irish Home Rule Movement [1][3].",
+   "cited": [
+    "Home Rule League::0",
+    "Irish Parliamentary Party::6"
+   ],
+   "retrieved": [
+    "Home Rule League::0",
+    "Irish Home Rule movement::8",
+    "Irish Parliamentary Party::6",
+    "Government of Ireland Act 1914::3",
+    "Indian Home Rule movement::7"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a72dcb45542992359bc31af": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 0.0,
+   "answer": "not in context",
+   "cited": [],
+   "retrieved": [
+    "Rex Maughan::5",
+    "Rex Records (1933)::9",
+    "Rex Records (1912)::7",
+    "Rex-Acme::2",
+    "REX American Resources::0"
+   ],
+   "faithfulness": 0.0,
+   "nv_context_relevance": 0.0
+  },
+  "5a72f74a55429901807daf59": {
+   "em": 0.0,
+   "f1": 0.4,
+   "citation_hit": 1.0,
+   "answer": "Rosie O'Donnell appeared in the movie \"Sleepless in Seattle\" [2].",
+   "cited": [
+    "Sleepless in Seattle::0"
+   ],
+   "retrieved": [
+    "Rosie O'Donnell::2",
+    "Sleepless in Seattle::0",
+    "Larry Drake::7",
+    "Craig Kilborn::9",
+    "Rob Sitch::8"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 0.5
+  },
+  "5a7300b85542994cef4bc41a": {
+   "em": 0.0,
+   "f1": 0.8571428571428571,
+   "citation_hit": 1.0,
+   "answer": "Astrosat is India's first dedicated multi-wavelength space observatory. [2]",
+   "cited": [
+    "Astrosat::1"
+   ],
+   "retrieved": [
+    "Gaia (spacecraft)::2",
+    "Astrosat::1",
+    "Herschel Space Observatory::9",
+    "XEUS::5",
+    "Director General of the European Space Agency::8"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 0.75
+  },
+  "5a74122f55429929fddd83da": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "\"Love Drunk\" [1][3]",
+   "cited": [
+    "Love Drunk::4",
+    "Love Drunk (Boys Like Girls song)::1"
+   ],
+   "retrieved": [
+    "Love Drunk::4",
+    "Two Is Better Than One::0",
+    "Love Drunk (Boys Like Girls song)::1",
+    "Heart Heart Heartbreak::3",
+    "Boys Like Girls::5"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a749e1855429979e28829c3": {
+   "em": 0.0,
+   "f1": 0.1818181818181818,
+   "citation_hit": 1.0,
+   "answer": "Emilio S\u00e1nchez is older, born on 29 May 1965, compared to Andrei Olhovskiy, born on 15 April 1966. [1][2]",
+   "cited": [
+    "Emilio S\u00e1nchez::9",
+    "Andrei Olhovskiy::3"
+   ],
+   "retrieved": [
+    "Emilio S\u00e1nchez::9",
+    "Andrei Olhovskiy::3",
+    "1990 Estoril Open::6",
+    "Andrei Pavel::8",
+    "1986 Swedish Open::0"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a74a26a55429979e28829d6": {
+   "em": 0.0,
+   "f1": 0.14285714285714285,
+   "citation_hit": 1.0,
+   "answer": "B\u00e9la Bart\u00f3k was born earlier than Paul Hindemith, as Bart\u00f3k was born on 25 March 1881, while Hindemith was born on 16 November 1895 [1][2].",
+   "cited": [
+    "Paul Hindemith::9",
+    "B\u00e9la Bart\u00f3k::1"
+   ],
+   "retrieved": [
+    "Paul Hindemith::9",
+    "B\u00e9la Bart\u00f3k::1",
+    "B\u00e9la Bart\u00f3k Music High School::4",
+    "Suite, Op. 14 (Bart\u00f3k)::8",
+    "Sonata for Solo Cello (Crumb)::2"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a74f8bd5542993748c8976a": {
+   "em": 0.0,
+   "f1": 0.125,
+   "citation_hit": 1.0,
+   "answer": "Steve Prohm, as he was in his 1st season coaching the 2015\u201316 Iowa State Cyclones men's basketball team, while Tim Cluess coached the 2010\u201311 Iona Gaels men's basketball team for multiple seasons [3][1].",
+   "cited": [
+    "2015\u201316 Iowa State Cyclones men's basketball team::3",
+    "David Hobbs (basketball)::4"
+   ],
+   "retrieved": [
+    "David Hobbs (basketball)::4",
+    "Tim Esmay::1",
+    "2015\u201316 Iowa State Cyclones men's basketball team::3",
+    "2010\u201311 Iona Gaels men's basketball team::8",
+    "Steve Spurrier::7"
+   ],
+   "faithfulness": 0.5,
+   "nv_context_relevance": 0.5
+  },
+  "5a75462d5542996c70cfaed3": {
+   "em": 0.0,
+   "f1": 0.15384615384615383,
+   "citation_hit": 1.0,
+   "answer": "Edison Chen was born first, as he was born on 7 October 1980, while Kwok Kin Pong was born on 30 March 1987 [1][2].",
+   "cited": [
+    "Kwok Kin Pong::7",
+    "Edison Chen::2"
+   ],
+   "retrieved": [
+    "Kwok Kin Pong::7",
+    "Edison Chen::2",
+    "Edison Chen (EP)::4",
+    "Ed Is On::5",
+    "Kwok Kin Poon::1"
+   ],
+   "faithfulness": 0.6666666666666666,
+   "nv_context_relevance": 1.0
+  },
+  "5a7557d75542992d0ec05f68": {
+   "em": 0.0,
+   "f1": 0.5,
+   "citation_hit": 1.0,
+   "answer": "Laurie Metcalf is in Scream 2 [2].",
+   "cited": [
+    "Laurie Metcalf::3"
+   ],
+   "retrieved": [
+    "Scream 2::6",
+    "Laurie Metcalf::3",
+    "Scream (franchise)::7",
+    "Rebecca Gayheart::0",
+    "Gale Weathers::8"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a75e62f5542992d0ec06013": {
+   "em": 0.0,
+   "f1": 0.4,
+   "citation_hit": 1.0,
+   "answer": "Tropicana Hotel [1]",
+   "cited": [
+    "Johnny Mathis: Wonderful, Wonderful!::0"
+   ],
+   "retrieved": [
+    "Johnny Mathis: Wonderful, Wonderful!::0",
+    "Tropicana Casino &amp; Resort Atlantic City::5",
+    "Borgata::1",
+    "Caesars Atlantic City::9",
+    "TEN Atlantic City::4"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 0.75
+  },
+  "5a75f0ea5542994ccc91866c": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "A41 [2]",
+   "cited": [
+    "A41 road::9"
+   ],
+   "retrieved": [
+    "Backford Cross::1",
+    "A41 road::9",
+    "Strawberry Park, Cheshire::8",
+    "A5117 road::5",
+    "Woodford Aerodrome::2"
+   ],
+   "faithfulness": 0.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a7717635542994aec3b71e3": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 1.0,
+   "answer": "Kim Bass [2]",
+   "cited": [
+    "Kenan &amp; Kel::3"
+   ],
+   "retrieved": [
+    "Kim Bass::8",
+    "Kenan &amp; Kel::3",
+    "Unfabulous::5",
+    "Clarissa Explains It All::4",
+    "ICarly::1"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a777ca855429949eeb29e6a": {
+   "em": 0.0,
+   "f1": 0.8,
+   "citation_hit": 1.0,
+   "answer": "Walt Disney Pictures [1][4]",
+   "cited": [
+    "The Strongest Man in the World::3",
+    "1980 World's Strongest Man::0"
+   ],
+   "retrieved": [
+    "The Strongest Man in the World::3",
+    "The Little Mermaid (1989 film)::9",
+    "The Little Mermaid: Ariel's Beginning::4",
+    "1980 World's Strongest Man::0",
+    "2014 World's Strongest Man::5"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 0.75
+  },
+  "5a7796e05542992a6e59df0f": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 1.0,
+   "answer": "Japan [1][2]",
+   "cited": [
+    "Huis Ten Bosch (train)::1",
+    "Huis Ten Bosch (theme park)::8"
+   ],
+   "retrieved": [
+    "Huis Ten Bosch (train)::1",
+    "Huis Ten Bosch (theme park)::8",
+    "Huis Ten Bosch Station::4",
+    "Huis ten Bosch (disambiguation)::2",
+    "Huis ten Bosch palace::5"
+   ],
+   "faithfulness": 0.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a77a44d5542997042120aba": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 1.0,
+   "answer": "Lynbrook [1]",
+   "cited": [
+    "Brian F. Curran::0"
+   ],
+   "retrieved": [
+    "Brian F. Curran::0",
+    "Baldwin, Nassau County, New York::5",
+    "Salisbury, Nassau County, New York::9",
+    "Karl A. Brabenec::7",
+    "Long Island Nets::3"
+   ],
+   "faithfulness": 0.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a77b1a75542992a6e59df8d": {
+   "em": 0.0,
+   "f1": 0.2,
+   "citation_hit": 1.0,
+   "answer": "True Williams illustrated an 1876 novel by Mark Twain about a young boy growing up along the Mississippi River. [1][2]",
+   "cited": [
+    "True Williams::6",
+    "The Adventures of Tom Sawyer::2"
+   ],
+   "retrieved": [
+    "True Williams::6",
+    "The Adventures of Tom Sawyer::2",
+    "Mark Twain Boyhood Home &amp; Museum::4",
+    "Mark Twain Cave::1",
+    "Sierra Seminary::7"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a78ae8b5542990784727730": {
+   "em": 0.0,
+   "f1": 0.5,
+   "citation_hit": 1.0,
+   "answer": "About 115 miles northwest of Sacramento, California. [2]",
+   "cited": [
+    "Castle Air Force Base::0"
+   ],
+   "retrieved": [
+    "Sierra Academy of Aeronautics::6",
+    "Castle Air Force Base::0",
+    "ATP Flight School::8",
+    "American Flyers (flight school)::5",
+    "North American Institute of Aviation::2"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 0.5
+  },
+  "5a78b5f7554299148911f95b": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "Todd McFarlane [1]",
+   "cited": [
+    "Spawn (comics)::0"
+   ],
+   "retrieved": [
+    "Spawn (comics)::0",
+    "Mustafa Shakir::2",
+    "Malebolgia::7",
+    "Tiffany (comics)::3",
+    "Charles Gunn (Angel)::5"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a78e49855429974737f78f3": {
+   "em": 0.0,
+   "f1": 0.14285714285714288,
+   "citation_hit": 1.0,
+   "answer": "About 560 small-box format stores for Yankee Candle, one of Newell Brands' brands. [2][1]",
+   "cited": [
+    "Newell Brands::8",
+    "Yankee Candle::1"
+   ],
+   "retrieved": [
+    "Yankee Candle::1",
+    "Newell Brands::8",
+    "Entenmann's::6",
+    "Focus Brands::7",
+    "Danby (appliances)::8"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a78e9a2554299148911f995": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "Drillers Stadium [1][3]",
+   "cited": [
+    "Athletics Stadium::4",
+    "Bedlam Series::3"
+   ],
+   "retrieved": [
+    "Athletics Stadium::4",
+    "1957 Oklahoma State Cowboys football team::6",
+    "Bedlam Series::3",
+    "Newark Bears (International League)::0",
+    "Dr Pepper Ballpark::6"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 0.5
+  },
+  "5a791ce955429974737f798e": {
+   "em": 0.0,
+   "f1": 0.125,
+   "citation_hit": 1.0,
+   "answer": "Brett McClure competed in the pommel horse event at the 2001 Goodwill Games in Brisbane, Queensland, Australia. [2]",
+   "cited": [
+    "2001 Goodwill Games::0"
+   ],
+   "retrieved": [
+    "Brett McClure::1",
+    "2001 Goodwill Games::0",
+    "Marius Urzic\u0103::9",
+    "Pan-American Exposition::4",
+    "Ioan Silviu Suciu::6"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a79b525554299029c4b5f67": {
+   "em": 0.0,
+   "f1": 0.18181818181818182,
+   "citation_hit": 1.0,
+   "answer": "Grupo Aymara are famous for performing traditionally from the Andes, interpretations of traditional music of pre-Hispanic and contemporary music of the Andes. [1]",
+   "cited": [
+    "Grupo Aymara::8"
+   ],
+   "retrieved": [
+    "Grupo Aymara::8",
+    "Andes::5",
+    "Cajamarca Region::9",
+    "Kunturi (Ikmaqucha)::6",
+    "Apachita Pura Pura::1"
+   ],
+   "faithfulness": 0.5,
+   "nv_context_relevance": 1.0
+  },
+  "5a7aa0a55542990198eaf165": {
+   "em": 0.0,
+   "f1": 0.1904761904761905,
+   "citation_hit": 1.0,
+   "answer": "Jacques Feyder, as he was born in 1885, whereas Sathish Kalathil's birth year is not mentioned in the provided passages. [2][1]",
+   "cited": [
+    "Jacques Feyder::9",
+    "Sathish Kalathil::6"
+   ],
+   "retrieved": [
+    "Sathish Kalathil::6",
+    "Jacques Feyder::9",
+    "Jalachhayam::8",
+    "Laloorinu Parayanullathu::2",
+    "L'Atlantide (1921 film)::5"
+   ],
+   "faithfulness": 0.5,
+   "nv_context_relevance": 0.75
+  },
+  "5a7bb7f2554299042af8f7b6": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "Gweilo [1][2]",
+   "cited": [
+    "Gweilo::0",
+    "Ghosts (2006 film)::2"
+   ],
+   "retrieved": [
+    "Gweilo::0",
+    "Ghosts (2006 film)::2",
+    "Cantonese slang::6",
+    "Ba-Jia-Jiang::2",
+    "Ghosts in Bengali culture::7"
+   ],
+   "faithfulness": 0.6666666666666666,
+   "nv_context_relevance": 1.0
+  },
+  "5a7bbc59554299294a54aaa9": {
+   "em": 0.0,
+   "f1": 0.2222222222222222,
+   "citation_hit": 1.0,
+   "answer": "Albert Costa began playing at the age of five. [1]",
+   "cited": [
+    "Albert Costa::0"
+   ],
+   "retrieved": [
+    "Albert Costa::0",
+    "Steve Denton::7",
+    "1995 Austrian Open::3",
+    "2005 Rafael Nadal tennis season::8",
+    "1996 Bournemouth International::5"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a7bea3d5542996dd594b847": {
+   "em": 0.0,
+   "f1": 0.1904761904761905,
+   "citation_hit": 0.0,
+   "answer": "Sean Maguire replaced Tom Ellis, who is the Welsh actor born in 1978, playing Robin Hood in \"Once Upon a Time\".",
+   "cited": [],
+   "retrieved": [
+    "Robin Hood (Once Upon a Time)::4",
+    "Robin Hood (2018 film)::4",
+    "Tom Ellis (actor)::3",
+    "Alyas Robin Hood::6",
+    "List of Alyas Robin Hood characters::5"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 0.5
+  },
+  "5a7c6d98554299683c1c6304": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "Agent Carter [2][3][1]",
+   "cited": [
+    "Agent Carter (TV series)::1",
+    "Agent Carter (season 1)::6",
+    "Dominic Cooper::9"
+   ],
+   "retrieved": [
+    "Dominic Cooper::9",
+    "Agent Carter (TV series)::1",
+    "Agent Carter (season 1)::6",
+    "Now is Not the End::0",
+    "X-Men: First Class::0"
+   ],
+   "faithfulness": 0.5,
+   "nv_context_relevance": 1.0
+  },
+  "5a7c8ae855429935c91b5207": {
+   "em": 0.0,
+   "f1": 0.30769230769230765,
+   "citation_hit": 1.0,
+   "answer": "Alexander Borodin was both a doctor and a chemist besides being a composer. [1]",
+   "cited": [
+    "Alexander Borodin::4"
+   ],
+   "retrieved": [
+    "Alexander Borodin::4",
+    "Nikolay Pirogov::1",
+    "The Mighty Handful::5",
+    "Nikolay Speshnev::7",
+    "Anatoly Lunacharsky::3"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a7cb8bc554299452d57b9be": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "27,000 [2]",
+   "cited": [
+    "Gaddafi Stadium::5"
+   ],
+   "retrieved": [
+    "Lahore Eagles::9",
+    "Gaddafi Stadium::5",
+    "Lahore Lions::2",
+    "Aamer Iqbal (cricketer, born 1990)::6",
+    "Mohammad Naeem (cricketer, born 1991)::4"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a7cc59c55429909bec767fb": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 1.0,
+   "answer": "7 miles west of Phoenix, Arizona [2]",
+   "cited": [
+    "Luke Air Force Base::8"
+   ],
+   "retrieved": [
+    "63d Fighter Squadron::2",
+    "Luke Air Force Base::8",
+    "Eielson Air Force Base::7",
+    "420th Flight Test Flight::7",
+    "Robins Air Force Base::5"
+   ],
+   "faithfulness": 0.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a7cd7f055429909bec7683e": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "Juilliard School [1][3]",
+   "cited": [
+    "Jessica Chastain on screen and stage::5",
+    "Jessica Chastain::6"
+   ],
+   "retrieved": [
+    "Jessica Chastain on screen and stage::5",
+    "The Cherry Orchard::8",
+    "Jessica Chastain::6",
+    "Three Sisters (play)::9",
+    "Maria Chekhova::2"
+   ],
+   "faithfulness": 0.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a7ce0ce554299452d57ba92": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "William McKinley [1][2][3]",
+   "cited": [
+    "Pan-American Exposition::4",
+    "Assassination of William McKinley::9",
+    "Temple of Music::6"
+   ],
+   "retrieved": [
+    "Pan-American Exposition::4",
+    "Assassination of William McKinley::9",
+    "Temple of Music::6",
+    "Alice Russell Glenny::0",
+    "Assassination of James A. Garfield::1"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a7e05ba5542995f4f402392": {
+   "em": 0.0,
+   "f1": 0.24000000000000002,
+   "citation_hit": 1.0,
+   "answer": "For One Night Only was hosted by Gay Byrne, who was most well-known for hosting The Late Late Show from 1962 until 1999. [2][3]",
+   "cited": [
+    "For One Night Only (Irish TV series)::2",
+    "Gay Byrne::0"
+   ],
+   "retrieved": [
+    "One Night Only (TV series)::5",
+    "For One Night Only (Irish TV series)::2",
+    "Gay Byrne::0",
+    "Jimmy O'Neill (DJ)::1",
+    "7th AVN Awards::9"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a7e37095542995ed0d166d5": {
+   "em": 0.0,
+   "f1": 0.2222222222222222,
+   "citation_hit": 1.0,
+   "answer": "Sinclair Hill, as he was born in 1894, while Robert Z. Leonard was born in 1889 [1][2].",
+   "cited": [
+    "Robert Z. Leonard::3",
+    "Sinclair Hill::9"
+   ],
+   "retrieved": [
+    "Robert Z. Leonard::3",
+    "Sinclair Hill::9",
+    "Douglas Hill::6",
+    "James J. Hill::6",
+    "Harry Ford Sinclair::6"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a7f22005542993067513656": {
+   "em": 0.0,
+   "f1": 0.4444444444444445,
+   "citation_hit": 1.0,
+   "answer": "Jon Hume made the New Zealand band Evermore. [1][2]",
+   "cited": [
+    "Jon Hume::8",
+    "Dann Hume::4"
+   ],
+   "retrieved": [
+    "Jon Hume::8",
+    "Dann Hume::4",
+    "Kele Okereke::0",
+    "Running (Evermore song)::6",
+    "Light Surrounding You::3"
+   ],
+   "faithfulness": 0.0,
+   "nv_context_relevance": 0.75
+  },
+  "5a7f567e5542992097ad2f22": {
+   "em": 0.0,
+   "f1": 0.08695652173913045,
+   "citation_hit": 1.0,
+   "answer": "2001 for the Honda K engine [1], and the Honda H engine was from the 1990s and early 2000s [2]. Therefore, the Honda K engine is more recent.",
+   "cited": [
+    "Honda K engine::2",
+    "Honda H Engine::5"
+   ],
+   "retrieved": [
+    "Honda K engine::2",
+    "Honda H Engine::5",
+    "Honda B engine::0",
+    "CVCC::3",
+    "Honda B20A engine::7"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 0.75
+  },
+  "5a802b595542995d8a8ddf51": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "D-Day [1][3]",
+   "cited": [
+    "Operation Overlord::6",
+    "Normandy landings::7"
+   ],
+   "retrieved": [
+    "Operation Overlord::6",
+    "Ray Barker::8",
+    "Normandy landings::7",
+    "Mission Chicago::9",
+    "American airborne landings in Normandy::0"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a806aca5542996402f6a503": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 1.0,
+   "answer": "Orcs were added to Hinterland in 2009, as suggested by passage [2].",
+   "cited": [
+    "Hinterland (video game)::9"
+   ],
+   "retrieved": [
+    "Tilted Mill Entertainment::7",
+    "Hinterland (video game)::9",
+    "Orc::4",
+    "Medieval Mayor::8",
+    "Super Ghouls 'n Ghosts::0"
+   ],
+   "faithfulness": 0.5,
+   "nv_context_relevance": 1.0
+  },
+  "5a80870d5542992bc0c4a752": {
+   "em": 0.0,
+   "f1": 0.4,
+   "citation_hit": 1.0,
+   "answer": "Matt Winer [2]",
+   "cited": [
+    "Matt Winer::6"
+   ],
+   "retrieved": [
+    "Shaqtin' a Fool::1",
+    "Matt Winer::6",
+    "Stephen A. Smith::5",
+    "Jenn Brown::9",
+    "Kelley L. Carter::6"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 0.5
+  },
+  "5a808f3f5542992097ad2ffd": {
+   "em": 0.0,
+   "f1": 0.42857142857142855,
+   "citation_hit": 1.0,
+   "answer": "The Empire Builder's Columbia River Subdivision was part of the Great Northern Railway [3].",
+   "cited": [
+    "James J. Hill::6"
+   ],
+   "retrieved": [
+    "Columbia River Subdivision::8",
+    "C&amp;M Subdivision::0",
+    "James J. Hill::6",
+    "Wishram station::5",
+    "St. Paul Subdivision::8"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a809b575542996402f6a59c": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 0.0,
+   "answer": "not in context",
+   "cited": [],
+   "retrieved": [
+    "ESPN College Football Friday Primetime::9",
+    "Jenn Brown::9",
+    "Mike Gundy::0",
+    "Michael Strahan::3",
+    "Steve Spurrier::7"
+   ],
+   "faithfulness": 0.0,
+   "nv_context_relevance": 0.5
+  },
+  "5a80abb65542996402f6a5df": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "Mountain West Conference [1][4]",
+   "cited": [
+    "2012 Hawaii Warriors football team::8",
+    "Mountain West Conference::0"
+   ],
+   "retrieved": [
+    "2012 Hawaii Warriors football team::8",
+    "Hawaii Rainbow Warriors baseball::3",
+    "Big 12 Conference football::1",
+    "Mountain West Conference::0",
+    "2012 Harvard Crimson football team::8"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a80ddc555429938b6142224": {
+   "em": 0.0,
+   "f1": 0.2222222222222222,
+   "citation_hit": 1.0,
+   "answer": "Chip Zien is best known for his role in the Broadway production \"Into the Woods\" by Stephen Sondheim [1][2].",
+   "cited": [
+    "Chip Zien::2",
+    "Stephen Sondheim::6"
+   ],
+   "retrieved": [
+    "Chip Zien::2",
+    "Stephen Sondheim::6",
+    "Lin-Manuel Miranda::5",
+    "Glenn Slater::4",
+    "Stephen Flaherty::0"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a80ecea55429938b6142254": {
+   "em": 0.0,
+   "f1": 0.25,
+   "citation_hit": 1.0,
+   "answer": "My Secret Hotel is a television series starring a South Korean DJ who rose to fame as the lead actress in \"Queen In-hyun's Man\". [1][2]",
+   "cited": [
+    "Yoo In-na::4",
+    "My Secret Hotel::0"
+   ],
+   "retrieved": [
+    "Yoo In-na::4",
+    "My Secret Hotel::0",
+    "The Secret of My Love::7",
+    "Secret Love (TV series)::3",
+    "Bang Eun-hee::9"
+   ],
+   "faithfulness": 0.6666666666666666,
+   "nv_context_relevance": 1.0
+  },
+  "5a81108855429926c1cdace2": {
+   "em": 0.0,
+   "f1": 0.4,
+   "citation_hit": 1.0,
+   "answer": "16th [1]",
+   "cited": [
+    "Daewoong Pharmaceutical Co., Ltd::9"
+   ],
+   "retrieved": [
+    "Daewoong Pharmaceutical Co., Ltd::9",
+    "Seoul::4",
+    "Taisho Pharmaceutical Co.::0",
+    "Daiichi Sankyo::6",
+    "Shanghai::8"
+   ],
+   "faithfulness": 0.0,
+   "nv_context_relevance": 0.5
+  },
+  "5a81d0515542990a1d231ed4": {
+   "em": 0.0,
+   "f1": 0.4444444444444444,
+   "citation_hit": 1.0,
+   "answer": "The Flamingo Las Vegas [1][2].",
+   "cited": [
+    "Summer Nights (residency show)::5",
+    "Flamingo Las Vegas::2"
+   ],
+   "retrieved": [
+    "Summer Nights (residency show)::5",
+    "Flamingo Las Vegas::2",
+    "Tropicana Casino &amp; Resort Atlantic City::5",
+    "Tropicana Las Vegas::4",
+    "Borgata::1"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a8242c155429940e5e1a81d": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 0.0,
+   "answer": "not in context",
+   "cited": [],
+   "retrieved": [
+    "Thoughts on Machiavelli::5",
+    "Sebastian de Grazia::7",
+    "Mera J. Flaumenhaft::2",
+    "Anthony Parel::9",
+    "Angelo Codevilla::3"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 0.0
+  },
+  "5a827ce155429940e5e1a8d7": {
+   "em": 0.0,
+   "f1": 0.42857142857142855,
+   "citation_hit": 1.0,
+   "answer": "Billie Jean King won more Grand Slam titles than Kevin Ullyett [1][2].",
+   "cited": [
+    "Kevin Ullyett::6",
+    "Billie Jean King::0"
+   ],
+   "retrieved": [
+    "Kevin Ullyett::6",
+    "Billie Jean King::0",
+    "Billie Jean King Leadership Initiative::2",
+    "Kerry Melville::5",
+    "Kevin Durant::4"
+   ],
+   "faithfulness": 0.0,
+   "nv_context_relevance": 0.75
+  },
+  "5a8284b555429954d2e2eb5f": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 0.0,
+   "answer": "not in context",
+   "cited": [],
+   "retrieved": [
+    "7th AVN Awards::9",
+    "Tropicana Las Vegas::4",
+    "8th AVN Awards::1",
+    "5th AVN Awards::7",
+    "4th AVN Awards::0"
+   ],
+   "faithfulness": 0.0,
+   "nv_context_relevance": 0.25
+  },
+  "5a83411655429966c78a6b5d": {
+   "em": 0.0,
+   "f1": 0.23529411764705882,
+   "citation_hit": 1.0,
+   "answer": "Justin Spitzer created the NBC sitcom \"Superstore\" that Johnny Pemberton appears in as the character Bo Thompson. [2]",
+   "cited": [
+    "Superstore (TV series)::2"
+   ],
+   "retrieved": [
+    "Johnny Pemberton::0",
+    "Superstore (TV series)::2",
+    "Geoff Peterson::1",
+    "Son of Zorn::9",
+    "Nick Zano::8"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a837121554299123d8c2128": {
+   "em": 0.0,
+   "f1": 0.30769230769230765,
+   "citation_hit": 1.0,
+   "answer": "Kangpenqing is located in China [2], while Kirat Chuli is located in Nepal and India [1].",
+   "cited": [
+    "Kangpenqing::4",
+    "Kirat Chuli::7"
+   ],
+   "retrieved": [
+    "Kirat Chuli::7",
+    "Kangpenqing::4",
+    "Gimmigela Chuli::0",
+    "Mingli Sar::2",
+    "Ngong Ping::9"
+   ],
+   "faithfulness": 0.5,
+   "nv_context_relevance": 1.0
+  },
+  "5a83de04554299334474609f": {
+   "em": 0.0,
+   "f1": 0.3243243243243243,
+   "citation_hit": 1.0,
+   "answer": "The second studio album by The D.O.C was named as a reference to Charles Manson's idea of a Beatles' song which was a product of McCartney's attempt to create a sound as loud and dirty as possible. [1][2][3]",
+   "cited": [
+    "Helter Skelter (album)::8",
+    "Helter Skelter (Manson scenario)::3",
+    "Helter Skelter (song)::6"
+   ],
+   "retrieved": [
+    "Helter Skelter (album)::8",
+    "Helter Skelter (Manson scenario)::3",
+    "Helter Skelter (song)::6",
+    "Never Learn Not to Love::2",
+    "Man That You Fear::7"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a840e395542992ef85e239d": {
+   "em": 0.0,
+   "f1": 0.4,
+   "citation_hit": 0.0,
+   "answer": "No, not in context",
+   "cited": [],
+   "retrieved": [
+    "The Straight Story::9",
+    "Frozen (2013 film)::5",
+    "Alvin Straight::4",
+    "Dan Flannery::7",
+    "Richard Farnsworth::6"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 0.25
+  },
+  "5a8494b15542991dd0999d35": {
+   "em": 0.0,
+   "f1": 0.2222222222222222,
+   "citation_hit": 1.0,
+   "answer": "Allure was founded first, in 1991, while Genre magazine started in 1992 [1][2].",
+   "cited": [
+    "Genre (magazine)::6",
+    "Allure (magazine)::2"
+   ],
+   "retrieved": [
+    "Genre (magazine)::6",
+    "Allure (magazine)::2",
+    "List of Allure cover models::5",
+    "Vibe (magazine)::4",
+    "George (magazine)::3"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a849c135542992a431d1a7a": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "67,575 [1]",
+   "cited": [
+    "Saint John, New Brunswick::4"
+   ],
+   "retrieved": [
+    "Saint John, New Brunswick::4",
+    "Bank of British North America::6",
+    "Bay of Fundy::8",
+    "Banff Bay::5",
+    "Canada under British rule::4"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 0.75
+  },
+  "5a84e9d35542994c784dda84": {
+   "em": 0.0,
+   "f1": 0.5454545454545454,
+   "citation_hit": 1.0,
+   "answer": "Xherdan Shaqiri, who plays for the Switzerland national team. [1][2]",
+   "cited": [
+    "Xherdan Shaqiri::8",
+    "Nike Mercurial Vapor::7"
+   ],
+   "retrieved": [
+    "Xherdan Shaqiri::8",
+    "Nike Mercurial Vapor::7",
+    "Stoke City F.C.::1",
+    "Tommy Hyslop::3",
+    "Bet365::6"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a8638945542994775f6072d": {
+   "em": 0.0,
+   "f1": 0.13333333333333333,
+   "citation_hit": 1.0,
+   "answer": "No, Sutera is a municipality in Sicily, not a shrub [2], and Rhodotypos scandens is a deciduous shrub [1].",
+   "cited": [
+    "Sutera::0",
+    "Rhodotypos::5"
+   ],
+   "retrieved": [
+    "Rhodotypos::5",
+    "Sutera::0",
+    "Myosotis::2",
+    "Rhizanthes::6",
+    "Cryptanthus::6"
+   ],
+   "faithfulness": 0.5,
+   "nv_context_relevance": 0.25
+  },
+  "5a864d9e5542994775f6073d": {
+   "em": 0.0,
+   "f1": 0.4,
+   "citation_hit": 1.0,
+   "answer": "No, not in context [1][2].",
+   "cited": [
+    "Ulrich Walter::5",
+    "L\u00e9opold Eyharts::4"
+   ],
+   "retrieved": [
+    "Ulrich Walter::5",
+    "L\u00e9opold Eyharts::4",
+    "Ulrich S. Schubert::8",
+    "\u00c9ric Vuillard::9",
+    "Edgar Leeteg::4"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 0.75
+  },
+  "5a86769c5542994775f60776": {
+   "em": 0.0,
+   "f1": 0.15384615384615385,
+   "citation_hit": 1.0,
+   "answer": "Kurt Vonnegut Jr. was best known for his 1969 satire novel \"Slaughterhouse-Five\" [3].",
+   "cited": [
+    "Kurt Vonnegut::0"
+   ],
+   "retrieved": [
+    "Armageddon in Retrospect::9",
+    "Venus on the Half-Shell::7",
+    "Kurt Vonnegut::0",
+    "Little Big Man (novel)::2",
+    "The Green Odyssey::8"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 0.5
+  },
+  "5a875fee5542996e4f3087ab": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 0.0,
+   "answer": "not in context",
+   "cited": [],
+   "retrieved": [
+    "Lysiloma::0",
+    "Hydrocotyle umbellata::9",
+    "Hydrocotyle ranunculoides::6",
+    "Hydrocotyle javanica::7",
+    "Hunteria umbellata::5"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 0.5
+  },
+  "5a87ed5b5542994846c1cdfc": {
+   "em": 0.0,
+   "f1": 0.8,
+   "citation_hit": 1.0,
+   "answer": "GNU GPLv3 license [1]",
+   "cited": [
+    "Tales of Maj'Eyal::5"
+   ],
+   "retrieved": [
+    "Tales of Maj'Eyal::5",
+    "Dungeon Crawl Stone Soup::9",
+    "The Binding of Isaac (video game)::2",
+    "Freemium::3",
+    "Open-source license::1"
+   ],
+   "faithfulness": 0.0,
+   "nv_context_relevance": 0.75
+  },
+  "5a8843cd5542994846c1ce75": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 1.0,
+   "answer": "The Mwabvi river [1].",
+   "cited": [
+    "Mwabvi Wildlife Reserve::8"
+   ],
+   "retrieved": [
+    "Mwabvi Wildlife Reserve::8",
+    "African buffalo::9",
+    "Project African Wilderness::2",
+    "Katonga Wildlife Reserve::4",
+    "Saint-Maurice Wildlife Reserve::3"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a88b3b4554299206df2b336": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 0.0,
+   "answer": "not in context",
+   "cited": [],
+   "retrieved": [
+    "The Consul::9",
+    "Arlecchino (opera)::0",
+    "Consul fabius::1",
+    "Malebolgia::7",
+    "Archibald Motley::4"
+   ],
+   "faithfulness": 0.0,
+   "nv_context_relevance": 0.0
+  },
+  "5a89bbb05542992e4fca83a3": {
+   "em": 0.0,
+   "f1": 0.2666666666666667,
+   "citation_hit": 1.0,
+   "answer": "Nick Offerman appeared in November as the actor who starred in Parks and Recreation [4][1].",
+   "cited": [
+    "Nick Offerman::7",
+    "November (2004 film)::6"
+   ],
+   "retrieved": [
+    "November (2004 film)::6",
+    "End of the World (Parks and Recreation)::8",
+    "The Camel (Parks and Recreation)::2",
+    "Nick Offerman::7",
+    "Donna Meagle::9"
+   ],
+   "faithfulness": 0.5,
+   "nv_context_relevance": 0.5
+  },
+  "5a89f58f5542992e4fca84af": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 0.0,
+   "answer": "not in context",
+   "cited": [],
+   "retrieved": [
+    "Carnforth railway station::3",
+    "Brief Encounter (1974 film)::8",
+    "Findochty railway station::9",
+    "Port Carlisle railway station::0",
+    "Hopperton::5"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 0.5
+  },
+  "5a8a231a55429930ff3c0cb4": {
+   "em": 0.0,
+   "f1": 0.7272727272727273,
+   "citation_hit": 1.0,
+   "answer": "Manitoba, bordered by North Dakota and Minnesota. [2]",
+   "cited": [
+    "Manitoba::9"
+   ],
+   "retrieved": [
+    "Kasimir Bileski::2",
+    "Manitoba::9",
+    "Roscoe Wilmeth::9",
+    "Philip Henry Ward Jr.::1",
+    "Canada under British rule::4"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a8af1e255429950cd6afc28": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 0.0,
+   "answer": "not in context",
+   "cited": [],
+   "retrieved": [
+    "John Alexander (footballer, born 1955)::9",
+    "Stoke City F.C.::1",
+    "Xherdan Shaqiri::8",
+    "Charlie Leatherbarrow::0",
+    "Wilton Lines::7"
+   ],
+   "faithfulness": 0.0,
+   "nv_context_relevance": 0.0
+  },
+  "5a8b057255429971feec4611": {
+   "em": 0.0,
+   "f1": 0.19999999999999998,
+   "citation_hit": 1.0,
+   "answer": "David Lightfoot worked on \"Wolf Creek\", which loosely based on the murders of tourists by Ivan Milat in the 1990s. [1][5]",
+   "cited": [
+    "David Lightfoot::3",
+    "Wolf Creek (film)::7"
+   ],
+   "retrieved": [
+    "David Lightfoot::3",
+    "Backpacker murders::2",
+    "Catching Milat::8",
+    "Mark Tedeschi::0",
+    "Wolf Creek (film)::7"
+   ],
+   "faithfulness": 0.5,
+   "nv_context_relevance": 1.0
+  },
+  "5a8b3de95542997f31a41cc3": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 1.0,
+   "answer": "1993 [3]",
+   "cited": [
+    "Tian Tan Buddha::5"
+   ],
+   "retrieved": [
+    "Buddhism in Hong Kong::1",
+    "Po Lin Monastery::2",
+    "Tian Tan Buddha::5",
+    "Ngong Ping::9",
+    "Nei Lak Shan::8"
+   ],
+   "faithfulness": 0.0,
+   "nv_context_relevance": 0.75
+  },
+  "5a8b3e985542995d1e6f131c": {
+   "em": 0.0,
+   "f1": 0.5555555555555556,
+   "citation_hit": 1.0,
+   "answer": "Focus Brands owns Moe's Southwest Grill, based in Sandy Springs, Georgia [4][1].",
+   "cited": [
+    "Focus Brands::7",
+    "Moe's Southwest Grill::9"
+   ],
+   "retrieved": [
+    "Moe's Southwest Grill::9",
+    "On the Border Mexican Grill &amp; Cantina::5",
+    "Tumbleweed Tex Mex Grill &amp; Margarita Bar::8",
+    "Focus Brands::7",
+    "Good Times Burgers &amp; Frozen Custard::7"
+   ],
+   "faithfulness": 0.5,
+   "nv_context_relevance": 1.0
+  },
+  "5a8b77705542995d1e6f13aa": {
+   "em": 0.0,
+   "f1": 0.8,
+   "citation_hit": 1.0,
+   "answer": "Sirius XM [1]",
+   "cited": [
+    "Emma Willmann::4"
+   ],
+   "retrieved": [
+    "Emma Willmann::4",
+    "The Big Bub's Comedy Show::9",
+    "A Prairie Home Companion::4",
+    "Billy Eichner::5",
+    "Superstore (TV series)::2"
+   ],
+   "faithfulness": 0.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a8c493e554299653c1aa020": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 0.0,
+   "answer": "not in context",
+   "cited": [],
+   "retrieved": [
+    "John Ruskin (painting)::5",
+    "Disguise in Love::9",
+    "Ruskin College::6",
+    "Ruskin Colony::7",
+    "His Band and the Street Choir::7"
+   ],
+   "faithfulness": 0.0,
+   "nv_context_relevance": 0.0
+  },
+  "5a8c6d4e5542996e8ac88aa6": {
+   "em": 0.0,
+   "f1": 0.15384615384615383,
+   "citation_hit": 1.0,
+   "answer": "J. Searle Dawley [1] was from the United States, while Lionel Ngakane [2] was from South Africa. The United States is closer to Canada than South Africa.",
+   "cited": [
+    "J. Searle Dawley::6",
+    "Lionel Ngakane::1"
+   ],
+   "retrieved": [
+    "J. Searle Dawley::6",
+    "Lionel Ngakane::1",
+    "Francis Searle::7",
+    "Lionel Snell::9",
+    "On the Broad Stairway::8"
+   ],
+   "faithfulness": 0.6666666666666666,
+   "nv_context_relevance": 0.75
+  },
+  "5a8c7ced5542995e66a4761c": {
+   "em": 0.0,
+   "f1": 0.5,
+   "citation_hit": 1.0,
+   "answer": "film and entertainment [1][2]",
+   "cited": [
+    "Josh Trank::1",
+    "Mike Valerio::9"
+   ],
+   "retrieved": [
+    "Josh Trank::1",
+    "Mike Valerio::9",
+    "Chronicle (film)::0",
+    "Fantastic Four (2015 film)::7",
+    "James Franco::6"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 0.75
+  },
+  "5a8c8f24554299653c1aa0ba": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "World War II [5]",
+   "cited": [
+    "Bataan Death March::1"
+   ],
+   "retrieved": [
+    "34th Pursuit Squadron::4",
+    "24th Pursuit Group::6",
+    "14th Bombardment Squadron::9",
+    "William E. Dyess::8",
+    "Bataan Death March::1"
+   ],
+   "faithfulness": 0.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a8ce55f554299441c6b9f62": {
+   "em": 0.0,
+   "f1": 0.11764705882352941,
+   "citation_hit": 1.0,
+   "answer": "Tulsa. The first performance by the band was on March 18, 2009 at Cain's Ballroom in Tulsa, Oklahoma. [2]",
+   "cited": [
+    "Tinted Windows (band)::9"
+   ],
+   "retrieved": [
+    "Tinted Windows (album)::3",
+    "Tinted Windows (band)::9",
+    "The Shins::1",
+    "Of Montreal::4",
+    "Lush (band)::1"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a8d841955429941ae14dfe6": {
+   "em": 0.0,
+   "f1": 0.3076923076923077,
+   "citation_hit": 1.0,
+   "answer": "Eve Hewson plays in both The True Adventures of Wolfboy and \"The Knick\" [1][3].",
+   "cited": [
+    "The True Adventures of Wolfboy::5",
+    "Eve Hewson::7"
+   ],
+   "retrieved": [
+    "The True Adventures of Wolfboy::5",
+    "The Ballad of Jack and Rose::6",
+    "Eve Hewson::7",
+    "Good Boy!::6",
+    "Devil's Knot (film)::3"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 0.75
+  },
+  "5a8da2b05542994ba4e3dcdc": {
+   "em": 0.0,
+   "f1": 0.6666666666666666,
+   "citation_hit": 1.0,
+   "answer": "Romantic era [3]",
+   "cited": [
+    "Edvard Grieg::1"
+   ],
+   "retrieved": [
+    "Grieg (crater)::6",
+    "Mount Grieg::0",
+    "Edvard Grieg::1",
+    "Grieg (disambiguation)::2",
+    "Grieg Academy::8"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a8dee2455429917b4a5bce1": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 0.0,
+   "answer": "not in context",
+   "cited": [],
+   "retrieved": [
+    "127 Hours::2",
+    "List of accolades received by 127 Hours::4",
+    "James Franco::6",
+    "The Keeping Hours::3",
+    "Any Questions for Ben?::5"
+   ],
+   "faithfulness": 0.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a8f18d555429918e830d189": {
+   "em": 0.0,
+   "f1": 0.5,
+   "citation_hit": 1.0,
+   "answer": "Caistor [2]",
+   "cited": [
+    "Caistor::4"
+   ],
+   "retrieved": [
+    "Normanby le Wold::2",
+    "Caistor::4",
+    "Wolds Top::3",
+    "Grimblethorpe::9",
+    "Boston, Lincolnshire::3"
+   ],
+   "faithfulness": 0.0,
+   "nv_context_relevance": 0.75
+  },
+  "5a8f45ca5542997ba9cb320e": {
+   "em": 0.0,
+   "f1": 0.19999999999999998,
+   "citation_hit": 1.0,
+   "answer": "Both \"500 Years Later\" and \"Manson\" are documentary films [1][2].",
+   "cited": [
+    "500 Years Later::3",
+    "Manson (film)::5"
+   ],
+   "retrieved": [
+    "500 Years Later::3",
+    "Manson (film)::5",
+    "Motherland (2010 film)::8",
+    "Mandingo Massacre::7",
+    "The Manson Family Album::5"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a8f68795542992414482ab5": {
+   "em": 0.0,
+   "f1": 0.4444444444444445,
+   "citation_hit": 1.0,
+   "answer": "Do Kyung-soo stars in the upcoming movie \"The Underdog\". [1][2]",
+   "cited": [
+    "The Underdog (film)::1",
+    "D.O. (entertainer)::8"
+   ],
+   "retrieved": [
+    "The Underdog (film)::1",
+    "D.O. (entertainer)::8",
+    "Kai (entertainer, born 1994)::2",
+    "Suho::3",
+    "Luhan (entertainer)::9"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5a90b6985542990a984936c2": {
+   "em": 0.0,
+   "f1": 0.33333333333333337,
+   "citation_hit": 1.0,
+   "answer": "Emily Blunt made her professional debut in the play \"The Royal Family\" [2].",
+   "cited": [
+    "Emily Blunt::2"
+   ],
+   "retrieved": [
+    "Arthur Newman (film)::8",
+    "Emily Blunt::2",
+    "Jessica Chastain on screen and stage::5",
+    "Jessica Chastain::6",
+    "The Passion of John Ruskin::4"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 0.75
+  },
+  "5ab28c89554299340b525513": {
+   "em": 0.0,
+   "f1": 0.2222222222222222,
+   "citation_hit": 1.0,
+   "answer": "Reichsf\u00fchrer-SS was higher than Obergruppenf\u00fchrer until April 1942 [3].",
+   "cited": [
+    "Obergruppenf\u00fchrer::3"
+   ],
+   "retrieved": [
+    "Karl Hermann Frank::6",
+    "Rudolf Plajner::9",
+    "Obergruppenf\u00fchrer::3",
+    "Jan Mor\u00e1vek (1902\u20131984)::3",
+    "Karlheinz Pintsch::2"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5ab29b07554299194fa93440": {
+   "em": 0.0,
+   "f1": 0.4,
+   "citation_hit": 1.0,
+   "answer": "Columbia, Maryland includes Lake Elkhorn and a surrounding park. [3]",
+   "cited": [
+    "Lake Elkhorn::8"
+   ],
+   "retrieved": [
+    "Falls Road station::7",
+    "Prettyboy Reservoir::6",
+    "Lake Elkhorn::8",
+    "Columbia, Maryland::0",
+    "Baltimore County, Maryland::5"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5ab2acbc55429929539467d2": {
+   "em": 0.0,
+   "f1": 0.16666666666666669,
+   "citation_hit": 1.0,
+   "answer": "Laysan is located 808 nmi northwest of Honolulu, the capital of Hawaii. [1][2]",
+   "cited": [
+    "Laysan::6",
+    "Honolulu::7"
+   ],
+   "retrieved": [
+    "Laysan::6",
+    "Honolulu::7",
+    "Kingman Reef::2",
+    "Minnetonka, Minnesota::9",
+    "Columbus Circle::1"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5ab2b61d5542991669774065": {
+   "em": 0.0,
+   "f1": 0.4,
+   "citation_hit": 1.0,
+   "answer": "Harrison Ford played Han Solo in Star Wars. [5]",
+   "cited": [
+    "Harrison Ford::6"
+   ],
+   "retrieved": [
+    "Dead Heat on a Merry-Go-Round::9",
+    "Timothy Olyphant::2",
+    "Going Back (film)::9",
+    "Larry Drake::7",
+    "Harrison Ford::6"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 0.5
+  },
+  "5ab2b630554299545a2cfa17": {
+   "em": 0.0,
+   "f1": 0.15384615384615385,
+   "citation_hit": 1.0,
+   "answer": "Yes, both Gasland from 2010 and Pumping Iron from 1977 are documentaries [1][2].",
+   "cited": [
+    "Pumping Iron::6",
+    "Gasland::8"
+   ],
+   "retrieved": [
+    "Pumping Iron::6",
+    "Gasland::8",
+    "Pumping Iron II: The Women::1",
+    "Ken Waller::9",
+    "Bodybuilders (On the Inside)::5"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5ab3589455429976abd1bc93": {
+   "em": 0.0,
+   "f1": 0.5555555555555556,
+   "citation_hit": 1.0,
+   "answer": "Both the Iron Rattler's inversion and a barrel roll involve a combination of a loop and a roll. [1][3]",
+   "cited": [
+    "Iron Rattler::8",
+    "Barrel roll::1"
+   ],
+   "retrieved": [
+    "Iron Rattler::8",
+    "Aileron roll::0",
+    "Barrel roll::1",
+    "Barrel roll (disambiguation)::9",
+    "El Rollo::4"
+   ],
+   "faithfulness": 0.0,
+   "nv_context_relevance": 1.0
+  },
+  "5ab44ab25542991779162c58": {
+   "em": 0.0,
+   "f1": 0.2,
+   "citation_hit": 1.0,
+   "answer": "both Camel Up and Outrage! are board games [1][3].",
+   "cited": [
+    "Camel Up::1",
+    "Outrage! (game)::0"
+   ],
+   "retrieved": [
+    "Camel Up::1",
+    "October Rage::3",
+    "Outrage! (game)::0",
+    "Outrage Coda::6",
+    "Outrage porn::5"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5ab4b9f75542990594ba9ca4": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 0.0,
+   "answer": "not in context",
+   "cited": [],
+   "retrieved": [
+    "I Love You (The Zombies song)::4",
+    "Syreeta (1972 album)::6",
+    "Who Do You Love? (Bo Diddley song)::5",
+    "Sara Bareilles::4",
+    "Can We Talk::7"
+   ],
+   "faithfulness": 0.0,
+   "nv_context_relevance": 1.0
+  },
+  "5ab57759554299637185c5a5": {
+   "em": 0.0,
+   "f1": 0.33333333333333337,
+   "citation_hit": 1.0,
+   "answer": "Princess Marie-Clementine Bagration was the illegitimate daughter of Prince Klemens von Metternich, whose resignation was forced by the liberal revolutions of 1848 [1][2].",
+   "cited": [
+    "Marie-Clementine Bagration::4",
+    "Klemens von Metternich::0"
+   ],
+   "retrieved": [
+    "Marie-Clementine Bagration::4",
+    "Klemens von Metternich::0",
+    "Mary Victoria Douglas-Hamilton::3",
+    "Prince Felix of Schwarzenberg::8",
+    "Historical assessment of Klemens von Metternich::1"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5ab5ac345542992aa134a37f": {
+   "em": 0.0,
+   "f1": 0.4347826086956522,
+   "citation_hit": 1.0,
+   "answer": "Leipzig University was founded by Frederick I, Elector of Saxony and his brother William II, Margrave of Meissen. [2]",
+   "cited": [
+    "Leipzig University::8"
+   ],
+   "retrieved": [
+    "Per K. S\u00f8rensen::0",
+    "Leipzig University::8",
+    "Central Asian Review::5",
+    "Central Asian studies::2",
+    "W. Norman Brown::4"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 1.0
+  },
+  "5ab5d6155542997d4ad1f1fa": {
+   "em": 0.0,
+   "f1": 0.19999999999999998,
+   "citation_hit": 1.0,
+   "answer": "David Coverdale was part of Deep Purple when he was inducted into the Rock and Roll Hall of Fame [3][5].",
+   "cited": [
+    "David Coverdale::1",
+    "The Yardbirds::0"
+   ],
+   "retrieved": [
+    "The Early Years (Whitesnake album)::2",
+    "Rock and Roll Hall of Fame::6",
+    "David Coverdale::1",
+    "Rock &amp; Roll Hall of Fame Covers EP::0",
+    "The Yardbirds::0"
+   ],
+   "faithfulness": 1.0,
+   "nv_context_relevance": 0.75
+  },
+  "5ab5e024554299494045f097": {
+   "em": 0.0,
+   "f1": 0.19999999999999998,
+   "citation_hit": 1.0,
+   "answer": "Yes, both Joss Whedon and Norman Mailer were Americans. [1][2]",
+   "cited": [
+    "Joss Whedon::4",
+    "Norman Mailer::7"
+   ],
+   "retrieved": [
+    "Joss Whedon::4",
+    "Norman Mailer::7",
+    "J. Michael Lennon::6",
+    "Zack Norman::0",
+    "Norman Mailer Prize::2"
+   ]
+  },
+  "5ab5ec0a5542997d4ad1f250": {
+   "em": 0.0,
+   "f1": 0.4444444444444445,
+   "citation_hit": 0.0,
+   "answer": "Approximately 650 locations, as of early 2008 [5].",
+   "cited": [
+    "Hughes Supply::4"
+   ],
+   "retrieved": [
+    "BJ's Wholesale Club::7",
+    "US Vision::9",
+    "Wholesale Club::3",
+    "City Club (wholesale club)::2",
+    "Hughes Supply::4"
+   ]
+  },
+  "5ab6e848554299710c8d1faa": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "August 19, 1968 [2]",
+   "cited": [
+    "George Gamow::1"
+   ],
+   "retrieved": [
+    "Alpher\u2013Bethe\u2013Gamow paper::6",
+    "George Gamow::1",
+    "Ylem::0",
+    "Bethe\u2013Salpeter equation::5",
+    "Semi-empirical mass formula::8"
+   ]
+  },
+  "5ab707d65542991d32223761": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "Pennsylvania's 18th congressional district [2].",
+   "cited": [
+    "Wilkins Township, Allegheny County, Pennsylvania::0"
+   ],
+   "retrieved": [
+    "Pennsylvania's 18th congressional district::7",
+    "Wilkins Township, Allegheny County, Pennsylvania::0",
+    "Kansas's 1st congressional district::5",
+    "Ohio House of Representatives, 78th District::8",
+    "Ron Stephens (Illinois politician)::5"
+   ]
+  },
+  "5ab741005542992aa3b8c800": {
+   "em": 0.0,
+   "f1": 0.4,
+   "citation_hit": 1.0,
+   "answer": "Bobby Hurley [3]",
+   "cited": [
+    "Dan Hurley::7"
+   ],
+   "retrieved": [
+    "Bobby Hurley::2",
+    "Bob Hurley::5",
+    "Dan Hurley::7",
+    "Nate Oats::0",
+    "Rhode Island Rams men's basketball::4"
+   ]
+  },
+  "5ab7b0775542992aa3b8c83e": {
+   "em": 0.0,
+   "f1": 0.5,
+   "citation_hit": 1.0,
+   "answer": "Belfast [1][2]",
+   "cited": [
+    "SS Ionic (1902)::8",
+    "Harland and Wolff::5"
+   ],
+   "retrieved": [
+    "SS Ionic (1902)::8",
+    "Harland and Wolff::5",
+    "SS Rebecca Lukens::9",
+    "Stewart Spiers::9",
+    "Larkin Company::9"
+   ]
+  },
+  "5ab7f6d35542993667794070": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "Cyclic Defrost [1]",
+   "cited": [
+    "Cyclic Defrost::6"
+   ],
+   "retrieved": [
+    "Cyclic Defrost::6",
+    "Free Access Magazine::2",
+    "Experimental hip hop::4",
+    "Lloyd Dunn::9",
+    "Black Velvet (magazine)::8"
+   ]
+  },
+  "5ab7f7465542993667794071": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 0.0,
+   "answer": "not in context",
+   "cited": [],
+   "retrieved": [
+    "Saab 36::4",
+    "Avro Vulcan::1",
+    "Saab JAS 39 Gripen::4",
+    "Volvo RM12::6",
+    "Avro Vulcan XH558::0"
+   ]
+  },
+  "5ab849d955429916710eb017": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "11 November 1918 [2]",
+   "cited": [
+    "Hundred Days Offensive::2"
+   ],
+   "retrieved": [
+    "Battle of Cambrai (1918)::7",
+    "Hundred Days Offensive::2",
+    "To the Green Fields Beyond (game)::1",
+    "Siege of Cambrai (1677)::5",
+    "Battle of Courtrai (1918)::4"
+   ]
+  },
+  "5ab8eabb5542991b5579f03d": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 1.0,
+   "answer": "Robert Nardelli, Frank Blake's longtime prot\u00e9g\u00e9, was also the chairman and CEO of The Home Depot from December 2000 to January 2007 [1][2].",
+   "cited": [
+    "Frank Blake::3",
+    "Robert Nardelli::8"
+   ],
+   "retrieved": [
+    "Frank Blake::3",
+    "Robert Nardelli::8",
+    "Ron Brill::2",
+    "Hughes Supply::4",
+    "Douglas Conant::6"
+   ]
+  },
+  "5ab900045542991b5579f0c0": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 1.0,
+   "answer": "Carnegie Hall [1]",
+   "cited": [
+    "Libu\u0161e (opera)::4"
+   ],
+   "retrieved": [
+    "Libu\u0161e (opera)::4",
+    "Carnegie Hall::5",
+    "Temple of Music::6",
+    "Tivolis Koncertsal::3",
+    "De Materie::7"
+   ]
+  },
+  "5ab90d8955429916710eb0f1": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "Smoothie King Center [2]",
+   "cited": [
+    "New Orleans Pelicans::4"
+   ],
+   "retrieved": [
+    "Jalen Jones::8",
+    "New Orleans Pelicans::4",
+    "Portland Trail Blazers::2",
+    "Detroit Pistons::5",
+    "Tyus Jones::7"
+   ]
+  },
+  "5ab916e155429919ba4e23a4": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "Chiwetel Ejiofor [1]",
+   "cited": [
+    "Chiwetel Ejiofor::8"
+   ],
+   "retrieved": [
+    "Chiwetel Ejiofor::8",
+    "12 Years a Slave (score)::6",
+    "Tom Hardy::8",
+    "Steve McQueen (director)::9",
+    "Michael Fassbender::7"
+   ]
+  },
+  "5ab9547755429970cfb8ea6c": {
+   "em": 0.0,
+   "f1": 0.5,
+   "citation_hit": 0.0,
+   "answer": "87 parish churches [2]",
+   "cited": [
+    "List of Christopher Wren churches in London::7"
+   ],
+   "retrieved": [
+    "St Dionis Backchurch::1",
+    "List of Christopher Wren churches in London::7",
+    "Great Fire of London::2",
+    "St Dionis Vicarage::9",
+    "St Dionis Mission Hall::6"
+   ]
+  },
+  "5ab99a215542996be202056a": {
+   "em": 0.0,
+   "f1": 0.125,
+   "citation_hit": 1.0,
+   "answer": "The castle where \"Spook Squad\" was filmed is in Fyvie, Scotland, specifically in Fyvie Castle [1].",
+   "cited": [
+    "Spook Squad::5"
+   ],
+   "retrieved": [
+    "Spook Squad::5",
+    "Kinloch Castle::2",
+    "Dundas Castle::4",
+    "Cairnburgh Castle::7",
+    "Loch Leven Castle::3"
+   ]
+  },
+  "5ab9e477554299232ef4a25d": {
+   "em": 0.0,
+   "f1": 0.1904761904761905,
+   "citation_hit": 1.0,
+   "answer": "The Woolworth Building was built first, constructed between 1910 and 1912, while 1 New York Plaza was built in 1969 [1][2].",
+   "cited": [
+    "Woolworth Building::8",
+    "1 New York Plaza::4"
+   ],
+   "retrieved": [
+    "Woolworth Building::8",
+    "1 New York Plaza::4",
+    "F. W. Woolworth Building (Watertown, New York)::5",
+    "Westchester Avenue (NYW&amp;B station)::3",
+    "Abraham M. Radcliffe::1"
+   ]
+  },
+  "5abace6b5542996cc5e49e99": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "Che Guevara [1][2]",
+   "cited": [
+    "Arthur Quinlan::2",
+    "Che Guevara::4"
+   ],
+   "retrieved": [
+    "Arthur Quinlan::2",
+    "Che Guevara::4",
+    "National Art Schools (Cuba)::6",
+    "Eulogio Cantillo::0",
+    "Republic of Cuba (1902\u201359)::3"
+   ]
+  },
+  "5abb1e1b5542992ccd8e7f19": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "Nobel Prize in Literature [1][2]",
+   "cited": [
+    "Ivo Andri\u0107::8",
+    "Jos\u00e9 Saramago::2"
+   ],
+   "retrieved": [
+    "Ivo Andri\u0107::8",
+    "Jos\u00e9 Saramago::2",
+    "Jos\u00e9 Saramago Foundation::0",
+    "Blindness (novel)::5",
+    "Andri\u0107grad::9"
+   ]
+  },
+  "5abb4b4a5542993f40c73aea": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "University of California [2][1]",
+   "cited": [
+    "Jonas Tilly::4",
+    "University of California::0"
+   ],
+   "retrieved": [
+    "University of California::0",
+    "Jonas Tilly::4",
+    "San Diego Community College District::5",
+    "University of California, Berkeley::3",
+    "Fremont High School (Oakland, California)::8"
+   ]
+  },
+  "5abbda84554299642a094b5b": {
+   "em": 0.0,
+   "f1": 0.05405405405405406,
+   "citation_hit": 1.0,
+   "answer": "The Mach number for a Saab JAS 39 Gripen is its ratio of flow velocity past a boundary to the local speed of sound, which is not explicitly stated but can be understood as its top speed of Mach 2 [1][5].",
+   "cited": [
+    "Saab JAS 39 Gripen::4",
+    "Mach number::9"
+   ],
+   "retrieved": [
+    "Saab JAS 39 Gripen::4",
+    "Volvo RM12::6",
+    "Industrigruppen JAS::3",
+    "Link-ZA::0",
+    "Mach number::9"
+   ]
+  },
+  "5abc030e554299642a094bdc": {
+   "em": 0.0,
+   "f1": 0.23076923076923078,
+   "citation_hit": 1.0,
+   "answer": "The Distribution of Industry Act 1950 was passed by a Labour government, and Clement Attlee was the Prime Minister of the United Kingdom from 1945 to 1951 [1][3].",
+   "cited": [
+    "Distribution of Industry Act 1950::5",
+    "Clement Attlee::6"
+   ],
+   "retrieved": [
+    "Distribution of Industry Act 1950::5",
+    "Industry Act 1975::9",
+    "Clement Attlee::6",
+    "Prime Minister of Northern Ireland::3",
+    "Who? Who? ministry::5"
+   ]
+  },
+  "5abc219655429959677d6a1d": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 0.0,
+   "answer": "not in context",
+   "cited": [],
+   "retrieved": [
+    "Crossed (comics)::8",
+    "Garth Ennis::7",
+    "Star Crossed (comics)::3",
+    "Serenity (comics)::9",
+    "Nunzio DeFilippis::0"
+   ]
+  },
+  "5abc41315542993a06baf8bb": {
+   "em": 0.0,
+   "f1": 0.2857142857142857,
+   "citation_hit": 1.0,
+   "answer": "M\u00eda Maestro had a role in the 2002 biopic \"Frida\" directed by Julie Taymor [1].",
+   "cited": [
+    "Frida::4"
+   ],
+   "retrieved": [
+    "Frida::4",
+    "M\u00eda Maestro::5",
+    "Nadia Santos::6",
+    "Amen.::7",
+    "The Three Marias::7"
+   ]
+  },
+  "5abce7d755429959677d6b3a": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "Los Angeles [2]",
+   "cited": [
+    "Red Hot Chili Peppers::7"
+   ],
+   "retrieved": [
+    "Docks (nightclub)::9",
+    "Red Hot Chili Peppers::7",
+    "Juicy Fruit (song)::8",
+    "Lafayette Afro Rock Band::4",
+    "New Academics::5"
+   ]
+  },
+  "5abd7d0c55429924427fd010": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 1.0,
+   "answer": "Ciril Cvetko is the brother of a scholar who participates in musical research [2].",
+   "cited": [
+    "Musicology::7"
+   ],
+   "retrieved": [
+    "Ciril Cvetko::5",
+    "Musicology::7",
+    "B\u00e9la Bart\u00f3k::1",
+    "Ian Partridge::9",
+    "Time\u2013frequency analysis for music signals::6"
+   ]
+  },
+  "5abdf06355429976d4830a2d": {
+   "em": 0.0,
+   "f1": 0.19999999999999998,
+   "citation_hit": 1.0,
+   "answer": "In Ancient Egyptian religion, citizens would recite the 42 negative confessions of Maat as their heart was weighed against the feather of truth. If the citizen's heart was heavier than a feather, they would face torment in a lake of fire. [1]",
+   "cited": [
+    "Damnation::7"
+   ],
+   "retrieved": [
+    "Damnation::7",
+    "Ancient Egyptian religion::0",
+    "Ancient Egyptian offering formula::5",
+    "Hatmehit::1",
+    "Osiris myth::4"
+   ]
+  },
+  "5abe34095542993f32c2a088": {
+   "em": 0.0,
+   "f1": 0.5454545454545454,
+   "citation_hit": 1.0,
+   "answer": "The Shire of Flinders existed from 1874 until 1994 [1].",
+   "cited": [
+    "Shire of Flinders (Victoria)::2"
+   ],
+   "retrieved": [
+    "Shire of Flinders (Victoria)::2",
+    "Flinders, Victoria::9",
+    "Shire of Mornington (Victoria)::6",
+    "Mornington Peninsula::7",
+    "Balnarring, Victoria::8"
+   ]
+  },
+  "5abe87cb5542993f32c2a156": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 1.0,
+   "answer": "Millennium Greens were funded in part by the National Lottery [1][2].",
+   "cited": [
+    "Millennium Green::0",
+    "Doorstep Greens::2"
+   ],
+   "retrieved": [
+    "Millennium Green::0",
+    "Doorstep Greens::2",
+    "Millennium Forest for Scotland::1",
+    "National Lottery (United Kingdom)::7",
+    "2016 NRL Auckland Nines::6"
+   ]
+  },
+  "5abec66b5542997ec76fd360": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 1.0,
+   "answer": "Both Josef Veltjens and Hermann Goering were recipients of the Pour le M\u00e9rite [1][4].",
+   "cited": [
+    "Josef Veltjens::0",
+    "Hermann G\u00f6ring::5"
+   ],
+   "retrieved": [
+    "Josef Veltjens::0",
+    "Werner Goering::1",
+    "Jan Mor\u00e1vek (1902\u20131984)::3",
+    "Hermann G\u00f6ring::5",
+    "Walter Schreiber::6"
+   ]
+  },
+  "5abecdf45542997719eab5d4": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 0.0,
+   "answer": "not in context",
+   "cited": [],
+   "retrieved": [
+    "Lake Wales Ridge National Wildlife Refuge::3",
+    "U.S. Route 278::6",
+    "Interstate 22::9",
+    "Florida peninsula inland scrub::8",
+    "Florida scrub::2"
+   ]
+  },
+  "5abf11d45542997719eab660": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 1.0,
+   "answer": "Visions Electronics, a Canadian company, is a sponsor of Driven To Perform [1].",
+   "cited": [
+    "Driven To Perform::1"
+   ],
+   "retrieved": [
+    "Driven To Perform::1",
+    "BJ's Wholesale Club::7",
+    "X-cite by Alghanim Electronics::6",
+    "Dick Smith (retailer)::4",
+    "Target Australia::9"
+   ]
+  },
+  "5abf16965542993fe9a41dd3": {
+   "em": 0.0,
+   "f1": 0.11764705882352941,
+   "citation_hit": 1.0,
+   "answer": "Hamilton Evans \"Tony\" James is the COO and director of the largest alternative investment firm in the world, Blackstone [2][1].",
+   "cited": [
+    "Hamilton E. James::4",
+    "The Blackstone Group::8"
+   ],
+   "retrieved": [
+    "The Blackstone Group::8",
+    "Hamilton E. James::4",
+    "Atlantic Investment Management::0",
+    "Bain Capital::5",
+    "James Man::3"
+   ]
+  },
+  "5abf1ad15542997ec76fd3c2": {
+   "em": 0.0,
+   "f1": 0.35294117647058826,
+   "citation_hit": 1.0,
+   "answer": "The Marquis de Lafayette visited The Cellar, the historic home located at Enfield, Halifax County, North Carolina. [1][2]",
+   "cited": [
+    "The Cellar (Enfield, North Carolina)::6",
+    "Gilbert du Motier, Marquis de Lafayette::5"
+   ],
+   "retrieved": [
+    "The Cellar (Enfield, North Carolina)::6",
+    "Gilbert du Motier, Marquis de Lafayette::5",
+    "John Hamilton (American Revolution)::9",
+    "John Andr\u00e9::6",
+    "Halifax, North Carolina::1"
+   ]
+  },
+  "5abf8e135542990832d3a14f": {
+   "em": 0.0,
+   "f1": 0.23529411764705882,
+   "citation_hit": 1.0,
+   "answer": "Daniel Ricciardo won the 44-lap race for the Red Bull Racing team at the 2014 Belgian Grand Prix. [4]",
+   "cited": [
+    "2014 Belgian Grand Prix::7"
+   ],
+   "retrieved": [
+    "Daniel Ricciardo::9",
+    "Red Bull RB12::6",
+    "Red Bull Racing::2",
+    "2014 Belgian Grand Prix::7",
+    "2014 Japanese Grand Prix::1"
+   ]
+  },
+  "5abfe1115542997d64295909": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 1.0,
+   "answer": "paranormal phenomena [1]",
+   "cited": [
+    "Bridgewater Triangle::7"
+   ],
+   "retrieved": [
+    "Bridgewater Triangle::7",
+    "Bennington Triangle::8",
+    "Witch ball::8",
+    "Ugly Way::6",
+    "Ba-Jia-Jiang::2"
+   ]
+  },
+  "5ac07fff554299294b219006": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "Tennis [1][2].",
+   "cited": [
+    "Thomaz Koch::7",
+    "Simon Aspelin::1"
+   ],
+   "retrieved": [
+    "Thomaz Koch::7",
+    "Simon Aspelin::1",
+    "2008 Hypo Group Tennis International \u2013 Doubles::6",
+    "2008 Swedish Open \u2013 Doubles::2",
+    "2011 Dubai Tennis Championships \u2013 Men's Doubles::9"
+   ]
+  },
+  "5ac11201554299294b21908c": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 1.0,
+   "answer": "Rochester Hills, Michigan [1]",
+   "cited": [
+    "Ron Teachworth::0"
+   ],
+   "retrieved": [
+    "Ron Teachworth::0",
+    "Ron Stephens (Illinois politician)::5",
+    "Ron Ehrenreich::4",
+    "Ohio House of Representatives, 78th District::8",
+    "Ben Coates::8"
+   ]
+  },
+  "5ac160bb5542994d76dccdfb": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "Southern Progress Corporation [2]",
+   "cited": [
+    "Sunset (magazine)::6"
+   ],
+   "retrieved": [
+    "Rodney Walker (architect)::7",
+    "Sunset (magazine)::6",
+    "Country Living::3",
+    "Huntin' Fool::0",
+    "Metropolitan Home::2"
+   ]
+  },
+  "5ac194db55429964131be23a": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 1.0,
+   "answer": "Lutheranism [2]",
+   "cited": [
+    "Albert, Duke of Prussia::1"
+   ],
+   "retrieved": [
+    "Dorothea of Denmark, Duchess of Prussia::2",
+    "Albert, Duke of Prussia::1",
+    "List of monarchs of Prussia::6",
+    "Duke of Leuchtenberg::7",
+    "Prince Hermann Friedrich of Leiningen::2"
+   ]
+  },
+  "5ac1a04e5542991316484b63": {
+   "em": 0.0,
+   "f1": 0.13333333333333333,
+   "citation_hit": 1.0,
+   "answer": "No, not both are American; Jim McBride is American, but Neil Jordan is Irish [1][2].",
+   "cited": [
+    "Jim McBride::6",
+    "Neil Jordan::8"
+   ],
+   "retrieved": [
+    "Jim McBride::6",
+    "Neil Jordan::8",
+    "Neil Smith (writer)::9",
+    "David Neill::4",
+    "Angel (1982 Irish film)::5"
+   ]
+  },
+  "5ac26ac15542992f1f2b38bc": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 0.0,
+   "answer": "not in context",
+   "cited": [],
+   "retrieved": [
+    "MTV Films::4",
+    "Beneath (2007 film)::2",
+    "Paramount Famous Productions::8",
+    "Notorious (soundtrack)::8",
+    "Jackass: The Movie::9"
+   ]
+  },
+  "5ac2ab9455429967731025f0": {
+   "em": 0.0,
+   "f1": 0.3529411764705882,
+   "citation_hit": 1.0,
+   "answer": "Marwan Kenzari won a Golden Calf for Best Actor for his performance in Collide [2].",
+   "cited": [
+    "Collide (film)::2"
+   ],
+   "retrieved": [
+    "Marwan Kenzari::1",
+    "Collide (film)::2",
+    "Hanneke Niens::0",
+    "Wagner Moura::8",
+    "James Franco::6"
+   ]
+  },
+  "5ac2f34455429921a00ab0b6": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "New York University School of Law [1][2]",
+   "cited": [
+    "Bill Daly::9",
+    "Gary Bettman::2"
+   ],
+   "retrieved": [
+    "Bill Daly::9",
+    "Gary Bettman::2",
+    "Bill Daly (footballer)::8",
+    "William Merrigan Daly::1",
+    "Rotman School of Management::9"
+   ]
+  },
+  "5ac385f8554299741d48a279": {
+   "em": 0.0,
+   "f1": 0.23529411764705882,
+   "citation_hit": 1.0,
+   "answer": "Alfred Preis designed the USS Arizona Memorial, which commemorates the 1941 Japanese surprise attack on Pearl Harbor [1].",
+   "cited": [
+    "Attack on Pearl Harbor in popular culture::7"
+   ],
+   "retrieved": [
+    "Attack on Pearl Harbor in popular culture::7",
+    "USS Arizona Memorial::5",
+    "National Pearl Harbor Remembrance Day::3",
+    "John Paul Jones Memorial Park::8",
+    "Frederick Douglass Memorial::0"
+   ]
+  },
+  "5ac3d9135542995c82c4ac4c": {
+   "em": 0.0,
+   "f1": 0.18181818181818182,
+   "citation_hit": 1.0,
+   "answer": "The population of Nelson, New Hampshire, is 729. [5]",
+   "cited": [
+    "Nelson, New Hampshire::4"
+   ],
+   "retrieved": [
+    "Mount Vernon, Indiana::8",
+    "Munsonville, New Hampshire::9",
+    "Lewistown, Pennsylvania::0",
+    "Hendersonville, North Carolina::6",
+    "Nelson, New Hampshire::4"
+   ]
+  },
+  "5ac3e0f7554299194317388b": {
+   "em": 0.0,
+   "f1": 0.4,
+   "citation_hit": 1.0,
+   "answer": "Kevin Spacey, as he stars in the 1999 film [1][4].",
+   "cited": [
+    "American Beauty (1999 film)::8",
+    "List of accolades received by American Beauty::4"
+   ],
+   "retrieved": [
+    "American Beauty (1999 film)::8",
+    "American Beauty (soundtrack)::9",
+    "American Beauty (1927 film)::0",
+    "List of accolades received by American Beauty::4",
+    "La Belle Am\u00e9ricaine::3"
+   ]
+  },
+  "5ac5188255429924173fb5a3": {
+   "em": 0.0,
+   "f1": 0.5,
+   "citation_hit": 1.0,
+   "answer": "Over 3,000 people [2]",
+   "cited": [
+    "Bet365::6"
+   ],
+   "retrieved": [
+    "Denise Coates::3",
+    "Bet365::6",
+    "The Co-operative Group::6",
+    "The Phone Co-op::5",
+    "Telespazio VEGA UK::6"
+   ]
+  },
+  "5ac546975542993e66e8229a": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "1844 [1][2]",
+   "cited": [
+    "The Rochdale Pioneers::0",
+    "Rochdale Society of Equitable Pioneers::9"
+   ],
+   "retrieved": [
+    "The Rochdale Pioneers::0",
+    "Rochdale Society of Equitable Pioneers::9",
+    "The Co-operative Group::6",
+    "Moulton Co-operative Society::4",
+    "The Phone Co-op::5"
+   ]
+  },
+  "5adcbb815542994ed6169bde": {
+   "em": 0.0,
+   "f1": 0.8,
+   "citation_hit": 1.0,
+   "answer": "Stone Brewing Co. [2]",
+   "cited": [
+    "Stone Brewing Co.::8"
+   ],
+   "retrieved": [
+    "Beer Wars::9",
+    "Stone Brewing Co.::8",
+    "Microbrewery::4",
+    "List of breweries in California::2",
+    "The Big Bub's Comedy Show::9"
+   ]
+  },
+  "5adcf8155542990d50227d6a": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "Maria Brink [1]",
+   "cited": [
+    "Maria Brink::9"
+   ],
+   "retrieved": [
+    "Maria Brink::9",
+    "City of Evil::4",
+    "The Dream (In This Moment album)::2",
+    "Michael Jagmin::8",
+    "Masters of Rock (festival)::1"
+   ]
+  },
+  "5add0f635542994ed6169c56": {
+   "em": 0.0,
+   "f1": 0.25,
+   "citation_hit": 1.0,
+   "answer": "Yes, they are filmed in different countries. [1][2]",
+   "cited": [
+    "The Man from Snowy River II::7",
+    "Miracle of the White Stallions::1"
+   ],
+   "retrieved": [
+    "The Man from Snowy River II::7",
+    "Miracle of the White Stallions::1",
+    "Return to Snowy River::0",
+    "Bruce Rowland::8",
+    "The Man from Snowy River (TV series)::6"
+   ]
+  },
+  "5add23d05542994734353871": {
+   "em": 0.0,
+   "f1": 0.10526315789473684,
+   "citation_hit": 1.0,
+   "answer": "The primary duty of the Austrian Pinscher is to act as farm dogs, keeping barns free of rats and acting as home guards, livestock guardians, and drovers, while the Maremma Sheepdog's primary duty is to guard sheep from wolves. [1][2]",
+   "cited": [
+    "Austrian Pinscher::3",
+    "Maremma Sheepdog::4"
+   ],
+   "retrieved": [
+    "Austrian Pinscher::3",
+    "Maremma Sheepdog::4",
+    "Dutch Shepherd::1",
+    "Schutzhund::0",
+    "Romanian Raven Shepherd Dog::9"
+   ]
+  },
+  "5add43335542995b365faae1": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 0.0,
+   "answer": "not in context",
+   "cited": [],
+   "retrieved": [
+    "Liverpool F.C.\u2013Manchester United F.C. rivalry::5",
+    "North-west Derby (Ireland)::3",
+    "Luton Town F.C.\u2013Watford F.C. rivalry::9",
+    "Western Derby::8",
+    "Football derbies in France::1"
+   ]
+  },
+  "5adde73f5542992200553b94": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 1.0,
+   "answer": "Both Spider-Man and Spider-Man in film share the character of Peter Parker as Spider-Man, though their origins and some details differ. [1][3]",
+   "cited": [
+    "Spider-Man in film::1",
+    "The Amazing Spider-Man (2012 film)::3"
+   ],
+   "retrieved": [
+    "Spider-Man in film::1",
+    "Spider-Man: Homecoming::9",
+    "The Amazing Spider-Man (2012 film)::3",
+    "Spider-Man 2::2",
+    "Spider-Man (2002 video game)::5"
+   ]
+  },
+  "5ade00855542997dc7907118": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "New York Shakespeare Festival [3]",
+   "cited": [
+    "Shakespeare in the Park (New York City)::3"
+   ],
+   "retrieved": [
+    "Joseph Papp::0",
+    "Joe's Pub::5",
+    "Shakespeare in the Park (New York City)::3",
+    "Organic Theater Company::7",
+    "Curse of the Starving Class::8"
+   ]
+  },
+  "5ade063d5542995b365fabcd": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "Major League Soccer [1][2]",
+   "cited": [
+    "Donnie Smith::1",
+    "Major League Soccer::5"
+   ],
+   "retrieved": [
+    "Donnie Smith::1",
+    "Major League Soccer::5",
+    "Kareem Smith::7",
+    "Midnight Riders (MLS supporters association)::2",
+    "Sports in Boston::4"
+   ]
+  },
+  "5ade51515542992fa25da745": {
+   "em": 0.0,
+   "f1": 0.13333333333333333,
+   "citation_hit": 1.0,
+   "answer": "Rudolf Hess flew to Scotland in an attempt to negotiate peace with the United Kingdom, which led to his arrest and cessation of service. [1]",
+   "cited": [
+    "Rudolf Hess::0"
+   ],
+   "retrieved": [
+    "Rudolf Hess::0",
+    "Wolf R\u00fcdiger Hess::8",
+    "Karlheinz Pintsch::2",
+    "Warsaw (song)::9",
+    "Nazi Party Chancellery::6"
+   ]
+  },
+  "5adf37a95542995ec70e8f97": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "1838 [2]",
+   "cited": [
+    "Virginia Commonwealth University::3"
+   ],
+   "retrieved": [
+    "2011\u201312 VCU Rams men's basketball team::5",
+    "Virginia Commonwealth University::3",
+    "2010\u201311 VCU Rams men's basketball team::6",
+    "2013\u201314 VCU Rams men's basketball team::4",
+    "2012\u201313 VCU Rams men's basketball team::0"
+   ]
+  },
+  "5adfff0755429925eb1afbce": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "Rachel, Nevada [1]",
+   "cited": [
+    "Groom Lake (salt flat)::1"
+   ],
+   "retrieved": [
+    "Groom Lake (salt flat)::1",
+    "Groom Range::3",
+    "Tonopah Test Range::5",
+    "Papoose Lake::7",
+    "Rachel, Nevada::2"
+   ]
+  },
+  "5ae0120155429925eb1afbfb": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "My Boss, My Hero [1][2]",
+   "cited": [
+    "My Boss, My Teacher::8",
+    "Kim Dong-won (director, born 1962)::7"
+   ],
+   "retrieved": [
+    "My Boss, My Teacher::8",
+    "Kim Dong-won (director, born 1962)::7",
+    "Kim Dong-won (filmmaker, born 1955)::3",
+    "Kim Dong-won::1",
+    "City of Damnation::4"
+   ]
+  },
+  "5ae0d52e554299603e418469": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 0.0,
+   "answer": "not in context",
+   "cited": [],
+   "retrieved": [
+    "Garden Party (film)::0",
+    "Almost Perfect (film)::3",
+    "Streak (film)::1",
+    "Barbara Niven::0",
+    "November (2004 film)::6"
+   ]
+  },
+  "5ae127c9554299422ee99612": {
+   "em": 0.0,
+   "f1": 0.18181818181818182,
+   "citation_hit": 0.0,
+   "answer": "Bardstown, Kentucky, which is in Nelson County, not directly stated but inferable as Heaven Hill Distilleries, Inc. is headquartered there [5].",
+   "cited": [
+    "Heaven Hill::6"
+   ],
+   "retrieved": [
+    "Fighting Cock (bourbon)::5",
+    "Henderson County, Kentucky::3",
+    "Casey County, Kentucky::2",
+    "Fighting cock (disambiguation)::8",
+    "Heaven Hill::6"
+   ]
+  },
+  "5ae129115542990adbacf722": {
+   "em": 0.0,
+   "f1": 0.16666666666666669,
+   "citation_hit": 1.0,
+   "answer": "\"Wild Mountain Thyme\" is based on a traditional Scottish folk song, with lyrics and melody variants collected by Francis McPeake and Robert Tannahill [2][4].",
+   "cited": [
+    "Wild Mountain Thyme::0",
+    "Crystal Gayle singles discography::4"
+   ],
+   "retrieved": [
+    "A Pair of Brown Eyes::1",
+    "Wild Mountain Thyme::0",
+    "Beautiful Brown Eyes::9",
+    "Crystal Gayle singles discography::4",
+    "Brown Eyes (song)::6"
+   ]
+  },
+  "5ae12a4b55429920d52342df": {
+   "em": 0.0,
+   "f1": 0.2222222222222222,
+   "citation_hit": 1.0,
+   "answer": "Baraki Barak District is situated in the western part of Logar Province, whose capital is Puli Alam. [5]",
+   "cited": [
+    "Logar Province::5"
+   ],
+   "retrieved": [
+    "Baraki Barak District::6",
+    "Baraki Barak::8",
+    "Baraki Barak airstrike::3",
+    "Baraki Rajan::4",
+    "Logar Province::5"
+   ]
+  },
+  "5ae1338d55429901ffe4ade1": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 0.0,
+   "answer": "not in context",
+   "cited": [],
+   "retrieved": [
+    "Quintessentially Unreal::5",
+    "Absinthe::9",
+    "Reassuringly Expensive::6",
+    "Black Velvet (beer cocktail)::6",
+    "Arak (drink)::1"
+   ]
+  },
+  "5ae1d4e8554299234fd04312": {
+   "em": 0.0,
+   "f1": 0.6666666666666666,
+   "citation_hit": 1.0,
+   "answer": "Rob Sitch [2]",
+   "cited": [
+    "Rob Sitch::8"
+   ],
+   "retrieved": [
+    "Any Questions for Ben?::5",
+    "Rob Sitch::8",
+    "Clayton Watson::9",
+    "Ben Queen::3",
+    "Magda Szubanski::5"
+   ]
+  },
+  "5ae1ebf95542997283cd22f2": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 0.0,
+   "answer": "not in context",
+   "cited": [],
+   "retrieved": [
+    "Mooreville, Mississippi::3",
+    "U.S. Route 278::6",
+    "Interstate 22::9",
+    "Mississippi Highway 23::1",
+    "U.S. Route 78 in Georgia::7"
+   ]
+  },
+  "5ae1faf15542997f29b3c1e3": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "1919 [1]",
+   "cited": [
+    "Commercial Solvents Corporation::9"
+   ],
+   "retrieved": [
+    "Commercial Solvents Corporation::9",
+    "William Davis Ticknor, Sr.::3",
+    "William Ticknor::2",
+    "Manteia Predictive Medicine::5",
+    "Icos::7"
+   ]
+  },
+  "5ae20427554299234fd04397": {
+   "em": 0.0,
+   "f1": 0.09523809523809523,
+   "citation_hit": 1.0,
+   "answer": "Sachem Central School District encompasses the CDPs that include the hamlet in Suffolk County, specifically Holbrook, Holtsville, and Farmingville mentioned in passage [1].",
+   "cited": [
+    "Sachem School District::8"
+   ],
+   "retrieved": [
+    "Sachem School District::8",
+    "Boght Corners, New York::2",
+    "Baldwin, Nassau County, New York::5",
+    "New York State Route 418::6",
+    "WSHR::9"
+   ]
+  },
+  "5ae20c245542997283cd2367": {
+   "em": 0.0,
+   "f1": 0.5882352941176471,
+   "citation_hit": 1.0,
+   "answer": "Hina is derived from a dye prepared in the Middle East and South Asia [1][2].",
+   "cited": [
+    "Henna::3",
+    "Hina (given name)::0"
+   ],
+   "retrieved": [
+    "Henna::3",
+    "Hina (given name)::0",
+    "Lawsonia inermis::2",
+    "Indigofera tinctoria::1",
+    "Phloxine::7"
+   ]
+  },
+  "5ae226755542996483e64906": {
+   "em": 0.0,
+   "f1": 0.25,
+   "citation_hit": 1.0,
+   "answer": "LNW-80 was released earlier than the Gradiente Expert [1][2].",
+   "cited": [
+    "LNW-80::0",
+    "Gradiente Expert::9"
+   ],
+   "retrieved": [
+    "LNW-80::0",
+    "Gradiente Expert::9",
+    "Dick Smith Super-80 Computer::3",
+    "Jim Westwood::3",
+    "Walter Newton::4"
+   ]
+  },
+  "5ae291bb5542996483e649f6": {
+   "em": 0.0,
+   "f1": 0.5714285714285715,
+   "citation_hit": 1.0,
+   "answer": "1987 to 2010 [2]",
+   "cited": [
+    "Premiere (magazine)::0"
+   ],
+   "retrieved": [
+    "April Bernard::5",
+    "Premiere (magazine)::0",
+    "Hachette Filipacchi Media U.S.::6",
+    "Vibe (magazine)::4",
+    "Car and Driver::8"
+   ]
+  },
+  "5ae2c416554299492dc91c67": {
+   "em": 0.0,
+   "f1": 0.8,
+   "citation_hit": 1.0,
+   "answer": "Jaleel White [1][2]",
+   "cited": [
+    "Steve Urkel::2",
+    "Jaleel White::5"
+   ],
+   "retrieved": [
+    "Steve Urkel::2",
+    "Jaleel White::5",
+    "List of Family Matters characters::7",
+    "Family Matters::0",
+    "American Nerd::6"
+   ]
+  },
+  "5ae3006c55429928c423959f": {
+   "em": 0.0,
+   "f1": 0.5,
+   "citation_hit": 1.0,
+   "answer": "Barbados [1][2]",
+   "cited": [
+    "Pon de Replay::1",
+    "Rihanna::9"
+   ],
+   "retrieved": [
+    "Pon de Replay::1",
+    "Rihanna::9",
+    "Vada Nobles::2",
+    "Rihanna videography::8",
+    "SOS (Rihanna song)::0"
+   ]
+  },
+  "5ae340a85542994393b9e668": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "Milan [1][5]",
+   "cited": [
+    "Gabriel Barbosa::8",
+    "Inter Milan::1"
+   ],
+   "retrieved": [
+    "Gabriel Barbosa::8",
+    "Stoke Gabriel A.F.C.::5",
+    "Ifeanyi Ubah F.C.::3",
+    "Sobaeksu Sports Club::2",
+    "Inter Milan::1"
+   ]
+  },
+  "5ae34b275542992e3233c371": {
+   "em": 0.0,
+   "f1": 0.5,
+   "citation_hit": 1.0,
+   "answer": "Drama Desk Award for Outstanding Lighting Design for Equus [2]",
+   "cited": [
+    "David Hersey::9"
+   ],
+   "retrieved": [
+    "Equus (play)::0",
+    "David Hersey::9",
+    "Equus (film)::6",
+    "Doris Abrahams::5",
+    "Amadeus::7"
+   ]
+  },
+  "5ae361605542994393b9e69b": {
+   "em": 0.0,
+   "f1": 0.5,
+   "citation_hit": 1.0,
+   "answer": "The Naval Submarine Base New London, also known as the \"Home of the Submarine Force\". [3]",
+   "cited": [
+    "Naval Submarine Base New London::2"
+   ],
+   "retrieved": [
+    "Robert Croft (diver)::7",
+    "RAF Croft::4",
+    "Naval Submarine Base New London::2",
+    "Naval Consolidated Brig, Miramar::0",
+    "David Croft (TV producer)::9"
+   ]
+  },
+  "5ae489ab5542995ad6573d62": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "Mookie Blaylock [2]",
+   "cited": [
+    "1995\u201396 Atlanta Hawks season::3"
+   ],
+   "retrieved": [
+    "Mookie Blaylock::0",
+    "1995\u201396 Atlanta Hawks season::3",
+    "Chris Engler::7",
+    "Dominique Wilkins::1",
+    "1991\u201392 Atlanta Hawks season::7"
+   ]
+  },
+  "5ae497f15542995ad6573db8": {
+   "em": 0.0,
+   "f1": 0.5,
+   "citation_hit": 1.0,
+   "answer": "Lisburn Distillery F.C. [3]",
+   "cited": [
+    "Lisburn Distillery F.C.::0"
+   ],
+   "retrieved": [
+    "Sean Connor::8",
+    "Donegal Celtic F.C.::5",
+    "Lisburn Distillery F.C.::0",
+    "NIFL Premier Intermediate League::2",
+    "Portstewart F.C.::6"
+   ]
+  },
+  "5ae4a1ef55429970de88d9e7": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "2 March 1972 [2]",
+   "cited": [
+    "Mauricio Pochettino::7"
+   ],
+   "retrieved": [
+    "2014\u201315 Southampton F.C. season::3",
+    "Mauricio Pochettino::7",
+    "2016\u201317 Southampton F.C. season::2",
+    "Ronald Koeman::1",
+    "2017\u201318 Southampton F.C. season::5"
+   ]
+  },
+  "5ae4bb1255429913cc2044e7": {
+   "em": 0.0,
+   "f1": 0.2222222222222222,
+   "citation_hit": 1.0,
+   "answer": "Yes, Linzhou, Henan has a larger population than Xingcheng [1][2].",
+   "cited": [
+    "Xingcheng::7",
+    "Linzhou, Henan::9"
+   ],
+   "retrieved": [
+    "Xingcheng::7",
+    "Linzhou, Henan::9",
+    "Ezhou::5",
+    "Hunchun::1",
+    "Hayashi Castle::3"
+   ]
+  },
+  "5ae4bbf05542995ad6573e32": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "People v. Turner [3]",
+   "cited": [
+    "People v. Turner::8"
+   ],
+   "retrieved": [
+    "Santa Clara County Superior Court::5",
+    "Michele Landis Dauber::9",
+    "People v. Turner::8",
+    "Jacqueline M. Arroyo::2",
+    "Jack Komar::4"
+   ]
+  },
+  "5ae4d7fc5542990ba0bbb16f": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 0.0,
+   "answer": "No, not both are primarily science fiction writers; Michael Moorcock is primarily of science fiction and fantasy, while Stephen R. Donaldson is known for fantasy.",
+   "cited": [],
+   "retrieved": [
+    "Michael Moorcock::3",
+    "Stephen R. Donaldson::2",
+    "The Final Programme::1",
+    "Epic Pooh::5",
+    "The Chinese Agent::7"
+   ]
+  },
+  "5ae4d8475542993aec5ec0e0": {
+   "em": 0.0,
+   "f1": 0.4,
+   "citation_hit": 1.0,
+   "answer": "Giuseppe Verdi, based on William Shakespeare's play \"Macbeth\". [3] [1]",
+   "cited": [
+    "Macbeth (opera)::3",
+    "Repertoire of Pl\u00e1cido Domingo::5"
+   ],
+   "retrieved": [
+    "Repertoire of Pl\u00e1cido Domingo::5",
+    "Pl\u00e1cido Domingo::6",
+    "Macbeth (opera)::3",
+    "Cavalleria rusticana (1982 film)::0",
+    "The Enchanted Island (opera)::1"
+   ]
+  },
+  "5ae524415542992663a4f121": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 1.0,
+   "answer": "Vancouver [1]",
+   "cited": [
+    "Brock Boeser::5"
+   ],
+   "retrieved": [
+    "Brock Boeser::5",
+    "Ryan Johansen::2",
+    "Michael Hj\u00e4lm::5",
+    "Ivan Barbashev::6",
+    "Oscar Dansk::7"
+   ]
+  },
+  "5ae532365542992663a4f150": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "2015 [1]",
+   "cited": [
+    "Playford B Power Station::7"
+   ],
+   "retrieved": [
+    "Playford B Power Station::7",
+    "Playford A Power Station::1",
+    "Curlew Island (South Australia)::8",
+    "Ironbridge power stations::3",
+    "Pembroke Power Station::2"
+   ]
+  },
+  "5ae5b25d5542990ba0bbb2bb": {
+   "em": 0.0,
+   "f1": 0.0625,
+   "citation_hit": 1.0,
+   "answer": "Christopher Guest has a wider scope of profession, as he is a screenwriter, composer, musician, director, actor, and comedian, while Roman Karmen is primarily known for his work as a documentary film director. [1][2]",
+   "cited": [
+    "Christopher Guest::3",
+    "Roman Karmen::4"
+   ],
+   "retrieved": [
+    "Christopher Guest::3",
+    "Roman Karmen::4",
+    "Great Is My Country::1",
+    "Carmen (novella)::4",
+    "Rumen Petkov::3"
+   ]
+  },
+  "5ae5cf625542996de7b71a22": {
+   "em": 0.0,
+   "f1": 0.4,
+   "citation_hit": 1.0,
+   "answer": "The University of Texas Longhorns football team included both Case McCoy and Colt McCoy during different years. [1][2]",
+   "cited": [
+    "Case McCoy::5",
+    "Colt McCoy::1"
+   ],
+   "retrieved": [
+    "Case McCoy::5",
+    "Colt McCoy::1",
+    "David Neill::4",
+    "Walter Camp Award::3",
+    "Colt clan incest case::6"
+   ]
+  },
+  "5ae5e8dc554299546bf82fbe": {
+   "em": 0.0,
+   "f1": 0.2727272727272727,
+   "citation_hit": 1.0,
+   "answer": "Hakim Abdullah Jamal co-founded the Black Power movement of the 1960s and 1970s with the name adopted by African-American activist Allen Donaldson. [1]",
+   "cited": [
+    "Hakim Jamal::6"
+   ],
+   "retrieved": [
+    "Hakim Jamal::6",
+    "Black Power movement::8",
+    "Black Power: The Politics of Liberation::7",
+    "Maulana Karenga::3",
+    "Rainbow Coalition (Fred Hampton)::2"
+   ]
+  },
+  "5ae617285542996de7b71b4c": {
+   "em": 0.0,
+   "f1": 0.8,
+   "citation_hit": 1.0,
+   "answer": "South African-born British [1][2]",
+   "cited": [
+    "The Lady Craved Excitement::1",
+    "Sid James::2"
+   ],
+   "retrieved": [
+    "The Lady Craved Excitement::1",
+    "Sid James::2",
+    "Evan Thomas (actor)::5",
+    "Terence Morgan::6",
+    "Basil Moss::9"
+   ]
+  },
+  "5ae682c45542995703ce8b6f": {
+   "em": 0.0,
+   "f1": 0.19999999999999998,
+   "citation_hit": 1.0,
+   "answer": "Hopeless Records reissued \"Sounding the Seventh Trumpet\" which initially sold only 300 copies in its first week of release. [1]",
+   "cited": [
+    "Sounding the Seventh Trumpet::5"
+   ],
+   "retrieved": [
+    "Sounding the Seventh Trumpet::5",
+    "Avenged Sevenfold (album)::6",
+    "Avenged Sevenfold discography::8",
+    "Nightmare (Avenged Sevenfold album)::0",
+    "City of Evil::4"
+   ]
+  },
+  "5ae6860e5542991bbc976112": {
+   "em": 0.0,
+   "f1": 0.25,
+   "citation_hit": 1.0,
+   "answer": "Emilie du Ch\u00e2telet contributed to the basic laws of physics through her translation and commentary on Isaac Newton's \"Principia,\" including a profound contribution to Newtonian mechanics with her postulate of an additional conservation law for total energy. [1]",
+   "cited": [
+    "\u00c9milie du Ch\u00e2telet::8"
+   ],
+   "retrieved": [
+    "\u00c9milie du Ch\u00e2telet::8",
+    "Voltaire in Love::3",
+    "The Physics of Superheroes::9",
+    "Laws of association::2",
+    "History of physics::7"
+   ]
+  },
+  "5ae71f06554299572ea54708": {
+   "em": 0.0,
+   "f1": 0.3636363636363636,
+   "citation_hit": 1.0,
+   "answer": "Christopher de Haro provided the financial backing to Ferdinand Magellan [1].",
+   "cited": [
+    "Christopher de Haro::3"
+   ],
+   "retrieved": [
+    "Christopher de Haro::3",
+    "Ferdinand Magellan::7",
+    "Lope D\u00edaz de Haro (d. 1322)::8",
+    "Maximilianus Transylvanus::4",
+    "Henri Christophe::2"
+   ]
+  },
+  "5ae7247b5542992ae0d163c1": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "November 10, 2017 [2]",
+   "cited": [
+    "Reputation (Taylor Swift album)::4"
+   ],
+   "retrieved": [
+    "...Ready for It?::0",
+    "Reputation (Taylor Swift album)::4",
+    "Shake It Off::1",
+    "Taylor Swift (album)::5",
+    "Fearless (Taylor Swift album)::3"
+   ]
+  },
+  "5ae78f3b554299540e5a5608": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 1.0,
+   "answer": "The CW [1]",
+   "cited": [
+    "Mr. &amp; Mrs. Mxyzptlk::1"
+   ],
+   "retrieved": [
+    "Mr. &amp; Mrs. Mxyzptlk::1",
+    "Freakazoid!::8",
+    "Warrior of Love Rainbowman::4",
+    "Supergirl (TV series)::7",
+    "Automan::0"
+   ]
+  },
+  "5ae7cea355429952e35ea9c1": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 1.0,
+   "answer": "Easy [4]",
+   "cited": [
+    "Easy (TV series)::6"
+   ],
+   "retrieved": [
+    "Riz Ahmed::0",
+    "Travelers (TV series)::1",
+    "Will (TV series)::2",
+    "Easy (TV series)::6",
+    "Laurie Davidson (actor)::1"
+   ]
+  },
+  "5ae7f56e5542993210983fd1": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "J. K. Rowling [1][2]",
+   "cited": [
+    "Rupert Grint::2",
+    "Ron Weasley::3"
+   ],
+   "retrieved": [
+    "Rupert Grint::2",
+    "Ron Weasley::3",
+    "Nachiket Dighe::6",
+    "A Clockwork Orange (novel)::7",
+    "Y\u016bki Tokiwa::1"
+   ]
+  },
+  "5ae80919554299540e5a56f6": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 0.0,
+   "answer": "not in context",
+   "cited": [],
+   "retrieved": [
+    "Isabella Kelly::8",
+    "Cairnburgh Castle::7",
+    "Edinburgh Castle::0",
+    "Loch Leven Castle::3",
+    "Inch Castle::4"
+   ]
+  },
+  "5ae81b895542997ec272770c": {
+   "em": 0.0,
+   "f1": 0.0,
+   "citation_hit": 0.0,
+   "answer": "not in context",
+   "cited": [],
+   "retrieved": [
+    "Princess Marie C\u00e9cile of Prussia::0",
+    "Princess Christine Louise of Oettingen-Oettingen::1",
+    "Mary Victoria Douglas-Hamilton::3",
+    "Prince Hermann Friedrich of Leiningen::2",
+    "Princess Marie of Prussia (1855\u20131888)::7"
+   ]
+  },
+  "5ae8202255429952e35eaa3a": {
+   "em": 1.0,
+   "f1": 1.0,
+   "citation_hit": 1.0,
+   "answer": "Comme des Gar\u00e7ons [1][2][3]",
+   "cited": [
+    "Dover Street Market::6",
+    "Rei Kawakubo::5",
+    "Comme des Gar\u00e7ons::3"
+   ],
+   "retrieved": [
+    "Dover Street Market::6",
+    "Rei Kawakubo::5",
+    "Comme des Gar\u00e7ons::3",
+    "Visvim::7",
+    "Nigo::8"
+   ]
+  }
+ },
+ "latency_ms": {},
+ "ragas": {
+  "n": 100,
+  "judge": "qwen2.5:7b-instruct",
+  "means": {
+   "faithfulness": 0.7041666666666667,
+   "nv_context_relevance": 0.8075
+  },
+  "note": "faithfulness NaN/failed samples are null and excluded from the mean"
+ }
+}

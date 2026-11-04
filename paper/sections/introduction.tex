@@ -1,0 +1,69 @@
+\section{Introduction}
+\label{sec:intro}
+
+Large language models answer fluently, but what they know is fixed at training
+time. They have not seen documents written after their cutoff or anything
+kept inside an organisation, and when a question falls outside what they
+learned they tend to produce a confident wrong
+answer~\cite{ji2023hallucination}. Retrieval-augmented generation
+(RAG)~\cite{lewis2020rag,gao2023ragsurvey} addresses this by fetching relevant
+passages at query time and asking the model to answer from them. The idea is
+simple, and it moves the burden onto the retriever. If the passage that holds
+the answer is not in the context, the generator cannot recover it, however
+capable it is.
+
+The two common retriever families fail in different places. Dense
+retrievers~\cite{karpukhin2020dpr} match meaning and handle paraphrase well,
+but they often miss exact strings that were rare in their training data:
+error codes, version numbers, header names, acronyms. A question that asks
+which status code or frame type a protocol uses can be answered from one line
+of one specification, and that line may look, to an embedding model, much
+like dozens of other passages on the same topic. BM25~\cite{robertson2009bm25} finds such
+strings easily, but it fails when the question and the source use different
+words. Hybrid retrieval runs both and merges the results, usually with
+Reciprocal Rank Fusion (RRF)~\cite{cormack2009rrf}. In most systems the
+balance between the two sides is one constant, tuned once and applied to every
+query. That constant is a compromise between queries that need exact matching
+and queries that need semantic matching, and a technical corpus contains both
+kinds.
+
+Choosing the balance per query is not a new idea. DAT~\cite{hsu2025dat} asks
+an LLM to judge the top result of each retriever and sets the weight from
+those judgements. That works, but it puts LLM calls on the retrieval path of
+every query. We ask whether much cheaper signals are enough: how many tokens
+look like identifiers, how rare the query terms are in the corpus, how
+confident each retriever is, and how much the two candidate lists agree. Our
+method, Query-Adaptive Fusion (QAF), feeds 12 such features to a ridge
+regression that outputs the fusion weight. It is trained once on development
+queries, needs no LLM at query time, and its coefficients can be read off
+directly.
+
+We build the full pipeline described in our project proposal, from structural
+chunking through BM25 and dense indexing, weighted RRF and cross-encoder
+reranking to a local 7B generator. Everything runs on a single laptop. We test
+it on three public collections and on a new corpus of 20 IETF RFCs, with two
+encoders: BGE-small and Google's recent EmbeddingGemma~2. Our contributions
+are:
+\begin{itemize}
+  \item \textbf{QAF}, an LLM-free, interpretable predictor of the per-query
+  dense/sparse fusion weight, together with a plateau-centre definition of
+  the oracle weight that gives stable regression targets for rank-based
+  fusion.
+  \item \textbf{An identifier-heavy RFC test collection} of 2{,}973 chunks and
+  101 questions, generated with a local LLM, filtered automatically and
+  checked by all three authors, with relevance labels derived from answer
+  spans.
+  \item \textbf{A controlled comparison} of sparse, dense, fixed-weight hybrid
+  and QAF retrieval, with and without reranking, on four collections and two
+  encoders, including an oracle upper bound, leave-one-dataset-out transfer,
+  an ablation, and EmbeddingGemma~2 at four embedding sizes.
+  \item \textbf{An end-to-end account of cost}: per-stage latency and answer
+  quality (exact match, F1 and judged faithfulness) on commodity hardware
+  with no paid API.
+\end{itemize}
+
+Section~\ref{sec:related} reviews related work. Section~\ref{sec:method}
+describes the pipeline and QAF, and Section~\ref{sec:setup} the data,
+configurations and metrics. Section~\ref{sec:results} reports results,
+Section~\ref{sec:discussion} discusses them along with the limitations of the
+study, and Section~\ref{sec:conclusion} concludes.

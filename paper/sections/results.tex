@@ -1,0 +1,55 @@
+\section{Results}
+\label{sec:results}
+% Every number in this section must come from tables/*.tex (generated) or a
+% numbers.tex macro. Do not type values by hand.
+
+\subsection{Main retrieval results}
+% TODO: introduce Table main_results (collections x configs x encoders;
+% nDCG@10 / Recall@10 / MRR@10; best bold; dagger = p<0.05 vs Hybrid-fixed+RR).
+% Points to cover: hybrid vs best single retriever per collection
+% (\HybridGainOverDenseRFC, \HybridGainOverBMRFC); BM25 sanity check against
+% published BEIR SciFact (\BMndcgSciFact); BGE vs EmbeddingGemma 2.
+\inputtable{main_results}
+
+\subsection{Does query-adaptive fusion help?}
+% TODO: QAF vs Hybrid-fixed with and without rerank (\QAFgainSciFact,
+% \QAFgainFiQA, \QAFgainHotpot, \QAFgainRFC; p-values \QAFpSciFact, \QAFpRFC).
+% Oracle headroom (\OracleHeadroomSciFact, \OracleHeadroomRFC): how much of the
+% gap between alpha* and the oracle QAF closes. Leave-one-dataset-out transfer.
+% Report honestly if gains are small or not significant.
+\inputfigure{alpha_sweep}{nDCG@10 of fixed-weight fusion as a function of the
+dense weight $\alpha$ on each test collection.}
+
+\subsection{What QAF learned}
+% TODO: Table qaf_coefficients (standardised ridge coefficients per encoder);
+% largest feature \QAFtopFeature; training R^2 \QAFtrainRsq on \QAFnDev dev
+% queries. Figure qaf_alpha_hist: predicted alpha for identifier-heavy vs
+% natural-language queries.
+\inputtable{qaf_coefficients}
+\inputfigure{qaf_alpha_hist}{Predicted $\alpha$ for identifier-heavy and
+natural-language queries.}
+
+\subsection{Ablation}
+% TODO: Table ablation (SciFact + RFC, better encoder): -chunking (RFC only),
+% -expansion, -QAF, -rerank (\RerankGainSciFact). Say which tiers were run.
+\inputtable{ablation}
+
+\subsection{Embedding size}
+% TODO: EmbeddingGemma 2 at 768/512/256/128 dims: nDCG@10, index size, query
+% latency (\MatryoshkaDropTwoFiftySix, \MatryoshkaIndexMBOneTwentyEight).
+% Tier B: drop this subsection if not run.
+\IfFileExists{tables/matryoshka.tex}{\input{tables/matryoshka}}{}
+
+\subsection{Latency}
+% TODO: Table latency / figure latency_breakdown: per-stage mean and p95;
+% QAF overhead \QAFlatencyMs vs reranking \RerankLatencyMs and total
+% \TotalLatencyMs. Contrast with the LLM calls DAT would add (DAT table only if
+% Task 16 ran).
+\inputtable{latency}
+
+\subsection{Answer quality}
+% TODO: Table generation (HotpotQA + RFC, \GenN questions each; EM, F1,
+% citation hit) for BM25, Dense, Hybrid-fixed+RR, QAF+RR (\GenFoneQAF,
+% \GenFoneDense, \GenEMQAF). RAGAS faithfulness on \RagasN answers
+% (\FaithQAF vs \FaithDense).
+\inputtable{generation}

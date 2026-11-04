@@ -1,0 +1,184 @@
+\section{Method}
+\label{sec:method}
+
+Fig.~\ref{fig:pipeline} shows the pipeline. Each passage is indexed twice, in
+BM25 and in a dense vector index. A query goes to both retrievers, their top-100
+lists are merged by weighted Reciprocal Rank Fusion (RRF) with a weight that is
+either constant or, in our method, predicted per query, and a cross-encoder
+reorders the head of the fused list before the top five passages reach the
+generator.
+
+\begin{figure*}[t]
+\centering
+\begin{tikzpicture}[
+  font=\footnotesize,
+  box/.style={draw, rounded corners=2pt, align=center, minimum height=9mm, inner sep=3pt, fill=gray!8},
+  ours/.style={box, fill=blue!10, draw=blue!60!black, thick},
+  store/.style={box, fill=white, dashed},
+  arr/.style={-{Stealth[length=2mm]}, semithick}]
+  % offline row
+  \node[box]   (docs)  at (-3.1,2.0) {Documents};
+  \node[box]   (chunk) at (-0.2,2.0) {Structural chunking\\(300 words, 50 overlap)};
+  \node[store] (idx)   at (3.4,2.0)  {BM25 index (bm25s)\\HNSW index (FAISS)};
+  \draw[arr] (docs) -- (chunk);
+  \draw[arr] (chunk) -- (idx);
+  % query row
+  \node[box]  (q)    at (0,0)    {Query $q$\\(optional LLM expansion)};
+  \node[box]  (lists) at (3.4,0) {Sparse top-100\\Dense top-100};
+  \coordinate (join) at (5.2,0);
+  \node[ours] (qaf)  at (6.4,-1.5) {QAF: 12 features\\ridge $\rightarrow \alpha(q)$};
+  \node[box]  (rrf)  at (7.6,0)  {Weighted RRF\\top-100};
+  \node[box]  (rr)   at (10.2,0) {Cross-encoder\\rerank top-50};
+  \node[box]  (gen)  at (13.0,0) {Qwen2.5-7B\\top-5, cited answer};
+  \draw[arr] (q) -- (lists);
+  \draw[arr, dotted] (idx) -- (lists);
+  \draw[semithick] (lists.east) -- (join);
+  \draw[arr] (join) -- (rrf.west);
+  \draw[arr] (join) |- (qaf.west);
+  \draw[arr] (qaf.east) -| node[pos=0.75, right]{$\alpha$} (rrf.south);
+  \draw[arr] (rrf) -- (rr);
+  \draw[arr] (rr) -- (gen);
+\end{tikzpicture}
+\caption{Pipeline. Top: offline indexing. Bottom: query time. The shaded block
+is Query-Adaptive Fusion (QAF), which sets the dense weight $\alpha$ of the
+fusion step separately for every query.}
+\label{fig:pipeline}
+\end{figure*}
+
+\subsection{Chunking}
+\label{sec:chunking}
+BEIR and HotpotQA passages are already short and are indexed as they are.
+Chunking matters for the RFC corpus, where one document can run past 100
+pages. Our chunker splits the cleaned text into blocks at blank lines. A
+one-line block is a heading if it is a numbered title of at most 12 words with
+no trailing punctuation (``4.2.1 Frame Header'') or a capitalised line of at
+most 8 words. A heading closes the current chunk and becomes the first line of
+the next, so section names are indexed with their bodies. Paragraphs are added
+until the chunk would pass 300 words (hard ceiling 380); longer paragraphs are
+split at sentences, then into word windows. Consecutive chunks of the same
+section share 50 words of overlap. Each chunk is a verbatim slice of its source
+and stores its character offsets, which we use for relevance labels
+(Section~\ref{sec:data}). The chunker can also break between paragraphs whose
+embeddings have cosine similarity below 0.55, but this option was off in every
+reported run, so chunk boundaries follow document structure only. The chunking
+ablation replaces this with fixed 256-word windows without overlap.
+
+\subsection{Sparse retrieval}
+BM25 scores the title and text of each passage with the Lucene variant
+implemented in \texttt{bm25s}~\cite{lu2024bm25s}:
+\begin{equation}
+  s_{\mathrm{BM25}}(q,d)=\sum_{t\in q}\mathrm{idf}(t)\,
+  \frac{f(t,d)}{f(t,d)+k_1\!\left(1-b+b\,\frac{|d|}{\mathrm{avgdl}}\right)},
+  \label{eq:bm25}
+\end{equation}
+where $f(t,d)$ is the frequency of $t$ in $d$ and
+$\mathrm{idf}(t)=\ln\bigl(1+\frac{N-n_t+0.5}{n_t+0.5}\bigr)$ for $N$ passages,
+$n_t$ of which contain $t$~\cite{robertson2009bm25}; $k_1=1.2$, $b=0.75$.
+
+The tokenizer is where we departed most from defaults. A standard word
+tokenizer splits \texttt{TLS1.3} into \texttt{tls} and \texttt{1}, losing
+exactly the strings our RFC questions ask about. Ours lowercases the text and
+first matches compounds, alphanumeric runs joined by \texttt{.}, \texttt{\_},
+\texttt{/}, \texttt{:} or \texttt{-}, and emits each compound both whole and as
+its parts (\texttt{http/2} gives \texttt{http/2}, \texttt{http}, \texttt{2}).
+Purely alphabetic tokens go through an English stopword list and the Snowball
+stemmer; tokens with a digit or separator are never stemmed or dropped. The
+same function serves documents, queries and the IDF look-ups used by QAF.
+
+\subsection{Dense retrieval}
+We compare two bi-encoders: BGE-small-en-v1.5~\cite{xiao2024cpack}
+(384 dimensions) and EmbeddingGemma~2~\cite{vera2026embeddinggemma2}, the
+successor of EmbeddingGemma~\cite{vera2025embeddinggemma}, whose 768-dimensional
+vectors are trained with a Matryoshka objective~\cite{kusupati2022matryoshka}
+so that prefixes of 512, 256 or 128 dimensions remain usable. We load only the
+text tower of EmbeddingGemma~2, in 32-bit floats. Each model gets its
+documented prompts: BGE prefixes queries with ``Represent this sentence for
+searching relevant passages:'' and encodes passages as plain text, while
+EmbeddingGemma~2 uses ``task: search result \textbar{} query:'' for queries
+and ``title: \{title or none\} \textbar{} text: \{passage\}'' for passages.
+Vectors are L2-normalised and stored in a FAISS~\cite{johnson2021faiss} HNSW
+graph~\cite{malkov2020hnsw} ($M=32$, $\mathit{efConstruction}=200$,
+$\mathit{efSearch}=128$) searched by inner product. At our corpus sizes an
+exact index would also be fast, but a deployed system would use approximate
+search, and we wanted our latency figures to include it.
+
+\subsection{Weighted reciprocal rank fusion}
+BM25 scores and cosine similarities are on different scales, so we fuse
+ranks~\cite{cormack2009rrf}. For a dense weight $\alpha\in[0,1]$,
+\begin{equation}
+  s_{\alpha}(d)=\frac{\alpha}{k+r_{\mathrm{dense}}(d)}
+               +\frac{1-\alpha}{k+r_{\mathrm{sparse}}(d)},\qquad k=60,
+  \label{eq:rrf}
+\end{equation}
+where $r(\cdot)$ is the 1-based rank in each top-100 list and a passage absent
+from a list gets nothing from it. The fused list keeps 100 passages, with ties
+broken by passage id. At $\alpha=0.5$ this is plain RRF up to a constant
+factor; $\alpha=1$ and $\alpha=0$ give back the dense and sparse rankings.
+
+\subsection{Query-Adaptive Fusion (QAF)}
+\label{sec:qaf}
+One $\alpha$ for all queries is a compromise. ``Which opcode marks a WebSocket
+close frame?'' needs the sparse side; a loosely worded finance question needs
+the dense side. QAF predicts $\alpha$ per query from 12 features
+(Table~\ref{tab:features}) that reuse work the pipeline has already done.
+
+\begin{table}[t]
+\centering
+\caption{QAF query features. The query is split into alphanumeric tokens
+(compounds kept whole); ``ratio'' means the share of those tokens.}
+\label{tab:features}
+\footnotesize
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.30\columnwidth}>{\raggedright\arraybackslash}p{0.64\columnwidth}@{}}
+\toprule
+Feature & Definition \\
+\midrule
+\texttt{id\_ratio} & identifier-like tokens: letters mixed with digits, an internal \texttt{\_-./}, or all capitals \\
+\texttt{num\_ratio} & tokens made only of digits \\
+\texttt{caps\_ratio} & all-capital tokens of length $\ge 2$ (acronyms) \\
+\texttt{len\_tokens} & number of tokens \\
+\texttt{mean\_idf}, \texttt{max\_idf} & BM25 IDF of the query terms in the target corpus \\
+\texttt{oov\_ratio} & tokens absent from the dense encoder's whole-word vocabulary \\
+\texttt{sparse\_top}, \texttt{sparse\_margin} & top BM25 score and its gap to the second \\
+\texttt{dense\_top}, \texttt{dense\_margin} & top cosine score and its gap to the second \\
+\texttt{overlap\_at10} & share of the dense top-10 also in the sparse top-10 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textit{Training target.} For a labelled training query we sweep $\alpha$ over
+$\{0,0.1,\dots,1\}$ and compute nDCG@10 of the fused list at each value. Since
+Eq.~\eqref{eq:rrf} uses ranks only, nDCG is piecewise constant in $\alpha$ and
+the optimum is usually a run of equally good grid points. Taking the first or
+last maximiser would push targets toward the ends of the range for no real
+reason, so the oracle $\alpha^{o}(q)$ is the centre of the longest contiguous
+run of grid values that reach the best nDCG@10; between equally long runs we
+keep the one nearer $0.5$. A query with nDCG@10 of zero at every $\alpha$
+carries no signal and gets $0.5$.
+
+\textit{Model and cost.} Standardised features feed a ridge regression
+(regularisation $1.0$) whose output, clipped to $[0,1]$, is used as $\alpha$.
+We fit one model per encoder on the pooled SciFact and FiQA dev queries; the
+RFC and HotpotQA collections are never seen in training. A linear model was a
+deliberate choice, since its 12 coefficients say directly which query
+properties move the weight toward either side and can be checked against
+intuition (identifier-heavy queries should lower $\alpha$). Every feature comes
+from the query string, the two candidate lists or the BM25 document
+frequencies, all available when fusion runs, so QAF adds feature extraction and
+a 12-term dot product, with no model call.
+
+\subsection{Reranking, post-processing and generation}
+The first 50 passages of the fused list are rescored by the BGE-reranker-base
+cross-encoder, which reads query and passage (title and text, up to 512 tokens)
+jointly as in monoBERT~\cite{nogueira2019passage}; the top five passages of the
+new order form the context. The interactive pipeline can also drop near
+duplicates (Jaccard similarity of word 5-gram sets $\ge 0.9$) and apply a
+metadata filter before reranking; both are disabled in the reported
+experiments. Optional query expansion, used only in the ablation, asks the
+local LLM for at most 20 keywords or synonyms and appends them to the query.
+
+Answers come from Qwen2.5-7B-Instruct~\cite{qwen2024qwen25} served by Ollama
+at temperature 0 with a fixed seed. The prompt numbers the passages
+\texttt{[1]}--\texttt{[5]} and asks for a short answer citing them in that
+form, or the exact reply ``not in context'' when they do not support one.
+Cited numbers are mapped back to passage ids, so we can check whether a cited
+passage is relevant.

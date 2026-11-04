@@ -1,0 +1,39 @@
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{When does adaptive weighting pay off?}
+% TODO (after results): relate QAF gains to query type (identifier share),
+% to how far apart the dense and sparse curves in the alpha sweep are, and to
+% the oracle headroom. Discuss transfer to the unseen RFC and HotpotQA sets.
+
+\subsection{Cost and deployment guidance}
+% TODO (after results): practical advice the approved abstract promised:
+% which alpha to use without QAF, whether reranking is worth its latency on a
+% laptop, which encoder and Matryoshka size to pick under a memory budget.
+
+\subsection{Limitations}
+Several choices limit how far our results generalise. All experiments run on
+subsets: FiQA uses 20{,}000 of its 57{,}638 passages, HotpotQA 500 questions
+with only their own distractor paragraphs as the corpus, and our RFC set has
+101 questions. Absolute scores on the subsets are not comparable with
+full-benchmark numbers, and on the RFC set a handful of questions can move
+the mean noticeably. The RFC questions were drafted by the same model
+(Qwen2.5-7B) that later generates answers, filtered automatically, screened with AI
+assistance and then verified by all three authors. Every row was checked, but
+the set still favours questions that a 7B model finds easy to write, namely
+short identifier lookups, and it has no multi-hop items.
+
+QAF is trained on only two development sets. Its features use the BM25 IDF
+table and the encoder vocabulary of the target corpus, so the model is cheap
+to apply anywhere, but the coefficients were fitted on scientific and
+financial queries and may not suit other domains. % NOTE: revise the next sentence if the DAT-style baseline (Task 16) is run.
+We compare QAF with a fixed
+weight and with the oracle but not with a learned or LLM-based weighting
+scheme such as DAT, so we cannot say how much accuracy the LLM-free design
+gives up. Generation and faithfulness are judged by a local 7B model, the
+same model that writes the answers. RAGAS scores from such a judge are noisier
+and possibly more lenient than those from a stronger model or from human
+raters, so we treat them as a relative signal between configurations. Finally,
+all latencies were measured on one laptop with an MPS backend; the ordering of
+stages by cost should carry over to other hardware, but the absolute numbers
+will not.

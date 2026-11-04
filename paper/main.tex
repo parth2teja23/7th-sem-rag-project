@@ -1,0 +1,80 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+
+\usepackage{iftex}
+\ifXeTeX
+  % Tectonic builds with XeTeX; use a Times clone so the output matches the
+  % pdfLaTeX (Overleaf) build of IEEEtran.
+  \usepackage{fontspec}
+  \setmainfont{texgyretermes}[Extension=.otf, UprightFont=*-regular,
+    BoldFont=*-bold, ItalicFont=*-italic, BoldItalicFont=*-bolditalic]
+  \setsansfont{texgyreheros}[Extension=.otf, UprightFont=*-regular,
+    BoldFont=*-bold, ItalicFont=*-italic, BoldItalicFont=*-bolditalic]
+  \setmonofont{texgyrecursor}[Extension=.otf, UprightFont=*-regular,
+    BoldFont=*-bold, ItalicFont=*-italic, BoldItalicFont=*-bolditalic]
+\fi
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,calc}
+
+\input{numbers}
+
+% Results tables/figures are produced by experiments/make_paper_assets.py.
+% Until they exist the paper still builds, with a visible placeholder.
+\newcommand{\inputtable}[1]{%
+  \IfFileExists{tables/#1.tex}{\input{tables/#1}}{%
+    \begin{table}[t]\centering\caption{[\detokenize{#1} table pending]}\fbox{\parbox{0.9\columnwidth}{\centering\small Table \texttt{tables/\detokenize{#1}.tex} not generated yet.}}\end{table}}}
+\newcommand{\inputfigure}[2]{%
+  \IfFileExists{figures/#1.pdf}{%
+    \begin{figure}[t]\centering\includegraphics[width=\columnwidth]{figures/#1}\caption{#2}\label{fig:#1}\end{figure}}{%
+    \begin{figure}[t]\centering\fbox{\parbox{0.9\columnwidth}{\centering\small Figure \texttt{figures/\detokenize{#1}.pdf} not generated yet.}}\caption{#2}\label{fig:#1}\end{figure}}}
+
+\begin{document}
+
+\title{Query-Adaptive Hybrid Retrieval for Retrieval-Augmented Generation on Identifier-Heavy Corpora}
+
+\author{
+\IEEEauthorblockN{Parth Tuteja}
+\IEEEauthorblockA{\textit{Dept. of Computer Science}\\ \textit{and Engineering}\\
+\textit{Chitkara University}\\
+Punjab, India\\
+2310991172}
+\and
+\IEEEauthorblockN{Reetika}
+\IEEEauthorblockA{\textit{Dept. of Computer Science}\\ \textit{and Engineering}\\
+\textit{Chitkara University}\\
+Punjab, India\\
+2310991267}
+\and
+\IEEEauthorblockN{Rishabh Puri}
+\IEEEauthorblockA{\textit{Dept. of Computer Science}\\ \textit{and Engineering}\\
+\textit{Chitkara University}\\
+Punjab, India\\
+2310991269}
+}
+
+\maketitle
+
+\input{sections/abstract}
+\input{sections/introduction}
+\input{sections/related}
+\input{sections/method}
+\input{sections/setup}
+\input{sections/results}
+\input{sections/discussion}
+\input{sections/conclusion}
+
+\section*{Acknowledgment}
+We thank our supervisor, Dr Rajat Takkar, Department of Computer Science and
+Engineering, Chitkara University, for his guidance throughout this project.
+
+\bibliographystyle{IEEEtran}
+\bibliography{refs}
+
+\end{document}

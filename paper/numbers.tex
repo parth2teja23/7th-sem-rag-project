@@ -1,0 +1,42 @@
+% Placeholder number macros. experiments/make_paper_assets.py (Task 18) overwrites
+% this file with values computed from results/. Never type a result by hand.
+\newcommand{\TBD}{\textbf{[TBD]}}
+% --- fixed-alpha baseline (chosen on pooled dev, per encoder)
+\newcommand{\AlphaStarBge}{\TBD}
+\newcommand{\AlphaStarGemma}{\TBD}
+% --- QAF training
+\newcommand{\QAFnDev}{\TBD}          % pooled dev queries used to fit QAF
+\newcommand{\QAFtrainRsq}{\TBD}      % training R^2 of the ridge model
+\newcommand{\QAFtopFeature}{\TBD}    % feature with the largest |coefficient|
+\newcommand{\QAFlatencyMs}{\TBD}     % mean added latency of QAF (features + predict), ms
+% --- headline retrieval gains (nDCG@10, qaf+rr minus hybrid_fixed+rr)
+\newcommand{\QAFgainSciFact}{\TBD}
+\newcommand{\QAFgainFiQA}{\TBD}
+\newcommand{\QAFgainHotpot}{\TBD}
+\newcommand{\QAFgainRFC}{\TBD}
+\newcommand{\QAFpRFC}{\TBD}          % one-sided paired bootstrap p, RFC
+\newcommand{\QAFpSciFact}{\TBD}
+% --- hybrid vs single retrievers (nDCG@10)
+\newcommand{\HybridGainOverDenseRFC}{\TBD}
+\newcommand{\HybridGainOverBMRFC}{\TBD}
+\newcommand{\BestNDCGRFC}{\TBD}
+\newcommand{\BestNDCGSciFact}{\TBD}
+\newcommand{\BMndcgSciFact}{\TBD}    % sanity check against published BEIR BM25
+% --- oracle headroom (oracle alpha minus fixed alpha*, nDCG@10)
+\newcommand{\OracleHeadroomSciFact}{\TBD}
+\newcommand{\OracleHeadroomRFC}{\TBD}
+% --- reranking and latency
+\newcommand{\RerankGainSciFact}{\TBD}
+\newcommand{\RerankLatencyMs}{\TBD}
+\newcommand{\TotalLatencyMs}{\TBD}
+% --- Matryoshka (EmbeddingGemma 2)
+\newcommand{\MatryoshkaDropTwoFiftySix}{\TBD} % nDCG@10 drop from 768 to 256 dims
+\newcommand{\MatryoshkaIndexMBOneTwentyEight}{\TBD}
+% --- generation
+\newcommand{\GenN}{\TBD}             % questions per dataset in generation eval
+\newcommand{\RagasN}{\TBD}           % RAGAS sample size
+\newcommand{\GenFoneQAF}{\TBD}
+\newcommand{\GenFoneDense}{\TBD}
+\newcommand{\GenEMQAF}{\TBD}
+\newcommand{\FaithQAF}{\TBD}
+\newcommand{\FaithDense}{\TBD}

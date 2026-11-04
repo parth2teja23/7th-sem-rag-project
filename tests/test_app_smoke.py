@@ -46,7 +46,7 @@ def toy_backend(dataset, encoder):
     rng = np.random.default_rng(0)
     qaf = QAFModel().fit(rng.normal(size=(20, len(FEATURE_NAMES))), rng.uniform(size=20))
     return backend.Backend(CORPUS, {"q1": "toy question one"}, {"q1": {"d0": 1}},
-                           Sparse(), Dense(), Reranker(), qaf, set())
+                           Sparse(), Dense(), qaf, set())
 
 
 @pytest.fixture
@@ -55,6 +55,9 @@ def app(monkeypatch):
 
     st.cache_resource.clear()
     monkeypatch.setattr(backend, "load_backend", toy_backend)
+    monkeypatch.setattr(backend, "load_reranker", Reranker)
+    monkeypatch.setattr(backend, "available_datasets", lambda: ["scifact", "rfc"])
+    monkeypatch.setattr(backend, "available_encoders", lambda ds: ["bge-small"])
     return AppTest.from_file(str(APP / "streamlit_app.py"), default_timeout=30)
 
 
@@ -79,8 +82,6 @@ def test_ollama_down_warns_and_shows_four_columns(app, monkeypatch):
 
 
 def test_qaf_mode_and_answer(app, monkeypatch):
-    from hrag.generate import Answer
-
     monkeypatch.setattr("hrag.generate.chat", lambda *a, **k: "An answer [1].")
     app.run()
     app.radio[0].set_value("QAF")
@@ -89,3 +90,24 @@ def test_qaf_mode_and_answer(app, monkeypatch):
     assert not app.warning
     assert any(h.value == "QAF" for h in app.header)
     assert len(app.dataframe) == 1
+    assert any(m.label == "Chosen alpha" for m in app.metric)
+    assert len(app.get("vega_lite_chart")) == 1
+    assert any("An answer" in m.value for m in app.markdown)
+    assert any(e.label == "[1] Title 0" for e in app.expander)
+
+
+def test_missing_index_stops_with_error(app, monkeypatch):
+    monkeypatch.setattr(backend, "available_encoders", lambda ds: [])
+    app.run()
+    assert not app.exception
+    assert len(app.error) == 1
+
+
+def test_load_failure_shows_error(app, monkeypatch):
+    def boom(*a):
+        raise FileNotFoundError("no index")
+
+    monkeypatch.setattr(backend, "load_backend", boom)
+    app.run()
+    assert not app.exception
+    assert "no index" in app.error[0].value

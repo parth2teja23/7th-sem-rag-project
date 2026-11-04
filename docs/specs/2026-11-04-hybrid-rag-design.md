@@ -34,7 +34,7 @@ The goal is the **"Excellent" band of every rubric row**. The rubric rows that d
 **Goals**
 - A hybrid retrieval pipeline exactly as the abstract describes: semantic chunking with overlap → dual indexing (dense + BM25) → optional query rewriting/expansion → parallel retrieval → weighted Reciprocal Rank Fusion → cross-encoder reranking → metadata filtering + dedup → top-k into an instruction-tuned LLM.
 - **Our contribution — Query-Adaptive Fusion (QAF):** per-query fusion weight α(q) predicted from cheap query features, compared against the best *fixed* α found by grid search.
-- **Two dense encoders** compared throughout: `bge-small-en-v1.5` and Google **EmbeddingGemma** (`google/embeddinggemma-300m`), including its Matryoshka truncation (768/512/256/128 dims).
+- **Two dense encoders** compared throughout: `bge-small-en-v1.5` and Google **EmbeddingGemma** (`google/embeddinggemma-2`, text-only), including its Matryoshka truncation (768/512/256/128 dims).
 - Full evaluation: retrieval (Recall@k, MRR@10, nDCG@10), generation (EM, token F1, RAGAS faithfulness & context relevance with a local judge), latency per stage, ablation study.
 - A Streamlit demo showing all retrievers side by side, the α chosen by QAF, and the cited answer.
 - An IEEE-format LaTeX paper (~6 pages + refs) whose every number is generated from experiment output files.

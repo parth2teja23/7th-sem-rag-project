@@ -14,7 +14,7 @@
 
 - Everything runs locally on an Apple M5 / 32 GB: torch device `mps` when available else `cpu`; no paid APIs.
 - LLM: `qwen2.5:7b-instruct` via Ollama, `temperature=0`, fixed `seed=42`.
-- Encoders: `BAAI/bge-small-en-v1.5` and `google/embeddinggemma-300m`; reranker `BAAI/bge-reranker-base`.
+- Encoders: `BAAI/bge-small-en-v1.5` and `google/embeddinggemma-2`; reranker `BAAI/bge-reranker-base`.
 - RRF constant `k=60`; default over-retrieval depth `N=50`; final context `k=5`.
 - Fusion formula: `score(d) = α·1/(60+rank_dense(d)) + (1−α)·1/(60+rank_sparse(d))`, ranks 1-based; a doc missing from a list contributes 0 from that list.
 - All random sampling uses seed 42; subset IDs written to `data/subsets/*.json`.
@@ -27,7 +27,7 @@
 1. Query whose terms are all stopwords/unknown to BM25 → sparse ranking empty; fusion must return the dense ranking (not crash, not empty). Test in Task 7.
 2. Same document at different ranks in both lists, and ties → appears once, scores summed. Test in Task 7.
 3. Ollama not running or model not pulled → `OllamaUnavailable` raised with a fix hint; demo still shows retrieval columns. Tests in Tasks 10 and 19.
-4. Passage longer than the encoder max length (512 tokens bge, 2048 gemma) → truncated silently by encoder, chunker keeps chunks under limit. Test in Task 4.
+4. Passage longer than the encoder max length (512 tokens bge, 8192 gemma) → truncated silently by encoder, chunker keeps chunks under limit. Test in Task 4.
 5. Empty or whitespace-only query in the demo/pipeline → `ValueError("empty query")`, demo shows a message. Test in Task 11.
 
 ---
@@ -87,8 +87,8 @@ Result file contract (every experiment): `results/<exp>/<dataset>__<config>.json
   - `@dataclass RetrievalResult(query: str, final: Ranking, stages: dict[str, Ranking], alpha: float | None, timings_ms: dict[str, float])`
   - `pick_device() -> str` returning `"mps"` / `"cpu"`
 
-- [ ] **Step 1:** `git init`; create `pyproject.toml` (package `hrag`, src layout, deps from Tech Stack, dev dep pytest; pytest marker `slow`); `.gitignore` with `data/raw indexes/ results/cache .venv __pycache__ *.pyc`.
-- [ ] **Step 2:** `uv venv && uv pip install -e ".[dev]"`; `ollama pull qwen2.5:7b-instruct`. Expected: `python -c "import hrag, faiss, bm25s, sentence_transformers"` exits 0.
+- [ ] **Step 1:** (repo already initialised on branch `feat/hybrid-rag`; append to existing `.gitignore`) create `pyproject.toml` (package `hrag`, src layout, deps from Tech Stack, dev dep pytest; pytest marker `slow`); `.gitignore` with `data/raw indexes/ results/cache .venv __pycache__ *.pyc`.
+- [ ] **Step 2:** `uv venv --python 3.12 && uv pip install -e ".[dev]"`; `ollama pull qwen2.5:7b-instruct`. Expected: `python -c "import hrag, faiss, bm25s, sentence_transformers"` exits 0.
 - [ ] **Step 3: Write failing test** `test_ranking_sorted_helper`: `sort_ranking([("a",0.1),("b",0.9)]) == [("b",0.9),("a",0.1)]`; `test_pick_device_returns_known`: result in `{"mps","cpu"}`.
 - [ ] **Step 4:** Run `pytest tests/test_types.py -v` → FAIL (import error).
 - [ ] **Step 5:** Implement types, `sort_ranking(r: Ranking) -> Ranking` (stable, desc, ties by doc_id asc), `pick_device()`.
@@ -111,7 +111,7 @@ Result file contract (every experiment): `results/<exp>/<dataset>__<config>.json
 
 - [ ] **Step 1: Write failing tests:**
   - ranking `[("d1",3),("d2",2),("d3",1)]`, rel `{"d2":1}` → recall@1=0, recall@2=1, mrr@10=0.5, ndcg@10 = `1/log2(3)` ≈ 0.6309
-  - rel `{"d1":2,"d3":1}` → ndcg@3 = `(3/1 + 1/2)/(3/1 + 1/log2(3))` ≈ 0.9213 (gain `2^rel−1`)
+  - rel `{"d1":2,"d3":1}` → ndcg@3 = `(3/1 + 1/2)/(3/1 + 1/log2(3))` ≈ 0.9639 (gain `2^rel−1`)
   - `exact_match("The Eiffel Tower!", ["eiffel tower"]) == 1.0`; `token_f1("big red dog", ["red dog"]) == 0.8`
   - `paired_bootstrap([0]*50, [1]*50) < 0.01`; identical lists → `> 0.4`
 - [ ] **Step 2:** Run `pytest tests/eval -v` → FAIL.
@@ -182,12 +182,9 @@ Algorithm for `semantic_chunks`: split into paragraphs on blank lines; a line ma
 - Produces:
   - `class Encoder(name: str, dim: int | None = None, device: str | None = None)`; `encode_queries(texts) -> np.ndarray`, `encode_docs(docs: list[Doc]) -> np.ndarray` (float32, L2-normalised, shape `(n, dim or native)`); `max_len` attribute.
     - bge: query prefix `"Represent this sentence for searching relevant passages: "`, docs raw.
-    - EmbeddingGemma: use `model.encode_query` / `model.encode_document` (built-in prompts `task: search result | query: ` and `title: {title or "none"} | text: `). Matryoshka: truncate to `dim` ∈ {768,512,256,128} then re-normalise.
-  - `ENCODERS = {"bge-small": "BAAI/bge-small-en-v1.5", "gemma": "google/embeddinggemma-300m"}`
+    - EmbeddingGemma 2 (`google/embeddinggemma-2`, Apache-2.0, already in local HF cache, requires sentence-transformers>=6.1.0): load text-only with `config_kwargs={"vision_config": None, "audio_config": None}` and `model_kwargs={"torch_dtype": torch.float32}` (never float16). Queries prefixed `"task: search result | query: "`; docs formatted `f"title: {doc.title or 'none'} | text: {doc.text}"`. Matryoshka: `truncate_dim=dim` ∈ {768,512,256,128} with `normalize_embeddings=True`.
+  - `ENCODERS = {"bge-small": "BAAI/bge-small-en-v1.5", "gemma": "google/embeddinggemma-2"}`
   - `class DenseIndex: build(docs: dict[str,Doc], encoder: Encoder, batch_size=64) -> None; search(query: str, k=100) -> Ranking; search_batch(queries: list[str], k) -> list[Ranking]; save(dir)/load(dir, encoder)`. FAISS `IndexHNSWFlat(dim, 32, METRIC_INNER_PRODUCT)`, `efConstruction=200`, `efSearch=128`.
-  - Note: `google/embeddinggemma-300m` is gated on HF — user must accept the licence and run `huggingface-cli login` once (Step 0).
-
-- [ ] **Step 0:** Ask user to accept the EmbeddingGemma licence on huggingface.co and log in; verify `python -c "from sentence_transformers import SentenceTransformer as S; S('google/embeddinggemma-300m')"`.
 - [ ] **Step 1: Write failing tests** (`slow`): for each encoder, 3 docs ("cats purr", "stock market crash", "feline sounds") → query "why do cats make noise" ranks a cat doc first; embeddings have unit norm; gemma with `dim=128` → shape `(3,128)`; save/load round-trip identical top-1.
 - [ ] **Step 2:** FAIL. **Step 3:** Implement. **Step 4:** PASS.
 - [ ] **Step 5:** Commit `feat: dense encoders (bge, EmbeddingGemma+Matryoshka) and FAISS HNSW index`.

@@ -891,7 +891,8 @@ def compute_macros(results: Path, R: dict) -> dict[str, str]:
     # Matryoshka
     mrows = load_matryoshka(results)
     if mrows:
-        cfg = "qaf+rr" if any(r["config"] == "qaf+rr" for r in mrows) else "dense"
+        # dense-only: truncation affects the embedding, so measure it without fusion/rerank masking it
+        cfg = "dense" if any(r["config"] == "dense" for r in mrows) else "qaf+rr"
         drops = []
         for ds in {r["dataset"] for r in mrows}:
             at = {r["dim"]: r["ndcg"] for r in mrows if r["dataset"] == ds and r["config"] == cfg and r["ndcg"] is not None}

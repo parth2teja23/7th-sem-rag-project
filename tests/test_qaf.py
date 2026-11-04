@@ -1,4 +1,5 @@
 import numpy as np
+import pytest
 
 from hrag.qaf import ALPHA_GRID, FEATURE_NAMES, QAFModel, _plateau_center, oracle_alpha, query_features
 
@@ -74,3 +75,21 @@ def test_model_fit_predict_roundtrip(tmp_path):
     m.save(tmp_path / "m.joblib")
     m2 = QAFModel.load(tmp_path / "m.joblib")
     assert np.allclose(m2.predict(X), p)
+
+
+def test_plateau_tie_is_float_safe():
+    assert _plateau_center([3, 7]) == 0.3
+
+
+def test_empty_query_with_rankings_is_zero():
+    f = query_features("", [("a", 1.0)], [("a", 2.0)], idf=lambda t: 1.0, tokenizer_vocab=set())
+    assert not f.any() and f.shape == (12,)
+
+
+def test_predict_rejects_non_finite():
+    X = np.random.default_rng(0).uniform(size=(20, 12))
+    m = QAFModel().fit(X, X[:, 0])
+    bad = X.copy()
+    bad[0, 3] = np.nan
+    with pytest.raises(ValueError, match="non-finite QAF features"):
+        m.predict(bad)

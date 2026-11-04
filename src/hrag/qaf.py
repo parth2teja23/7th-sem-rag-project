@@ -57,6 +57,8 @@ def query_features(
 ) -> np.ndarray:
     toks = _TOKEN_RE.findall(query)
     n = len(toks)
+    if n == 0:
+        return np.zeros(len(FEATURE_NAMES), dtype=float)
     d_top, d_margin = _top_margin(dense)
     s_top, s_margin = _top_margin(sparse)
     overlap = len({d for d, _ in dense[:10]} & {d for d, _ in sparse[:10]}) / 10.0
@@ -85,9 +87,9 @@ def _plateau_center(opt: list[int]) -> float:
             runs[-1].append(i)
         else:
             runs.append([i])
-    means = [(len(r), sum(ALPHA_GRID[i] for i in r) / len(r)) for r in runs]
-    _, mean = min(means, key=lambda lm: (-lm[0], abs(lm[1] - 0.5), lm[1]))
-    return round(mean, 2)
+    # compare in integer grid indices (alpha = i/10) to avoid float tie-break flips
+    best = min(runs, key=lambda r: (-len(r), abs(sum(r) - 5 * len(r)), sum(r)))
+    return round(sum(ALPHA_GRID[i] for i in best) / len(best), 2)
 
 
 def oracle_alpha(dense: Ranking, sparse: Ranking, rel: dict[str, int], k_eval: int = 10) -> float:
@@ -118,6 +120,8 @@ class QAFModel:
 
     def predict(self, X: np.ndarray) -> np.ndarray:
         X = np.atleast_2d(np.asarray(X, dtype=float))
+        if not np.isfinite(X).all():
+            raise ValueError("non-finite QAF features")
         return np.clip(self.pipe.predict(X), 0.0, 1.0)
 
     def coef_table(self) -> list[tuple[str, float]]:

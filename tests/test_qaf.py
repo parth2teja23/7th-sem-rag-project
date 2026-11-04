@@ -1,6 +1,6 @@
 import numpy as np
 
-from hrag.qaf import ALPHA_GRID, FEATURE_NAMES, QAFModel, oracle_alpha, query_features
+from hrag.qaf import ALPHA_GRID, FEATURE_NAMES, QAFModel, _plateau_center, oracle_alpha, query_features
 
 
 def _f(q, dense=None, sparse=None, vocab=None):
@@ -40,22 +40,24 @@ def test_ranking_features():
     assert abs(f["overlap_at10"] - 0.1) < 1e-9
 
 
-def test_oracle_alpha_prefers_correct_side():
-    # relevant doc only in sparse -> alpha < 0.5; only in dense -> alpha > 0.5.
-    # RRF is rank-based, so every alpha on that side ties and the tie-break picks the
-    # grid point closest to 0.5 (0.4 / 0.6), then the smaller alpha.
+def test_oracle_alpha_plateau_centres():
     dense = [("x", 1.0), ("d1", 0.5)]
     sparse = [("y", 1.0), ("s1", 0.5)]
-    assert oracle_alpha(dense, sparse, {"s1": 1}) == 0.4
-    assert oracle_alpha(dense, sparse, {"d1": 1}) == 0.6
+    assert oracle_alpha(dense, sparse, {"s1": 1}) == 0.2
+    assert oracle_alpha(dense, sparse, {"d1": 1}) == 0.8
     assert oracle_alpha(dense, sparse, {}) == 0.5
     assert oracle_alpha(dense, sparse, {"zzz": 1}) == 0.5
 
 
-def test_oracle_alpha_tie_toward_half():
-    d = [("a", 1.0)]
-    s = [("a", 1.0)]
-    assert oracle_alpha(d, s, {"a": 1}) == 0.5
+def test_oracle_alpha_all_equal():
+    assert oracle_alpha([("a", 1.0)], [("a", 1.0)], {"a": 1}) == 0.5
+
+
+def test_plateau_picks_longest_run():
+    # runs {0.0,0.1} (len 2) and {0.5..0.9} (len 5) -> longer one, mean 0.7
+    assert _plateau_center([0, 1, 5, 6, 7, 8, 9]) == 0.7
+    # equal length: nearest 0.5 wins -> {0.3,0.4} (0.35) over {0.8,0.9}
+    assert _plateau_center([3, 4, 8, 9]) == 0.35
 
 
 def test_model_fit_predict_roundtrip(tmp_path):
@@ -72,8 +74,3 @@ def test_model_fit_predict_roundtrip(tmp_path):
     m.save(tmp_path / "m.joblib")
     m2 = QAFModel.load(tmp_path / "m.joblib")
     assert np.allclose(m2.predict(X), p)
-
-
-def test_oracle_alpha_ties_pick_closest_to_half():
-    # relevant at rank 1 of sparse only: every alpha < 0.5 ties; closest to 0.5 is 0.4
-    assert oracle_alpha([("d", 1.0)], [("s", 1.0)], {"s": 1}) == 0.4

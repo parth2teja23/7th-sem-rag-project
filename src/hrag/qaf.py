@@ -77,16 +77,35 @@ def query_features(
     )
 
 
+def _plateau_center(opt: list[int]) -> float:
+    """opt: sorted grid indices that are optimal. Centre of the longest contiguous run."""
+    runs: list[list[int]] = []
+    for i in opt:
+        if runs and i == runs[-1][-1] + 1:
+            runs[-1].append(i)
+        else:
+            runs.append([i])
+    means = [(len(r), sum(ALPHA_GRID[i] for i in r) / len(r)) for r in runs]
+    _, mean = min(means, key=lambda lm: (-lm[0], abs(lm[1] - 0.5), lm[1]))
+    return round(mean, 2)
+
+
 def oracle_alpha(dense: Ranking, sparse: Ranking, rel: dict[str, int], k_eval: int = 10) -> float:
-    """Grid alpha maximising nDCG@k; ties -> closest to 0.5, then smaller alpha."""
+    """Oracle fusion weight: the centre of the longest plateau of grid alphas maximising nDCG@k.
+
+    Rank-based fusion (RRF) is piecewise constant in alpha, so the optimum is usually a
+    plateau of equally good weights rather than a single point. Taking the centre of the
+    longest contiguous plateau (ties between equal runs go to the one nearest 0.5) gives a
+    stable, unbiased regression target instead of an arbitrary or 0.5-collapsed grid point.
+    Returns 0.5 when nothing relevant is retrieved.
+    """
     if not any(v > 0 for v in rel.values()):
         return 0.5
-    scores = [(a, ndcg_at_k(weighted_rrf(dense, sparse, a), rel, k_eval)) for a in ALPHA_GRID]
-    best = max(s for _, s in scores)
+    scores = [ndcg_at_k(weighted_rrf(dense, sparse, a), rel, k_eval) for a in ALPHA_GRID]
+    best = max(scores)
     if best <= 0.0:
         return 0.5
-    tied = [a for a, s in scores if abs(s - best) < 1e-12]
-    return min(tied, key=lambda a: (abs(a - 0.5), a))
+    return _plateau_center([i for i, sc in enumerate(scores) if abs(sc - best) < 1e-12])
 
 
 class QAFModel:

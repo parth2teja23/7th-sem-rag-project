@@ -1,0 +1,51 @@
+\begin{table}[t]
+\centering
+\caption{Retrieval effectiveness on the test queries. Best deployable value per column in bold; $\dagger$: significantly better than Hybrid-fixed+RR (one-sided paired bootstrap, $p<0.05$). $\ddagger$: per-query oracle $\alpha$ on test qrels, an upper-bound reference only. BM25 does not depend on the encoder.}
+\label{tab:main_results}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lcccccc}
+\toprule
+Config & \multicolumn{2}{c}{nDCG@10} & \multicolumn{2}{c}{Recall@10} & \multicolumn{2}{c}{MRR@10} \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7}
+ & BGE-small & Gemma & BGE-small & Gemma & BGE-small & Gemma \\
+\midrule
+\multicolumn{7}{l}{\textit{SciFact}} \\
+BM25 & 0.682 & 0.682 & 0.814 & 0.814 & 0.647 & 0.647 \\
+Dense & 0.695 & \textbf{0.851}$^{\dagger}$ & 0.830 & \textbf{0.944}$^{\dagger}$ & 0.657 & \textbf{0.828}$^{\dagger}$ \\
+Hybrid-fixed & 0.707 & 0.830$^{\dagger}$ & 0.843 & 0.941$^{\dagger}$ & 0.667 & 0.800$^{\dagger}$ \\
+Hybrid-fixed+RR & 0.712 & 0.734 & 0.844 & 0.869 & 0.678 & 0.698 \\
+QAF & 0.721 & 0.801$^{\dagger}$ & 0.850 & 0.927$^{\dagger}$ & 0.685 & 0.769$^{\dagger}$ \\
+QAF+RR & \textbf{0.725}$^{\dagger}$ & 0.729 & \textbf{0.861} & 0.864 & \textbf{0.690}$^{\dagger}$ & 0.695 \\
+Oracle$^{\ddagger}$ & 0.810 & 0.913 & 0.916 & 0.968 & 0.782 & 0.900 \\
+\midrule
+\multicolumn{7}{l}{\textit{FiQA}} \\
+BM25 & 0.334 & 0.334 & 0.416 & 0.416 & 0.397 & 0.397 \\
+Dense & 0.483$^{\dagger}$ & 0.406 & 0.547$^{\dagger}$ & 0.489 & 0.566$^{\dagger}$ & 0.480 \\
+Hybrid-fixed & \textbf{0.494}$^{\dagger}$ & 0.431 & \textbf{0.561}$^{\dagger}$ & 0.519 & \textbf{0.579}$^{\dagger}$ & 0.501 \\
+Hybrid-fixed+RR & 0.431 & 0.426 & 0.513 & 0.508 & 0.505 & 0.497 \\
+QAF & 0.469$^{\dagger}$ & \textbf{0.435} & 0.543$^{\dagger}$ & \textbf{0.531}$^{\dagger}$ & 0.550$^{\dagger}$ & 0.498 \\
+QAF+RR & 0.427 & 0.430 & 0.506 & 0.509 & 0.502 & \textbf{0.504} \\
+Oracle$^{\ddagger}$ & 0.563 & 0.532 & 0.616 & 0.598 & 0.665 & 0.631 \\
+\midrule
+\multicolumn{7}{l}{\textit{HotpotQA}} \\
+BM25 & 0.785 & 0.785 & 0.891 & 0.891 & 0.876 & 0.876 \\
+Dense & 0.870 & 0.923 & 0.934 & 0.977 & 0.936 & 0.962 \\
+Hybrid-fixed & 0.874 & 0.921 & 0.941 & \textbf{0.979} & 0.937 & 0.962 \\
+Hybrid-fixed+RR & 0.926 & \textbf{0.936} & \textbf{0.962} & 0.973 & \textbf{0.970} & \textbf{0.973} \\
+QAF & 0.857 & 0.881 & 0.941 & 0.959 & 0.924 & 0.945 \\
+QAF+RR & \textbf{0.927} & 0.934 & 0.960 & 0.973 & \textbf{0.970} & 0.970 \\
+Oracle$^{\ddagger}$ & 0.916 & 0.950 & 0.962 & 0.987 & 0.970 & 0.984 \\
+\midrule
+\multicolumn{7}{l}{\textit{RFC}} \\
+BM25 & 0.786 & 0.786 & \textbf{0.941}$^{\dagger}$ & \textbf{0.941} & 0.736 & 0.736 \\
+Dense & 0.599 & 0.694 & 0.748 & 0.827 & 0.557 & 0.659 \\
+Hybrid-fixed & 0.637 & 0.733 & 0.792 & 0.866 & 0.593 & 0.696 \\
+Hybrid-fixed+RR & 0.792 & 0.823 & 0.876 & 0.921 & 0.769 & 0.792 \\
+QAF & 0.686 & 0.763 & 0.827 & 0.906 & 0.645 & 0.719 \\
+QAF+RR & \textbf{0.813} & \textbf{0.843} & 0.906 & \textbf{0.941} & \textbf{0.788} & \textbf{0.813} \\
+Oracle$^{\ddagger}$ & 0.871 & 0.900 & 0.970 & 0.970 & 0.842 & 0.881 \\
+\bottomrule
+\end{tabular}}
+\end{table}

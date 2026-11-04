@@ -1,0 +1,28 @@
+\begin{table}[t]
+\centering
+\caption{Standardised ridge coefficients of the QAF model (change in predicted dense weight $\alpha$ per 1 SD of the feature); largest $|$coefficient$|$ per encoder in bold.}
+\label{tab:qaf_coefficients}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lcc}
+\toprule
+Feature & BGE-small & Gemma \\
+\midrule
+\texttt{id\_ratio} & +0.011 & +0.004 \\
+\texttt{num\_ratio} & -0.003 & -0.013 \\
+\texttt{caps\_ratio} & -0.017 & +0.002 \\
+\texttt{len\_tokens} & +0.030 & +0.018 \\
+\texttt{mean\_idf} & +0.010 & +0.008 \\
+\texttt{max\_idf} & -0.019 & -0.020 \\
+\texttt{oov\_ratio} & -0.028 & -0.005 \\
+\texttt{sparse\_top} & -0.024 & +0.002 \\
+\texttt{sparse\_margin} & -0.016 & -0.027 \\
+\texttt{dense\_top} & \textbf{+0.048} & \textbf{+0.071} \\
+\texttt{dense\_margin} & -0.024 & -0.033 \\
+\texttt{overlap\_at10} & -0.031 & -0.025 \\
+\midrule
+Train $R^2$ & 0.093 & 0.062 \\
+Intercept & 0.626 & 0.609 \\
+\bottomrule
+\end{tabular}
+\end{table}

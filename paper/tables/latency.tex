@@ -1,0 +1,22 @@
+\begin{table}[t]
+\centering
+\caption{Per-stage latency in ms (mean and 95th percentile over sampled test queries, averaged over collections; encoder: Gemma). Lowest total in bold.}
+\label{tab:latency}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lcccccc}
+\toprule
+Stage & \multicolumn{2}{c}{Dense} & \multicolumn{2}{c}{Hybrid-fixed+RR} & \multicolumn{2}{c}{QAF+RR} \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7}
+ & mean & p95 & mean & p95 & mean & p95 \\
+\midrule
+BM25 & -- & -- & 0.2 & 0.2 & 0.2 & 0.2 \\
+Dense search & 18 & 19 & 20 & 23 & 19 & 24 \\
+$\alpha$ decision & -- & -- & -- & -- & 0.3 & 0.3 \\
+Fusion & -- & -- & 0.1 & 0.1 & 0.1 & 0.1 \\
+Reranking & -- & -- & 1192 & 1339 & 1186 & 1336 \\
+Post-processing & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 \\
+Total & \textbf{18} & \textbf{19} & 1212 & 1358 & 1206 & 1356 \\
+\bottomrule
+\end{tabular}
+\end{table}

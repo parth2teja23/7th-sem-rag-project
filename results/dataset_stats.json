@@ -1,0 +1,26 @@
+{
+ "scifact": {
+  "mean_doc_words": 214.6280146633224,
+  "mean_query_words": 12.506666666666666,
+  "mean_rel_per_query": 1.13,
+  "n_dev_queries": 162
+ },
+ "fiqa": {
+  "mean_doc_words": 139.2959,
+  "mean_query_words": 10.939814814814815,
+  "mean_rel_per_query": 2.632716049382716,
+  "n_dev_queries": 500
+ },
+ "hotpot": {
+  "mean_doc_words": 92.58526740665994,
+  "mean_query_words": 15.798,
+  "mean_rel_per_query": 2.0,
+  "n_dev_queries": null
+ },
+ "rfc": {
+  "mean_doc_words": 184.35553313151698,
+  "mean_query_words": 9.94059405940594,
+  "mean_rel_per_query": 1.0792079207920793,
+  "n_dev_queries": null
+ }
+}

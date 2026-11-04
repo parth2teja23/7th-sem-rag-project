@@ -2,53 +2,53 @@
 % this file with values computed from results/. Never type a result by hand.
 \newcommand{\TBD}{\textbf{[TBD]}}
 % --- fixed-alpha baseline (chosen on pooled dev, per encoder)
-\newcommand{\AlphaStarBge}{\TBD}
-\newcommand{\AlphaStarGemma}{\TBD}
+\newcommand{\AlphaStarBge}{0.9}
+\newcommand{\AlphaStarGemma}{0.9}
 % --- QAF training
-\newcommand{\QAFnDev}{\TBD}          % pooled dev queries used to fit QAF
-\newcommand{\QAFtrainRsq}{\TBD}      % training R^2 of the ridge model
-\newcommand{\QAFtopFeature}{\TBD}    % feature with the largest |coefficient|
-\newcommand{\QAFlatencyMs}{\TBD}     % mean added latency of QAF (features + predict), ms
+\newcommand{\QAFnDev}{662}          % pooled dev queries used to fit QAF
+\newcommand{\QAFtrainRsq}{0.06}      % training R^2 of the ridge model
+\newcommand{\QAFtopFeature}{\texttt{dense\_top}}    % feature with the largest |coefficient|
+\newcommand{\QAFlatencyMs}{0.3}     % mean added latency of QAF (features + predict), ms
 % --- headline retrieval gains (nDCG@10, qaf+rr minus hybrid_fixed+rr)
-\newcommand{\QAFgainSciFact}{\TBD}
-\newcommand{\QAFgainFiQA}{\TBD}
-\newcommand{\QAFgainHotpot}{\TBD}
-\newcommand{\QAFgainRFC}{\TBD}
+\newcommand{\QAFgainSciFact}{$-0.005$}
+\newcommand{\QAFgainFiQA}{$+0.004$}
+\newcommand{\QAFgainHotpot}{$-0.002$}
+\newcommand{\QAFgainRFC}{$+0.020$}
 % one-sided paired-bootstrap p (qaf+rr vs hybrid_fixed+rr), significance at 0.05
-\newcommand{\QAFpSciFact}{\TBD}
-\newcommand{\QAFpFiQA}{\TBD}
-\newcommand{\QAFpHotpot}{\TBD}
-\newcommand{\QAFpRFC}{\TBD}
+\newcommand{\QAFpSciFact}{0.9586}
+\newcommand{\QAFpFiQA}{0.2282}
+\newcommand{\QAFpHotpot}{0.8045}
+\newcommand{\QAFpRFC}{0.0643}
 % 95% paired-bootstrap CI of the gain above (10,000 resamples, seed 42), e.g. "[0.004, 0.021]"
-\newcommand{\QAFgainCISciFact}{\TBD}
-\newcommand{\QAFgainCIFiQA}{\TBD}
-\newcommand{\QAFgainCIHotpot}{\TBD}
-\newcommand{\QAFgainCIRFC}{\TBD}
+\newcommand{\QAFgainCISciFact}{$[-0.011,\,0.001]$}
+\newcommand{\QAFgainCIFiQA}{$[-0.005,\,0.013]$}
+\newcommand{\QAFgainCIHotpot}{$[-0.006,\,0.002]$}
+\newcommand{\QAFgainCIRFC}{$[-0.003,\,0.053]$}
 % per-query standard deviation of nDCG@10 for qaf+rr (better encoder)
-\newcommand{\NDCGsdSciFact}{\TBD}
-\newcommand{\NDCGsdFiQA}{\TBD}
-\newcommand{\NDCGsdHotpot}{\TBD}
-\newcommand{\NDCGsdRFC}{\TBD}
+\newcommand{\NDCGsdSciFact}{0.362}
+\newcommand{\NDCGsdFiQA}{0.357}
+\newcommand{\NDCGsdHotpot}{0.127}
+\newcommand{\NDCGsdRFC}{0.290}
 % --- hybrid vs single retrievers (nDCG@10)
-\newcommand{\HybridGainOverDenseRFC}{\TBD}
-\newcommand{\HybridGainOverBMRFC}{\TBD}
-\newcommand{\BestNDCGRFC}{\TBD}
-\newcommand{\BestNDCGSciFact}{\TBD}
-\newcommand{\BMndcgSciFact}{\TBD}    % sanity check against published BEIR BM25
+\newcommand{\HybridGainOverDenseRFC}{$+0.039$}
+\newcommand{\HybridGainOverBMRFC}{$-0.053$}
+\newcommand{\BestNDCGRFC}{0.843}
+\newcommand{\BestNDCGSciFact}{0.851}
+\newcommand{\BMndcgSciFact}{0.682}    % sanity check against published BEIR BM25
 % --- headroom relative to the plateau-centre oracle alpha (oracle minus fixed alpha*, nDCG@10); not a strict upper bound
-\newcommand{\OracleHeadroomSciFact}{\TBD}
-\newcommand{\OracleHeadroomRFC}{\TBD}
+\newcommand{\OracleHeadroomSciFact}{$+0.083$}
+\newcommand{\OracleHeadroomRFC}{$+0.167$}
 % --- reranking and latency
-\newcommand{\RerankGainSciFact}{\TBD}
-\newcommand{\RerankLatencyMs}{\TBD}
-\newcommand{\TotalLatencyMs}{\TBD}
+\newcommand{\RerankGainSciFact}{$-0.072$}
+\newcommand{\RerankLatencyMs}{1186}
+\newcommand{\TotalLatencyMs}{1206}
 % --- Matryoshka (EmbeddingGemma 2)
 \newcommand{\MatryoshkaDropTwoFiftySix}{\TBD} % nDCG@10 drop from 768 to 256 dims
 \newcommand{\MatryoshkaIndexMBOneTwentyEight}{\TBD}
 % --- encoding throughput (from results/indexes/build_times.json, docs_per_s / seconds)
-\newcommand{\GemmaDocsPerSec}{\TBD}    % EmbeddingGemma 2 passages/s on MPS
-\newcommand{\BGEDocsPerSec}{\TBD}      % BGE-small passages/s (a range across collections is fine)
-\newcommand{\FiQAEncodeMinGemma}{\TBD} % minutes to encode the FiQA subset with EmbeddingGemma 2
+\newcommand{\GemmaDocsPerSec}{3.0--8.9}    % EmbeddingGemma 2 passages/s on MPS
+\newcommand{\BGEDocsPerSec}{65--169}      % BGE-small passages/s (a range across collections is fine)
+\newcommand{\FiQAEncodeMinGemma}{38} % minutes to encode the FiQA subset with EmbeddingGemma 2
 % --- generation
 \newcommand{\GenN}{\TBD}             % questions per dataset in generation eval
 \newcommand{\RagasN}{\TBD}           % RAGAS sample size

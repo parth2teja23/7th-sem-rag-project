@@ -70,17 +70,14 @@ BM25 margin, the overlap between the two lists and, less intuitively, the
 dense margin. The identifier share, which motivated the method,
 has a coefficient close to zero. As a result, predictions stay close to the
 intercept. Fig.~\ref{fig:qaf_alpha_hist} shows that nearly all predicted
-weights lie between 0.4 and 0.8% NOTE(macro): range read off qaf_alpha_hist.pdf
-, and that identifier-heavy queries get almost
+weights sit close to their mean of \QAFpredMean{} (standard deviation \QAFpredSd{}), and that identifier-heavy queries get almost
 the same distribution as natural-language ones. In practice QAF behaves like a
 constant that has been shrunk from $\alpha^{*}=\AlphaStarGemma$ toward the
 middle of the range. That shift is probably what helps on RFC, whose sweep
 favours the sparse side, more than any recognition of identifier queries.
-The targets explain part of the difficulty: a large share of training queries
+The targets explain part of the difficulty: \QAFinsensitivePct\% of training queries
 have the same nDCG@10 at every grid weight and therefore carry the neutral
 target 0.5.
-% NOTE(macro): share of alpha-insensitive training targets (targets_*.json,
-% n_alpha_insensitive / n) is not emitted by make_paper_assets yet.
 
 \inputtable{qaf_coefficients}
 \inputfigure{qaf_alpha_hist}{Predicted dense weight $\alpha$ for

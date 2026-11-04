@@ -251,7 +251,7 @@ def main_results_table(R: dict) -> str | None:
             body.append(f"{CFG_LABEL[c]} & " + " & ".join(cells) + " \\\\")
     cap = ("Retrieval effectiveness on the test queries. Best deployable value per column in bold; "
            "$\\dagger$: significantly better than Hybrid-fixed+RR (one-sided paired bootstrap, $p<0.05$). "
-           "$\\ddagger$: per-query oracle $\\alpha$ on test qrels, an upper-bound reference only. "
+           "$\\ddagger$: per-query oracle $\\alpha$ on test qrels, a headroom reference, not a strict upper bound. "
            "BM25 does not depend on the encoder.")
     return table("main_results", cap, "l" + "c" * ncol, [head1, cmid, head2], body, resize=True)
 
@@ -816,6 +816,21 @@ def compute_macros(results: Path, R: dict) -> dict[str, str]:
         if isinstance(c.get("coefficients"), dict) and c["coefficients"]:
             top = max(c["coefficients"].items(), key=lambda kv: abs(kv[1]))[0]
             M["QAFtopFeature"] = f"\\texttt{{{tex(top)}}}"
+    tg = _read(results / "qaf" / f"targets_{pick}.json") if pick else None
+    pooled = tg.get("pooled") if isinstance(tg, dict) else None
+    if isinstance(pooled, dict) and pooled.get("n") and pooled.get("n_alpha_insensitive") is not None:
+        M["QAFinsensitivePct"] = f"{100 * pooled['n_alpha_insensitive'] / pooled['n']:.0f}"
+    # predicted alpha spread of the qaf config on test, headline encoder, pooled over datasets
+    if H:
+        alphas = []
+        for ds in DATASETS:
+            d = get(R, ds, H, "qaf")
+            pq = d.get("per_query") if isinstance(d, dict) else None
+            if isinstance(pq, dict):
+                alphas += [v["alpha"] for v in pq.values() if isinstance(v, dict) and v.get("alpha") is not None]
+        if len(alphas) > 1:
+            M["QAFpredMean"] = f"{float(np.mean(alphas)):.2f}"
+            M["QAFpredSd"] = f"{float(np.std(alphas, ddof=1)):.2f}"
 
     # latency (headline encoder, common dataset set)
     lat = latency_stats(R, H) if R else {}
@@ -941,7 +956,7 @@ def compute_macros(results: Path, R: dict) -> dict[str, str]:
 
 
 MACRO_NAMES = (
-    "AlphaStarBge AlphaStarGemma QAFnDev QAFtrainRsq QAFtopFeature QAFlatencyMs "
+    "AlphaStarBge AlphaStarGemma QAFnDev QAFtrainRsq QAFtopFeature QAFlatencyMs QAFinsensitivePct QAFpredMean QAFpredSd "
     "QAFgainSciFact QAFgainFiQA QAFgainHotpot QAFgainRFC QAFpSciFact QAFpFiQA QAFpHotpot QAFpRFC "
     "QAFgainCISciFact QAFgainCIFiQA QAFgainCIHotpot QAFgainCIRFC NDCGsdSciFact NDCGsdFiQA NDCGsdHotpot NDCGsdRFC "
     "HybridGainOverDenseRFC HybridGainOverBMRFC BestNDCGRFC BestNDCGSciFact BMndcgSciFact "

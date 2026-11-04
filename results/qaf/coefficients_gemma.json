@@ -1,0 +1,58 @@
+{
+ "encoder": "gemma",
+ "trained_on": {
+  "scifact-dev": 162,
+  "fiqa-dev": 500
+ },
+ "model": "StandardScaler + Ridge(alpha=1.0); predictions clipped to [0, 1]",
+ "coefficients": {
+  "id_ratio": 0.0035939625986893776,
+  "num_ratio": -0.012528270911586164,
+  "caps_ratio": 0.001821146241547542,
+  "len_tokens": 0.017668629526724856,
+  "mean_idf": 0.007971152930203807,
+  "max_idf": -0.019941839280636062,
+  "oov_ratio": -0.005031127012466244,
+  "sparse_top": 0.0021719696196223744,
+  "sparse_margin": -0.02741474428460956,
+  "dense_top": 0.07110755031177154,
+  "dense_margin": -0.03252135785134141,
+  "overlap_at10": -0.02511931192476655
+ },
+ "coefficients_note": "standardized-feature coefficients (change in predicted alpha per 1 SD of the feature); alpha = weight on DENSE",
+ "intercept": 0.6094410876132933,
+ "feature_mean": {
+  "id_ratio": 0.05574309112992604,
+  "num_ratio": 0.0072908404821843,
+  "caps_ratio": 0.02766703674989931,
+  "len_tokens": 11.376132930513595,
+  "mean_idf": 2.3750743511852312,
+  "max_idf": 5.902794153480033,
+  "oov_ratio": 0.11792982262277078,
+  "sparse_top": 11.893210695589417,
+  "sparse_margin": 2.100188589528248,
+  "dense_top": 0.8164365674253677,
+  "dense_margin": 0.033063038778449114,
+  "overlap_at10": 0.25211480362537686
+ },
+ "feature_std": {
+  "id_ratio": 0.08560437352243327,
+  "num_ratio": 0.029029624885584616,
+  "caps_ratio": 0.059675135931827876,
+  "len_tokens": 4.644026618472891,
+  "mean_idf": 0.6939982494550504,
+  "max_idf": 1.675737423185585,
+  "oov_ratio": 0.11445678877710458,
+  "sparse_top": 6.219873341175343,
+  "sparse_margin": 3.5702665784006533,
+  "dense_top": 0.046416222679570726,
+  "dense_margin": 0.03257820372843469,
+  "overlap_at10": 0.18587605620487768
+ },
+ "train_r2_clipped": 0.06176582992150459,
+ "train_mae_clipped": 0.1919403192691443,
+ "target_mean": 0.6094410876132931,
+ "target_std": 0.24800866494710885,
+ "pred_mean": 0.609441087613293,
+ "pred_std": 0.06142892327146399
+}

@@ -11,6 +11,7 @@ dependencies = [
   "sentence-transformers>=6.1.0",
   "transformers>=5",
   "torch",
+  "torchvision",
   "faiss-cpu",
   "bm25s",
   "PyStemmer",

@@ -6,7 +6,7 @@ import random
 
 from datasets import load_dataset
 
-from hrag.data.beir import SEED, SUBSETS_DIR
+from hrag.data.beir import SEED, SUBSETS_DIR  # noqa: F401 (SUBSETS_DIR patchable here)
 from hrag.types import Doc, Qrels
 
 
@@ -18,7 +18,9 @@ def load_hotpot(
     Returns (corpus, queries, qrels, answers). Corpus is the union of the 10 paragraphs
     of every sampled question; doc id is ``"<title>::<para_idx>"`` and docs are
     deduplicated by title (first occurrence wins). Qrels are the supporting-fact
-    paragraphs (relevance 1). Question IDs are saved to ``data/subsets/hotpot.json``.
+    paragraphs (relevance 1). Question and doc IDs are saved to ``data/subsets/hotpot_n<n>.json``.
+    Note: the id of a doc whose title is shared by several questions depends on which
+    question first contributes it, so ids (para_idx suffix) can vary with ``n``.
     """
     ds = load_dataset("hotpotqa/hotpot_qa", "distractor", split="validation")
     idx = sorted(random.Random(SEED).sample(range(len(ds)), n_questions))
@@ -44,5 +46,7 @@ def load_hotpot(
         }
 
     SUBSETS_DIR.mkdir(parents=True, exist_ok=True)
-    (SUBSETS_DIR / "hotpot.json").write_text(json.dumps(list(queries)))
+    (SUBSETS_DIR / f"hotpot_n{n_questions}.json").write_text(
+        json.dumps({"qids": list(queries), "doc_ids": list(corpus)})
+    )
     return corpus, queries, qrels, answers

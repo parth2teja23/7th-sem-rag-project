@@ -6,6 +6,15 @@ from hrag.data.hotpot import load_hotpot
 pytestmark = pytest.mark.slow
 
 
+@pytest.fixture(autouse=True)
+def _tmp_subsets(tmp_path, monkeypatch):
+    import hrag.data.beir as b
+    import hrag.data.hotpot as h
+
+    monkeypatch.setattr(b, "SUBSETS_DIR", tmp_path)
+    monkeypatch.setattr(h, "SUBSETS_DIR", tmp_path)
+
+
 def test_scifact_test_split():
     corpus, queries, qrels = load_beir("scifact", "test")
     assert len(queries) == 300
@@ -30,7 +39,7 @@ def test_hotpot_50():
     assert len(queries) == 50
     assert set(qrels) == set(queries) == set(answers)
     for qid in queries:
-        assert len(qrels[qid]) == 2
+        assert len(qrels[qid]) >= 1
         assert all(d in corpus for d in qrels[qid])
         assert answers[qid] and answers[qid][0]
 

@@ -49,7 +49,7 @@ def load_beir(
     If ``max_docs`` is set, the corpus is subsampled deterministically (seed 42): all
     qrel-positive docs for the loaded split are kept (even if that exceeds ``max_docs``),
     then random fill up to ``max_docs``. Chosen doc IDs are written to
-    ``data/subsets/<name>_docs.json`` (note: overwritten per call/split).
+    ``data/subsets/<name>_<split>_docs_<max_docs>.json``.
     """
     qrels = _qrels_for_split(name, split)
 
@@ -70,7 +70,7 @@ def load_beir(
         chosen = sorted(pos_set | set(fill))
         corpus = {d: corpus[d] for d in chosen}
         SUBSETS_DIR.mkdir(parents=True, exist_ok=True)
-        (SUBSETS_DIR / f"{name}_docs.json").write_text(json.dumps(chosen))
+        (SUBSETS_DIR / f"{name}_{split}_docs_{max_docs}.json").write_text(json.dumps(chosen))
 
     qrels = {q: {d: s for d, s in rel.items() if d in corpus} for q, rel in qrels.items()}
     return corpus, queries, qrels

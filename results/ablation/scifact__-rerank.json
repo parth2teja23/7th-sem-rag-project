@@ -8,7 +8,7 @@
   "retrieve_k": 100,
   "dedupe": false,
   "chunker": "structural",
-  "note": "query expansion SKIPPED: run_generation.py (Ollama) was running and no concurrent Ollama job is allowed; full = structural chunking + QAF + rerank, expand=False",
+  "note": "query expansion NOT run (Tier B, --expansion not given): full = structural chunking + QAF + rerank, expand=False",
   "variant": "-rerank",
   "expand": false,
   "alpha_mode": "qaf",
@@ -3630,28 +3630,28 @@
  },
  "latency_ms": {
   "sparse": {
-   "mean": 0.1371824901434593,
-   "p95": 0.22874790156492958
+   "mean": 0.09335039008874446,
+   "p95": 0.12545835161290597
   },
   "dense": {
-   "mean": 17.820308770096744,
-   "p95": 18.791691648948472
+   "mean": 17.22316122984921,
+   "p95": 18.229391646309523
   },
   "features": {
-   "mean": 0.2409991202148376,
-   "p95": 0.2861027027392993
+   "mean": 0.16883370066352654,
+   "p95": 0.24050210304267236
   },
   "fusion": {
-   "mean": 0.06691540955216624,
-   "p95": 0.07728544878773391
+   "mean": 0.052838309566141106,
+   "p95": 0.06417980075639207
   },
   "post": {
-   "mean": 0.0006058499275241047,
-   "p95": 0.000790998456068337
+   "mean": 0.00032418014598079026,
+   "p95": 0.0004610534233506768
   },
   "total": {
-   "mean": 18.280127570105833,
-   "p95": 19.455191655652015
+   "mean": 17.547287439883803,
+   "p95": 18.622785747720627
   }
  },
  "live_consistency": {

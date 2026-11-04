@@ -1,0 +1,20 @@
+\begin{table}[t]
+\centering
+\caption{Answer quality. EM/F1 against the gold answer; Cite: a cited passage is relevant. Best per column in bold; $\dagger$: significantly better than Hybrid-fixed+RR (one-sided paired bootstrap, $p<0.05$).}
+\label{tab:generation}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lcccccc}
+\toprule
+Config & \multicolumn{3}{c}{HotpotQA} & \multicolumn{3}{c}{RFC} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-7}
+ & EM & F1 & Cite & EM & F1 & Cite \\
+\midrule
+BM25 & 0.170 & 0.328 & 0.710 & 0.228 & 0.492 & 0.683 \\
+Dense & \textbf{0.215} & \textbf{0.410}$^{\dagger}$ & \textbf{0.855} & 0.228 & 0.469 & 0.624 \\
+Hybrid-fixed+RR & 0.180 & 0.364 & 0.830 & \textbf{0.248} & 0.534 & \textbf{0.713} \\
+QAF+RR & 0.195 & 0.377 & 0.815 & \textbf{0.248} & \textbf{0.535} & \textbf{0.713} \\
+\bottomrule
+\end{tabular}}
+\end{table}

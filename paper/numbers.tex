@@ -43,20 +43,20 @@
 \newcommand{\RerankLatencyMs}{1186}
 \newcommand{\TotalLatencyMs}{1206}
 % --- Matryoshka (EmbeddingGemma 2)
-\newcommand{\MatryoshkaDropTwoFiftySix}{\TBD} % nDCG@10 drop from 768 to 256 dims
-\newcommand{\MatryoshkaIndexMBOneTwentyEight}{\TBD}
+\newcommand{\MatryoshkaDropTwoFiftySix}{0.035} % nDCG@10 drop from 768 to 256 dims
+\newcommand{\MatryoshkaIndexMBOneTwentyEight}{3.9}
 % --- encoding throughput (from results/indexes/build_times.json, docs_per_s / seconds)
 \newcommand{\GemmaDocsPerSec}{3.0--8.9}    % EmbeddingGemma 2 passages/s on MPS
 \newcommand{\BGEDocsPerSec}{65--169}      % BGE-small passages/s (a range across collections is fine)
 \newcommand{\FiQAEncodeMinGemma}{38} % minutes to encode the FiQA subset with EmbeddingGemma 2
 % --- generation
-\newcommand{\GenN}{\TBD}             % questions per dataset in generation eval
-\newcommand{\RagasN}{\TBD}           % RAGAS sample size
-\newcommand{\GenFoneQAF}{\TBD}
-\newcommand{\GenFoneDense}{\TBD}
-\newcommand{\GenEMQAF}{\TBD}
-\newcommand{\FaithQAF}{\TBD}
-\newcommand{\FaithDense}{\TBD}
+\newcommand{\GenN}{200}             % questions per dataset in generation eval
+\newcommand{\RagasN}{100}           % RAGAS sample size
+\newcommand{\GenFoneQAF}{0.456}
+\newcommand{\GenFoneDense}{0.439}
+\newcommand{\GenEMQAF}{0.221}
+\newcommand{\FaithQAF}{0.66}
+\newcommand{\FaithDense}{0.70}
 \newcommand{\QAFinsensitivePct}{39}
 \newcommand{\QAFpredMean}{0.58}
 \newcommand{\QAFpredSd}{0.07}

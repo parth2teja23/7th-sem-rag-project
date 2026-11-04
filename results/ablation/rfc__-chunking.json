@@ -8,7 +8,7 @@
   "retrieve_k": 100,
   "dedupe": false,
   "chunker": "fixed",
-  "note": "query expansion SKIPPED: run_generation.py (Ollama) was running and no concurrent Ollama job is allowed; full = structural chunking + QAF + rerank, expand=False",
+  "note": "query expansion NOT run (Tier B, --expansion not given): full = structural chunking + QAF + rerank, expand=False",
   "variant": "-chunking",
   "expand": false,
   "chunk_words": 256,
@@ -16,10 +16,6 @@
   "n_chunks": 1930,
   "mean_rel_chunks_per_query": 1.00990099009901,
   "qrels": "fixed chunks overlapping the gold answer span [answer_start, answer_end) of the parent RFC (hrag.data.rfc.span_relevant)",
-  "index_build_s": {
-   "bm25_s": 0.22,
-   "gemma_s": 643.6
-  },
   "alpha_mode": "qaf",
   "rerank": true,
   "qaf_model": "indexes/qaf_gemma.joblib",
@@ -1253,32 +1249,32 @@
  },
  "latency_ms": {
   "sparse": {
-   "mean": 0.9126437599479686,
-   "p95": 4.776941350428387
+   "mean": 0.12609959041583352,
+   "p95": 0.1427083509042859
   },
   "dense": {
-   "mean": 166.53726330994687,
-   "p95": 456.7988419548783
+   "mean": 28.38474288044381,
+   "p95": 29.43035144926398
   },
   "features": {
-   "mean": 0.659102509598597,
-   "p95": 1.8071482500090468
+   "mean": 0.2756720704928739,
+   "p95": 0.30210385157261044
   },
   "fusion": {
-   "mean": 0.09133962004852947,
-   "p95": 0.13585270062321797
+   "mean": 0.07083664007950574,
+   "p95": 0.07829939931980334
   },
   "rerank": {
-   "mean": 3900.866936270031,
-   "p95": 6694.01730180216
+   "mean": 1512.3840808102977,
+   "p95": 1537.9732173019875
   },
   "post": {
-   "mean": 0.0010954005119856447,
-   "p95": 0.003710095552378334
+   "mean": 0.0005613198300125077,
+   "p95": 0.0006669946742476895
   },
   "total": {
-   "mean": 4069.152293749794,
-   "p95": 6776.280997600406
+   "mean": 1541.2673687396455,
+   "p95": 1567.4433753487392
   }
  },
  "live_consistency": {

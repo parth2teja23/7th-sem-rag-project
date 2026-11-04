@@ -1,0 +1,48 @@
+"""HotpotQA (distractor setting) loader with a seeded question subset."""
+from __future__ import annotations
+
+import json
+import random
+
+from datasets import load_dataset
+
+from hrag.data.beir import SEED, SUBSETS_DIR
+from hrag.types import Doc, Qrels
+
+
+def load_hotpot(
+    n_questions: int = 500,
+) -> tuple[dict[str, Doc], dict[str, str], Qrels, dict[str, list[str]]]:
+    """Load ``n_questions`` seeded-random HotpotQA validation questions (distractor).
+
+    Returns (corpus, queries, qrels, answers). Corpus is the union of the 10 paragraphs
+    of every sampled question; doc id is ``"<title>::<para_idx>"`` and docs are
+    deduplicated by title (first occurrence wins). Qrels are the supporting-fact
+    paragraphs (relevance 1). Question IDs are saved to ``data/subsets/hotpot.json``.
+    """
+    ds = load_dataset("hotpotqa/hotpot_qa", "distractor", split="validation")
+    idx = sorted(random.Random(SEED).sample(range(len(ds)), n_questions))
+
+    corpus: dict[str, Doc] = {}
+    title_to_id: dict[str, str] = {}
+    queries: dict[str, str] = {}
+    qrels: Qrels = {}
+    answers: dict[str, list[str]] = {}
+    for i in idx:
+        row = ds[i]
+        qid = row["id"]
+        ctx = row["context"]
+        for p, (title, sents) in enumerate(zip(ctx["title"], ctx["sentences"])):
+            if title not in title_to_id:
+                did = f"{title}::{p}"
+                title_to_id[title] = did
+                corpus[did] = Doc(id=did, text=" ".join(s.strip() for s in sents), title=title)
+        queries[qid] = row["question"]
+        answers[qid] = [row["answer"]]
+        qrels[qid] = {
+            title_to_id[t]: 1 for t in set(row["supporting_facts"]["title"]) if t in title_to_id
+        }
+
+    SUBSETS_DIR.mkdir(parents=True, exist_ok=True)
+    (SUBSETS_DIR / "hotpot.json").write_text(json.dumps(list(queries)))
+    return corpus, queries, qrels, answers

@@ -1,0 +1,102 @@
+{
+ "config": "full",
+ "encoder": "gemma",
+ "expand": false,
+ "components": "structural chunks + QAF alpha + CE rerank depth 50",
+ "n_queries": 100,
+ "unit": "ms",
+ "protocol": "Pipeline.retrieve (dedupe=False) on a seed-42 sample of test queries after one warm-up query; per-stage mean / p95",
+ "datasets": {
+  "scifact": {
+   "sparse": {
+    "mean": 0.3401174200553214,
+    "p95": 0.5673892963386605
+   },
+   "dense": {
+    "mean": 117.69631795985333,
+    "p95": 325.7399965019431
+   },
+   "features": {
+    "mean": 0.44575421015906613,
+    "p95": 0.701512498926604
+   },
+   "fusion": {
+    "mean": 0.08722499012947083,
+    "p95": 0.11591190086619463
+   },
+   "rerank": {
+    "mean": 2463.187180820387,
+    "p95": 3914.4168952010655
+   },
+   "post": {
+    "mean": 0.0009099597809836268,
+    "p95": 0.0016270980268018318
+   },
+   "total": {
+    "mean": 2581.801721679876,
+    "p95": 4041.8632816017634
+   }
+  },
+  "rfc": {
+   "sparse": {
+    "mean": 0.7647416899271775,
+    "p95": 3.166837504249997
+   },
+   "dense": {
+    "mean": 101.72111421030422,
+    "p95": 272.2994297979312
+   },
+   "features": {
+    "mean": 0.42010875993582886,
+    "p95": 0.7265440530318301
+   },
+   "fusion": {
+    "mean": 0.09006375024910085,
+    "p95": 0.10880144873226527
+   },
+   "rerank": {
+    "mean": 2251.7589516998123,
+    "p95": 3273.5608982467966
+   },
+   "post": {
+    "mean": 0.0008891499601304531,
+    "p95": 0.0016660480468999594
+   },
+   "total": {
+    "mean": 2354.8228394702164,
+    "p95": 3489.489472949208
+   }
+  }
+ },
+ "mean_over_datasets": {
+  "dense": {
+   "mean": 109.70871608507878,
+   "p95": 299.01971314993716
+  },
+  "features": {
+   "mean": 0.4329314850474475,
+   "p95": 0.714028275979217
+  },
+  "fusion": {
+   "mean": 0.08864437018928584,
+   "p95": 0.11235667479922995
+  },
+  "post": {
+   "mean": 0.00089955487055704,
+   "p95": 0.0016465730368508957
+  },
+  "rerank": {
+   "mean": 2357.4730662600996,
+   "p95": 3593.9888967239312
+  },
+  "sparse": {
+   "mean": 0.5524295549912495,
+   "p95": 1.8671134002943288
+  },
+  "total": {
+   "mean": 2468.3122805750463,
+   "p95": 3765.6763772754857
+  }
+ },
+ "note": "query expansion SKIPPED: run_generation.py (Ollama) was running and no concurrent Ollama job is allowed; full = structural chunking + QAF + rerank, expand=False"
+}

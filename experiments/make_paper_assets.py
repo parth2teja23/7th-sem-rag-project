@@ -567,7 +567,7 @@ def matryoshka_table(results: Path) -> str | None:
         body.append(f"{dm} & " + " & ".join(cells) + " \\\\")
     head = ["Dims & " + " & ".join(f"{DS_LABEL[d]} {CFG_LABEL.get(c, tex(c))}" for d, c in pairs)
             + " & Index MB & Query ms \\\\"]
-    cap = "EmbeddingGemma 2 with Matryoshka truncation: nDCG@10 (best per column in bold), mean index size and query latency."
+    cap = "EmbeddingGemma 2 with Matryoshka truncation: nDCG@10 (best per column in bold), mean dense-index size (FAISS HNSW file) and query latency."
     return table("matryoshka", cap, "l" + "c" * (len(pairs) + 2), head, body, resize=True)
 
 

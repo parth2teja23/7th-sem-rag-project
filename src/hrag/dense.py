@@ -10,6 +10,7 @@ Notes:
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -28,9 +29,12 @@ _GEMMA_MAX_LEN = 2048
 
 def _single_thread_faiss() -> None:
     """faiss-cpu and torch each bundle an OpenMP runtime on macOS; multi-threaded
-    faiss calls after torch is loaded segfault. HNSW search is cheap; stay single-threaded."""
+    faiss calls after torch is loaded segfault. HNSW search is cheap; stay single-threaded.
+    Applied on macOS only; cost: HNSW build there is single-threaded (fine for ~60k docs)."""
     import faiss
 
+    if sys.platform != "darwin":
+        return
     faiss.omp_set_num_threads(1)
 
 
@@ -57,7 +61,9 @@ class Encoder:
                 model_kwargs={"torch_dtype": torch.float32},
             )
             self.model.max_seq_length = _GEMMA_MAX_LEN
-            native = 768
+            native = self.model.get_embedding_dimension()
+            if native not in _GEMMA_DIMS:
+                raise ValueError(f"unexpected gemma native dim {native}")
         else:
             self.model = SentenceTransformer(ENCODERS[name], device=self.device)
             native = self.model.get_embedding_dimension()
@@ -144,6 +150,10 @@ class DenseIndex:
         _single_thread_faiss()
         obj = cls()
         obj.index = faiss.read_index(str(d / "index.faiss"))
+        if obj.index.ntotal != len(meta["ids"]):
+            raise ValueError(
+                f"index has {obj.index.ntotal} vectors but meta lists {len(meta['ids'])} ids"
+            )
         obj.index.hnsw.efSearch = 128
         obj.ids = meta["ids"]
         obj.encoder = encoder

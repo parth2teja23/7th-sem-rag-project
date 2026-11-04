@@ -67,3 +67,22 @@ def test_load_mismatch_raises(tmp_path):
     idx.save(tmp_path)
     with pytest.raises(ValueError):
         DenseIndex.load(tmp_path, Encoder("gemma", dim=256))
+
+
+def test_k_larger_than_ntotal(enc):
+    idx = DenseIndex()
+    idx.build(_docs(), enc)
+    res = idx.search("cats", k=50)
+    assert len(res) <= 3
+    assert all(i in _docs() for i, _ in res)
+
+
+def test_gemma_dim256_roundtrip(tmp_path):
+    e = Encoder("gemma", dim=256)
+    idx = DenseIndex()
+    idx.build(_docs(), e)
+    idx.save(tmp_path)
+    idx2 = DenseIndex.load(tmp_path, e)
+    q = "why do cats make noise"
+    assert idx2.search(q, k=3)[0][0] == idx.search(q, k=3)[0][0]
+    assert idx2.search(q, k=3)[0][0] in {"cat", "feline"}

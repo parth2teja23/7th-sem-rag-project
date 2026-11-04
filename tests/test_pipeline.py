@@ -121,3 +121,29 @@ def test_answer(monkeypatch):
     monkeypatch.setattr(pl, "generate_answer", fake)
     r, a = make(final_k=2).answer("hello")
     assert a == "ANS" and [p.id for p in seen["p"]] == [d for d, _ in r.final]
+
+
+def test_dat_mode_calls_dat_alpha(monkeypatch):
+    import sys
+    import types
+
+    calls = {}
+
+    def fake_dat(query, dense_top, sparse_top):
+        calls["a"] = (query, dense_top, sparse_top)
+        return 0.7
+
+    fake = types.ModuleType("hrag.baselines.dat")
+    fake.dat_alpha = fake_dat
+    monkeypatch.setitem(sys.modules, "hrag.baselines.dat", fake)
+    r = make(alpha_mode="dat").retrieve("hello")
+    assert r.alpha == 0.7
+    assert calls["a"] == ("hello", CORPUS["d5"], CORPUS["d0"])
+
+
+def test_vocab_from_encoder():
+    from types import SimpleNamespace as NS
+
+    vocab = {"##ing": 1, "▁The": 2, "Ġcat": 3, "a": 4, "[CLS]": 5, "x-y": 6}
+    enc = NS(model=NS(tokenizer=NS(get_vocab=lambda: vocab)))
+    assert pl.vocab_from_encoder(enc) == {"ing", "the", "cat"}

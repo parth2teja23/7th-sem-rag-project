@@ -71,6 +71,9 @@ class Pipeline:
                 self._vocab = vocab_from_encoder(enc)
 
     def _alpha(self, q: str, dense: Ranking, sparse: Ranking, timings: dict) -> float:
+        """Decide the fusion weight. timings["features"] covers the whole alpha-decision
+        cost (feature extraction + qaf.predict, or dat_alpha), since the paper reports
+        the added latency of adaptive weighting."""
         mode = self.cfg.alpha_mode
         if mode == "fixed":
             return self.cfg.alpha
@@ -79,13 +82,21 @@ class Pipeline:
 
             t = time.perf_counter()
             x = query_features(q, dense, sparse, self.sparse.idf, self._vocab)
+            alpha = float(self.qaf.predict(x)[0])
             timings["features"] = _ms(t)
-            return float(self.qaf.predict(x)[0])
+            return alpha
         try:
-            from hrag.baselines.dat import dat_alpha  # noqa: F401
+            from hrag.baselines.dat import dat_alpha
         except ImportError as e:
             raise NotImplementedError("alpha_mode='dat' needs hrag.baselines.dat") from e
-        raise NotImplementedError("alpha_mode='dat' is not wired up yet")
+        t = time.perf_counter()
+        alpha = float(dat_alpha(
+            q,
+            self.corpus[dense[0][0]] if dense else None,
+            self.corpus[sparse[0][0]] if sparse else None,
+        ))
+        timings["features"] = _ms(t)
+        return alpha
 
     def retrieve(self, query: str) -> RetrievalResult:
         if not query or not query.strip():

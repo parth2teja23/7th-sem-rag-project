@@ -9,7 +9,7 @@ from hrag.data import questions as Q
 from hrag.data.rfc import RFC_DIR, RFC_IDS, fetch_rfc
 
 
-def main(n_questions: int = 150) -> None:
+def main(n_questions: int = 180) -> None:
     t0 = time.time()
     docs = [fetch_rfc(n) for n in RFC_IDS]
     RFC_DIR.mkdir(parents=True, exist_ok=True)
@@ -18,8 +18,11 @@ def main(n_questions: int = 150) -> None:
             f.write(json.dumps({"id": d.id, "title": d.title, "text": d.text, "meta": d.meta}) + "\n")
     chunks = [c for d in docs for c in semantic_chunks(d)]
     stats: dict = {}
-    rows = Q.generate_questions(chunks, n=n_questions, seed=42, stats=stats)
+    rows = Q.generate_questions(chunks, n=n_questions, seed=42, stats=stats, docs={d.id: d for d in docs})
     Q.write_csv(rows, RFC_DIR / "questions_draft.csv")
+    print({k: v for k, v in stats.items() if k.startswith("rej_")})
+    from collections import Counter
+    print("per_rfc", dict(Counter(r["gold_chunk_id"].split("#")[0] for r in rows)))
     print(f"docs={len(docs)} chunks={len(chunks)} accepted={stats['accepted']} "
           f"rejected={stats['rejected']} rows={len(rows)} time={time.time() - t0:.1f}s")
 

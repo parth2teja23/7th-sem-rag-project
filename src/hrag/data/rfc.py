@@ -21,7 +21,9 @@ RFC_DIR = ROOT / "data" / "rfc"
 
 _MONTHS = "January|February|March|April|May|June|July|August|September|October|November|December"
 _HEADER = re.compile(rf"^RFC \d+ .* ({_MONTHS}) \d{{4}}$")
-_FOOTER = re.compile(r"^.*\[Page \d+\]$")
+_FOOTER = re.compile(r"^.*\[Page [ivxlcdm\d]+\]$", re.I)
+_DATE_ONLY = re.compile(rf"^\s*({_MONTHS}) \d{{4}}\s*$")
+_RFC_NUM = re.compile(r"^RFC:\s+\d+\s*$")
 _DATE = re.compile(rf"\b({_MONTHS}) (\d{{4}})\b")
 
 
@@ -29,7 +31,20 @@ def clean_rfc_text(raw: str) -> str:
     """Drop BOM, form feeds, page headers/footers; collapse 3+ blank lines to one."""
     text = raw.replace("﻿", "").replace("\f", "")
     lines = [ln.rstrip() for ln in text.splitlines()]
-    kept = [ln for ln in lines if not _HEADER.match(ln) and not _FOOTER.match(ln)]
+    title = parse_title(raw).lower()
+    kept: list[str] = []
+    after_date = False
+    for ln in lines:
+        if _DATE_ONLY.match(ln):  # old-style (1981) running header: date line + running title
+            after_date = True
+            continue
+        if after_date and title and ln.strip().lower() == title:
+            after_date = False
+            continue
+        after_date = False
+        if _HEADER.match(ln) or _FOOTER.match(ln) or _RFC_NUM.match(ln):
+            continue
+        kept.append(ln)
     return re.sub(r"\n{3,}", "\n\n", "\n".join(kept)).strip("\n") + "\n"
 
 
@@ -113,7 +128,13 @@ def load_rfc_corpus(chunker: str = "semantic") -> tuple[
             if row["verified"].strip() != "1":
                 continue
             parent = row["gold_chunk_id"].split("#")[0]
-            rel = span_relevant(by_parent[parent], parent, int(row["span_start"]), int(row["span_end"]))
+            if parent not in by_parent:
+                raise ValueError(f"{row['qid']}: unknown parent {parent!r} in gold_chunk_id")
+            try:
+                a_start, a_end = int(row["answer_start"]), int(row["answer_end"])
+            except (KeyError, TypeError, ValueError):
+                raise ValueError(f"{row['qid']}: verified row has blank/invalid answer_start/answer_end") from None
+            rel = span_relevant(by_parent[parent], parent, a_start, a_end)
             queries[row["qid"]] = row["question"]
             qrels[row["qid"]] = {c: 1 for c in rel}
             answers[row["qid"]] = [row["answer"]]

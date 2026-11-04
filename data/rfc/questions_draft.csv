@@ -1,0 +1,350 @@
+qid,question,answer,gold_chunk_id,gold_text_snippet,verified,notes,span_start,span_end
+rfcq001,What is the name requested in the response type name?,"The name requested (e.g.,",rfc6749#112,"se type name:
+      The name requested (e.g., ""example"").
+
+   Cha",,,136324,136389
+rfcq002,What must labels start with?,a letter,rfc1035#13,"hey must
+start with a letter, end with a letter ",,,20384,20432
+rfcq003,What is the name of the message used for updating traffic keys?,KeyUpdate handshake message,rfc8446#126,"ffic keys using the KeyUpdate handshake message
+   defined in Secti",,,189136,189203
+rfcq004,What is the reserved range unit for a server that does not support any kind of range request?,none,rfc9110#257,"
+
+   Accept-Ranges: none
+
+   to advise the c",,,309731,309775
+rfcq005,What section defines the validation of received ICMP PTB messages?,Section 4.6,rfc9000#172,"n, as defined in
+   Section 4.6 of [DPLPMTUD].  In ",,,235585,235636
+rfcq006,What is the default port for http scheme?,80,rfc2616#30," or not given, port 80 is assumed. The sem",,,48704,48746
+rfcq007,What is the acronym for Real Time Protocol?,RTP,rfc793#175,"a RST in response.
+
+RTP
+          Real Time",,,156736,156779
+rfcq008,What status code must a server use to reject a CONNECT request targeting an empty or invalid port number?,400 (Bad Request),rfc9110#170,"y responding with a 400 (Bad Request)
+   status code.
+
+  ",,,203535,203592
+rfcq009,What is the maximum number of errors an endpoint SHOULD report for a connection?,one,rfc9113#42,"OULD report at most one stream and one
+   c",,,52375,52418
+rfcq010,What is the RFC number for 'Hypertext Transfer Protocol -- HTTP/1.1'?,2068,rfc7230#132,"ember 1996.
+
+   [RFC2068]     Fielding, R., ",,,172374,172418
+rfcq011,What is the name of the packet containing HANDSHAKE_DONE?,1-RTT,rfc9000#60,"edges 0-RTT data in 1-RTT packets,
+   and the",,,84665,84710
+rfcq012,What status code must a server return if it does not understand or implement a header?,501 (Not Implemented),rfc2616#108,  and MUST return a 501 (Not Implemented) response in such ca,,,130322,130383
+rfcq013,What type of connection error might an endpoint treat suspicious activity as?,ENHANCE_YOUR_CALM,rfc7540#121,tion 5.4.1) of type ENHANCE_YOUR_CALM.,,,158994,159032
+rfcq014,What section describes the validation of a peer's new address?,Section 9.3,rfc9000#94,"
+   As described in Section 9.3, an endpoint is req",,,132743,132794
+rfcq015,What is the range of Type in STREAMS_BLOCKED Frame?,0x16..0x17,rfc9000#227,"e {
+     Type (i) = 0x16..0x17,
+     Maximum Strea",,,309567,309617
+rfcq016,What specifies a host which has the specified mailbox?,MADNAME,rfc1035#29,/                   MADNAME                    ,,,31369,31416
+rfcq017,What is the default port for HTTP communication?,TCP 80,rfc2616#19,"
+   default port is TCP 80 [19], but other por",,,35514,35560
+rfcq018,What component is deprecated for containing passwords?,userinfo component,rfc3986#94,"ppearing within the userinfo component is deprecated and
+ ",,,103562,103620
+rfcq019,What is the maximum length for the per-record nonce?,N_MAX bytes,rfc8446#110,from N_MIN bytes to N_MAX bytes of input [RFC5116].,,,166211,166262
+rfcq020,What is the maximum number of components excluded from the Referer header field value?,3,rfc9110#181,"10.1.3.  Referer
+
+   The """,,,216243,216269
+rfcq021,What is the error code for a graceful shutdown of a connection?,NO_ERROR (0x0),rfc7540#81,"es are defined:
+
+   NO_ERROR (0x0):  The associated co",,,110602,110656
+rfcq022,What flag indicates the end of a stream in a HEADERS frame?,END_STREAM,rfc7540#85,DERS frame bears an END_STREAM flag.  Header block,,,115075,115125
+rfcq023,What is the maximum number of product values in an Upgrade header?,1#product,rfc2616#265,"    = ""Upgrade"" "":"" 1#product
+
+   For example,
+
+ ",,,327670,327719
+rfcq024,What is the number of the first RFC mentioned?,2396,rfc3986#97,"is derived from RFC 2396 [RFC2396], RFC 1808",,,105183,105227
+rfcq025,What is the type value for WINDOW_UPDATE frame?,0x8,rfc7540#73,_UPDATE frame (type=0x8) is used to impleme,,,100139,100182
+rfcq026,What type of error might be signaled by receiving a DATA frame on a closed stream?,PROTOCOL_ERROR,rfc9113#30,".4.1) of type
+      PROTOCOL_ERROR.  Endpoints can use",,,38838,38892
+rfcq027,What flow is mentioned where the attacker can easily switch the token in the response?,implicit flow,rfc6749#103," client.
+
+   In the implicit flow (response_type=toke",,,126341,126394
+rfcq028,What is the section number for IANA Considerations?,11,rfc6749#5,"........58
+      10.11. Phishing Attacks .",,,7232,7274
+rfcq029,What term is used for the host initiating an SMTP transaction?,SMTP client,rfc5321#32,"ers to them as the ""SMTP client"" (or sometimes just",,,29275,29326
+rfcq030,What control bit is set in the RST segment?,<CTL=RST>,rfc793#162,       <SEQ=SEG.ACK><CTL=RST>,,,135170,135199
+rfcq031,What status code might an origin server send if the request appears to have already succeeded?,2xx,rfc9110#240, MAY respond with a 2xx (Successful) status,,,288110,288153
+rfcq032,What is the enum value for alert in ContentType?,21,rfc8446#159,"0),
+          alert(21),
+          handsha",,,247360,247402
+rfcq033,What HTTP status code can a server send for large field blocks?,HTTP 431,rfc9113#128, handle can send an HTTP 431 (Request Header Fie,,,162101,162149
+rfcq034,What status code was originally defined as method-preserving in HTTP/1.0?,301 (Moved Permanently),rfc9110#278,"   the status codes 301 (Moved Permanently), 302 (Found), 307
+ ",,,339517,339580
+rfcq035,What is the ALPN protocol identifier for HTTP/2 over TLS?,"0x68, 0x32",rfc7540#11,"two-octet sequence: 0x68, 0x32.
+
+   o  The string ",,,17122,17172
+rfcq036,"What is the acronym for 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED', 'MAY', and 'OPTIONAL'?",BCP 14,rfc8484#8," as described in
+   BCP 14 [RFC2119] [RFC8174]",,,6039,6085
+rfcq037,What section discusses security considerations for URIs?,Section 7 of [URI],rfc9110#324,"n, are discussed in Section 7 of [URI].  Various
+   organi",,,396829,396887
+rfcq038,What is the warn-code for a stale response?,110,rfc2616#273,"of its meaning.
+
+   110 Response is stale
+ ",,,339561,339604
+rfcq039,What bit must be set to 1 in the last frame?,FIN bit,rfc6455#74,"  data.
+
+   4.  The FIN bit (frame-fin) of the ",,,89783,89830
+rfcq040,What field name is not sent in Vary?,Authorization,rfc9110#228,no need to send the Authorization field name in Vary ,,,270721,270774
+rfcq041,What must a server send in this scenario?,a connection preface,rfc9113#14,"he server MUST send a connection preface (Section 3.4).
+
+   ",,,15455,15515
+rfcq042,What is the value registered in the HTTP Upgrade Tokens registry?,h2c,rfc7540#136,"11.8.  The h2c Upgrade Token
+
+   T",,,173484,173518
+rfcq043,What is the status code for client error responses?,4xx,rfc9112#38,"rate an appropriate 4xx (Client Error)
+   r",,,51368,51411
+rfcq044,What status code must SMTP servers use to reject commands with invalid character codes?,501,rfc5321#98,that command with a 501 response (this rule,,,100618,100661
+rfcq045,What is the size of the error code space?,32-bit,rfc7540#131," registry manages a 32-bit space.  The ""HTTP/2",,,169285,169331
+rfcq046,What SHOULD NOT appear in the reverse-path today?,Source Routes,rfc5321#230,"able.
+
+Appendix C.  Source Routes
+
+   Historically, t",,,196982,197035
+rfcq047,What header field is echoed in the response?,Location header field,rfc7230#120,"echoed in the Location header field of the
+   response.",,,156723,156778
+rfcq048,What is another name for proactive negotiation mentioned in the RFC?,server-driven negotiation,rfc9110#209,"ation""
+   (a.k.a., ""server-driven negotiation"").  Selection is ba",,,247194,247259
+rfcq049,What header field signals the presence of a message body in a request?,Content-Length or Transfer-Encoding,rfc9112#27,"is signaled by a
+   Content-Length or Transfer-Encoding header field.  Requ",,,34359,34434
+rfcq050,What must contain exactly one byte set to zero in TLS 1.3 ClientHello?,legacy_compression_methods,rfc8446#40,"d with the PSK.
+
+   legacy_compression_methods:  Versions of TLS b",,,54123,54189
+rfcq051,What policy reserves the use of the first unassigned codepoint?,Standards Action policy,rfc9000#282,"cation
+   using the Standards Action policy; see Section 4.9 of",,,368986,369049
+rfcq052,What is the HTTP status code for the server's handshake response?,101,rfc6455#15,":
+
+        HTTP/1.1 101 Switching Protocols",,,11878,11921
+rfcq053,What is the page number for Server Timeout?,66,rfc5321#10,". . . . . . . . . . 66
+           4.5.3.2.",,,7467,7509
+rfcq054,What is the type value for RESET_STREAM frame?,0x04,rfc9000#216,"_STREAM frame (type=0x04) to abruptly
+   ter",,,294169,294213
+rfcq055,"What is the error code for a request being missing, invalid, or mismatching?",invalid_request,rfc6749#48,"ollowing:
+
+         invalid_request
+               The ",,,60517,60572
+rfcq056,What is the type value for the CONTINUATION frame?,0x09,rfc9113#78,NUATION frame (type=0x09) is used to continu,,,101452,101496
+rfcq057,What version of QUIC allows only clients to migrate?,this version of QUIC,rfc9000#8,"le to migrate
+   in this version of QUIC.  This design also ",,,11996,12056
+rfcq058,What type of frame carries field block fragments?,"HEADERS, PUSH_PROMISE, or CONTINUATION frames",rfc9113#21,"frame payload of
+   HEADERS, PUSH_PROMISE, or CONTINUATION frames because these frame",,,24430,24515
+rfcq059,What alert is sent when a client certificate is desired but none was provided by the client?,certificate_required,rfc8446#120,"      identity.
+
+   certificate_required:  Sent by servers w",,,182029,182089
+rfcq060,What is the code for the HEADER_TABLE_SIZE setting?,0x1,rfc7540#130,R_TABLE_SIZE      | 0x1  | 4096          | ,,,168692,168735
+rfcq061,What HTTP method is excluded from write-through caching?,GET and HEAD,rfc2616#184," methods except for GET and HEAD.
+   A cache MUST NO",,,226625,226677
+rfcq062,What does CLOSE imply?,push function,rfc793#132, Close also implies push function.,,,112710,112744
+rfcq063,What type of connection error must a client treat a non-zero SETTINGS_ENABLE_PUSH setting change as?,PROTOCOL_ERROR,rfc7540#99,"n 5.4.2) of type
+   PROTOCOL_ERROR.
+
+   An intermediar",,,134713,134767
+rfcq064,What type of stream error can be triggered by an excessive number of server push streams?,ENHANCE_YOUR_CALM,rfc7540#120,"tion 5.4.2) of type ENHANCE_YOUR_CALM.
+
+   Processing cap",,,157264,157321
+rfcq065,What is the registered URN for declaring content is a JWT?,urn:ietf:params:oauth:token-type:jwt,rfc7519#32,"gisters the URN
+   ""urn:ietf:params:oauth:token-type:jwt"" for use by applica",,,33789,33865
+rfcq066,What term is used for interconnected systems of packet-switched computer communication networks?,catenet,rfc791#13,"as
+  been called a ""catenet"" [1].  The internet",,,3720,3767
+rfcq067,What is the maximum age directive?,max-age,rfc2616#202," 14.9.4
+         | ""max-age"" ""="" delta-seconds ",,,248856,248903
+rfcq068,What is the maximum number of overlapping ranges servers should consider egregious?,two,rfc9110#342,"uests for more than two
+   overlapping rang",,,418372,418415
+rfcq069,What is the Fragment Offset value in the example?,0,rfc791#72,111      |Flg=0|  Fragment Offset  ,,,76396,76431
+rfcq070,What are idempotent methods mentioned in this section?,"PUT, DELETE",rfc9110#153,"this specification, PUT, DELETE, and safe request m",,,181263,181314
+rfcq071,What does ISN(t) stand for?,initial sequence number,rfc793#66,"ed it to select
+    initial sequence number values are not immu",,,64691,64754
+rfcq072,What section defines HTTP requirements for cache behavior and cacheable responses?,section 13,rfc2616#18,"s are
+   defined in section 13.",,,34560,34591
+rfcq073,How many bits are in an internet address?,32 bits,rfc791#25,"gth of four octets (32 bits).  An address
+    b",,,14807,14854
+rfcq074,What HTTP status code is mentioned?,302 Found,rfc6749#49,"ponse:
+
+   HTTP/1.1 302 Found
+   Location: https:",,,63098,63147
+rfcq075,What header field might be present in an HTTP/1.0 message that could lead to connection closure upon receipt?,Content-Length,rfc9112#30,"and an estimated
+   Content-Length header field for us",,,39055,39109
+rfcq076,What is the Type value?,68,rfc791#48,"   .
+        Type = 68
+
+        The Option",,,43573,43615
+rfcq077,What is the name of the attack mentioned in the RFC?,Slowloris,rfc9000#270,"21.6.  Slowloris Attacks
+
+   The att",,,358067,358103
+rfcq078,What status code is reserved for future use?,402 Payment Required,rfc2616#125,"tion"" [43].
+
+10.4.3 402 Payment Required
+
+   This code is re",,,153547,153607
+rfcq079,What is the value of the M flag for the first fragment?,1,rfc8200#24, An M flag value of 1 as this is the firs,,,35989,36030
+rfcq080,What field value might servers scan?,User-Agent field value,rfc9110#18,"can portions of the User-Agent field value,
+   and user agents",,,24556,24618
+rfcq081,What is the only range unit defined by HTTP/1.1?,bytes,rfc2616#52, range-unit       = bytes-unit | other-range-,,,73539,73584
+rfcq082,What sections of [JWS] apply to JWT?,10.12 (,rfc7519#43,"articular, Sections 10.12 (""JSON Security
+   Co",,,41786,41833
+rfcq083,What is the Code for the DATA frame type?,0x0,rfc7540#129," for values between 0x00 and 0xef,
+   with ",,,166438,166481
+rfcq084,What HTTP/1.1 default connection type is mentioned?,persistent connections,rfc7230#88,"ults to the use of ""persistent connections"", allowing
+   multi",,,120932,120994
+rfcq085,What is the preferred format for HTTP-date?,IMF-fixdate,rfc9110#69,"e timestamps in the IMF-fixdate format.
+
+   An HTTP",,,85096,85147
+rfcq086,What ends the mail text according to the transparency procedures?,<CRLF>.<CRLF>,rfc5321#167,"racter sequence
+   ""<CRLF>.<CRLF>"" ends the mail text",,,138627,138680
+rfcq087,What is the Erratum ID for the issue regarding the handling of a packet with a zero Hop Limit?,4279,rfc8200#55,         Erratum ID 4279 [Err4279]: This err,,,84705,84749
+rfcq088,How many labels in addition to the IN-ADDR.ARPA suffix are defined for domain names in the IN-ADDR.ARPA domain?,four,rfc1035#45,"fined to have up to four
+labels in addition ",,,45131,45175
+rfcq089,What is the maximum TTL recommended for RRs in the optional step?,1 week,rfc1035#87,"L, say greater than 1 week, either discard
+   ",,,98068,98114
+rfcq090,What is the type value for NEW_CONNECTION_ID frame?,0x18,rfc9000#228,"TION_ID frame (type=0x18) to provide
+   its ",,,310209,310253
+rfcq091,What protocol is described in the excerpt?,INTERNET PROTOCOL,rfc791#1,INTERNET PROTOCOL,,,38,55
+rfcq092,What is the copyright year mentioned?,2005,rfc3986#112,"e Internet Society (2005).
+
+   This document",,,130370,130414
+rfcq093,What type of protocol is IP according to the text?,datagram,rfc791#65,"ernet protocol is a datagram
+  protocol, there i",,,67012,67060
+rfcq094,What section describes the error response?,Section 5.2,rfc6749#73,"nse as described in Section 5.2.
+
+   The authorizat",,,96251,96302
+rfcq095,What is the type value for HANDSHAKE_DONE frame?,0x1e,rfc9000#235,"KE_DONE frame (type=0x1e) to signal
+   confi",,,319443,319487
+rfcq096,What is the acronym for the IETF Trust's Legal Provisions?,BCP 78,rfc7540#3,ument is subject to BCP 78 and the IETF Trust',,,1910,1956
+rfcq097,What page number starts the SMTP Procedures section?,17,rfc5321#5,". . . . . . . . . . 17
+     3.1.  Session ",,,3029,3071
+rfcq098,What status code is described in Section 15.5.15?,414,rfc9110#291,"y again.
+
+15.5.15.  414 URI Too Long
+
+   Th",,,362984,363027
+rfcq099,What is the initial value of SETTINGS_HEADER_TABLE_SIZE?,"4,096",rfc9113#23,"l
+      |  value of 4,096 is somewhat better ",,,27051,27096
+rfcq100,What is the initial state for the receiving part of a stream?,Recv,rfc9000#22,"      o
+          | Recv STREAM / STREAM_DAT",,,32449,32493
+rfcq101,What MUST a server NOT do until it receives the entire request header section?,apply a request to the target resource,rfc9110#53,"  A server MUST NOT apply a request to the target resource until it
+   receive",,,72083,72161
+rfcq102,What compression algorithm is used in deflate coding?,Lempel-Ziv (LZ77),rfc7230#63,"mbination of
+   the Lempel-Ziv (LZ77) compression algorit",,,91027,91084
+rfcq103,What is the name of the protocol specified in this document?,DoD Standard Internet Protocol,rfc791#8,"ument specifies the DoD Standard Internet Protocol.  This
+document is ",,,2547,2617
+rfcq104,What cache-control directive allows a response to be returned to any subsequent request?,public,rfc2616#200,"ponse includes the ""public"" cache-control dire",,,246571,246617
+rfcq105,What is the required parameter for both media types?,none,rfc2616#299,"red parameters:     none
+       Optional par",,,369708,369752
+rfcq106,What status code MUST NOT send a Content-Length header field?,204 (No Content),rfc9110#128," (Informational) or 204 (No Content).  A
+   server MUST ",,,150193,150249
+rfcq107,What is the section number for IANA Considerations?,10,rfc7519#6," . . . . . .  17
+   10. IANA Consideration",,,4333,4375
+rfcq108,What type of response triggers the requirement of TLS?,"""code"" or ""token""",rfc6749#35,"ed response type is ""code"" or ""token"",
+   or when the red",,,43649,43706
+rfcq109,What appears in the MAIL command with a null reverse-path?,<>,rfc5321#67,"s:
+
+      MAIL FROM:<>
+
+   As discussed in",,,68612,68654
+rfcq110,What is the ASCII string used to concatenate Cookie header fields?,;,rfc7540#93,"uses a semi-colon ("";"") to delimit
+   coo",,,123255,123296
+rfcq111,What status code indicates a communication failure?,5xx,rfc2616#141,"error (4xx or 5xx) response message.
+",,,176268,176305
+rfcq112,What is the RFC number?,3986,rfc3986#0,quest for Comments: 3986                    ,,,75,119
+rfcq113,What is the name of the field read after the chunked data?,trailer field,rfc9112#40,"LF
+     }
+     read trailer field
+     while (trailer",,,52842,52895
+rfcq114,What section defines the 'If' header field?,10.4,rfc9110#230,"WEBDAV],
+   Section 10.4).
+
+   Extensibility",,,273413,273457
+rfcq115,What frame supplies connection IDs to the peer?,NEW_CONNECTION_ID frame,rfc9000#43," endpoint using the NEW_CONNECTION_ID frame
+   (Section 19.15).",,,61042,61105
+rfcq116,What character must be percent-encoded as?,%25,rfc3986#33,"percent-encoded as ""%25"" for that
+   octet ",,,33292,33335
+rfcq117,What is the maximum rank value for a preferred transfer coding?,1,rfc7230#65,"eptable
+   for HTTP/1.1 recipients.
+
+    ",,,92002,92043
+rfcq118,What is the state that represents a newly created stream able to accept data from the application?,Ready,rfc9000#20,"  +-------+
+      | Ready | Send RESET_STREAM",,,28112,28157
+rfcq119,What is the request target for OPTIONS method?,*,rfc9110#91,"-specific form:
+
+   *  For CONNECT (Secti",,,110116,110157
+rfcq120,What type of connection error might occur if an endpoint forgets a connection ID without retiring it?,CONNECTION_ID_LIMIT_ERROR,rfc9000#47,"ction error of type CONNECTION_ID_LIMIT_ERROR.
+
+   Endpoints SHOU",,,67583,67648
+rfcq121,What is the client connection preface string in hex notation?,0x505249202a20485454502f322e300d0a0d0a534d0d0a0d0a,rfc9113#15," notation is:
+
+     0x505249202a20485454502f322e300d0a0d0a534d0d0a0d0a
+
+   That is, the co",,,16218,16308
+rfcq122,What is the most common form of request-target?,origin-form,rfc9112#16,"   request-target = origin-form
+                   ",,,18361,18412
+rfcq123,What is the maximum number of protocol names allowed in Via?,1,rfc2616#270,"14.45  Via
+
+   The Vi",,,332868,332889
+rfcq124,What is the minimum requirement for user agents regarding message integrity?,provide some indication,rfc7230#122," agents
+   ought to provide some indication that allows a user ",,,159694,159757
+rfcq125,What status code can a server send if it wishes to refuse service of the client's major protocol version?,505,rfc7230#24,"A server can send a 505
+   (HTTP Version No",,,36302,36345
+rfcq126,What is the page number for the index section?,56,rfc3986#9,". . . . . . . . . . 56
+   Authors' Address",,,7017,7059
+rfcq127,What status code is described in Section 15.3.7?,206 Partial Content,rfc9110#272,"response.
+
+15.3.7.  206 Partial Content
+
+   The 206 (Partia",,,331064,331123
+rfcq128,What term has been introduced for the URI used in requests?,Effective Request URI,rfc7230#136," 5.3)
+
+   The term ""Effective Request URI"" has been introduce",,,182332,182393
+rfcq129,What type of error must an endpoint generate if any computed packet number is negative?,FRAME_ENCODING_ERROR,rfc9000#214,ction error of type FRAME_ENCODING_ERROR.,,,292901,292942
+rfcq130,What is the maximum number of Version Negotiation packets a server can send in response to a single UDP datagram?,one,rfc9000#185, NOT send more than one Version Negotiation,,,253028,253071
+rfcq131,"What command should clients open a session with before sending NOOP, HELP, EXPN, VRFY, or RSET?",EHLO,rfc5321#101,"parameter
+   to the EHLO command is a primar",,,104072,104116
+rfcq132,What is the first digit of the Status-Code that indicates a Client Error?,4,rfc2616#70,"he request
+
+      - 4xx: Client Error - T",,,95018,95059
+rfcq133,What is the case-sensitivity rule for method tokens?,The method token is case-sensitive,rfc9110#147," method = token
+
+   The method token is case-sensitive because it might be",,,174642,174716
+rfcq134,What is the type value for NEW_TOKEN frames?,0x07,rfc9000#219,W_TOKEN frame (type=0x07) to provide the cli,,,298421,298465
+rfcq135,What type of connection error is triggered by a SETTINGS frame with a length other than a multiple of 6 octets?,FRAME_SIZE_ERROR,rfc9113#57,"tion 5.4.1) of type FRAME_SIZE_ERROR.  For more
+      in",,,71815,71871
+rfcq136,What is the initial flow-control window size in octets?,"65,535 octets",rfc7540#77,"trol window size of 65,535 octets.
+   The connection ",,,105426,105479
+rfcq137,What is the maximum number of QUIC packet encryption levels mentioned?,4,rfc9000#133,"ke
+   (Section 17.2.4) packets contain a ",,,183180,183221
+rfcq138,What should be returned if the user should not have access?,error:  connection illegal for this process,rfc793#151,"tion, return
+      ""error:  connection illegal for this process"".
+
+      Otherwise ",,,129597,129680
+rfcq139,What is the ISSN of this document?,2070-1721,rfc7519#0,"   J. Bradley
+ISSN: 2070-1721                    ",,,205,254
+rfcq140,What is the ISSN of this document?,2070-1721,rfc9000#0," Thomson, Ed.
+ISSN: 2070-1721                    ",,,205,254
+rfcq141,What is the media type for enclosing messages as data?,message/http,rfc9112#4,"  10.1.  Media Type message/http
+     10.2.  Media T",,,4195,4247
+rfcq142,What is the STD number for UTF-8 specification?,STD 63,rfc3986#99,"        ISO 10646"", STD 63, RFC 3629, November",,,106614,106660
+rfcq143,What type of stream error is triggered by receiving frames other than PRIORITY on a half-closed (remote) stream?,STREAM_CLOSED,rfc7540#29,".4.2) of
+      type STREAM_CLOSED.
+
+      A stream th",,,41185,41238
+rfcq144,What grant type does not support the issuance of refresh tokens?,Implicit Grant,rfc6749#52,"4.2.  Implicit Grant
+
+   The implicit gr",,,66117,66157
+rfcq145,What type of frame MAY be received in the reserved (local) state?,PRIORITY or WINDOW_UPDATE frame,rfc9113#27,"his state.
+
+      A PRIORITY or WINDOW_UPDATE frame MAY be received in ",,,33599,33670
+rfcq146,What is used throughout HTTP as the means for identifying resources?,Uniform Resource Identifiers (URIs),rfc9110#34,"tifiers in HTTP
+
+   Uniform Resource Identifiers (URIs) [URI] are used thro",,,45883,45958
+rfcq147,What is the scheme for unencrypted WebSocket connections?,ws,rfc6455#34,"s from the scheme (""ws"" for unencrypted
+  ",,,38092,38134
+rfcq148,What section discusses the anti-amplification limit?,Section 8,rfc9000#82,"fication limit; see Section 8.
+   Note that in th",,,117048,117097
+rfcq149,What section introduces the document's conventions?,1.1,rfc8259#4," . . . . .   3
+     1.1.  Conventions Used ",,,2872,2915
+rfcq150,What status code indicates a connection was closed due to a failure to perform a TLS handshake?,1015,rfc6455#92,"ng the request.
+
+   1015
+
+      1015 is a re",,,104686,104730

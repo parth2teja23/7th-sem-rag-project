@@ -123,6 +123,59 @@ One $\alpha$ for all queries is a compromise. ``Which opcode marks a WebSocket
 close frame?'' needs the sparse side; a loosely worded finance question needs
 the dense side. QAF predicts $\alpha$ per query from 12 features
 (Table~\ref{tab:features}) that reuse work the pipeline has already done.
+Fig.~\ref{fig:qaf} shows how the features are grouped, how $\alpha$ is
+produced, and how the model is trained.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[
+  font=\footnotesize,
+  box/.style={draw, rounded corners=2pt, align=center, inner sep=2.5pt, fill=gray!8},
+  feat/.style={box, fill=white, text width=1.62cm, minimum height=1.55cm},
+  train/.style={box, fill=white, text width=3.7cm},
+  arr/.style={-{Stealth[length=1.6mm]}, semithick}]
+  % inputs
+  \node[box] (q)  at (0.95,0) {Query $q$};
+  \node[box] (sp) at (3.05,0) {BM25 top-100};
+  \node[box] (de) at (7.25,0) {Dense top-100};
+  % feature groups from qaf.FEATURE_NAMES (agreement drawn between the two lists)
+  \node[feat] (lex) at (0.95,-1.55) {\textbf{Lexical (7)}\\id, num, caps ratios; length; mean/max IDF; OOV};
+  \node[feat] (sc)  at (3.05,-1.55) {\textbf{Sparse conf. (2)}\\top score, margin};
+  \node[feat] (dc)  at (7.25,-1.55) {\textbf{Dense conf. (2)}\\top score, margin};
+  \node[feat] (ag)  at (5.15,-1.55) {\textbf{Agreement (1)}\\overlap@10 of the two lists};
+  \draw[arr] (q) -- (lex);
+  \draw[arr] (sp) -- (sc);
+  \draw[arr] (sp) -- (ag.north);
+  \draw[arr] (de) -- (dc);
+  \draw[arr] (de) -- (ag.north);
+  % model
+  \node[box, text width=3.7cm] (ridge) at (2.3,-3.2) {StandardScaler + Ridge\\(regularisation 1.0)};
+  \node[box, text width=2.3cm] (clip)  at (6.6,-3.2) {$\alpha(q)$, clipped\\to $[0,1]$};
+  % feature bus: all 12 features go into the scaler + ridge
+  \foreach \n in {lex,sc,ag,dc} \draw[semithick] (\n.south) -- (\n.south |- 0,-2.55);
+  \draw[semithick] (lex.south |- 0,-2.55) -- (dc.south |- 0,-2.55);
+  \draw[arr] (ridge.north |- 0,-2.55) -- (ridge.north);
+  \draw[arr] (ridge) -- (clip);
+  \node[box, text width=2.3cm] (rrf) at (6.6,-4.35) {Weighted RRF\\(Eq.~\eqref{eq:rrf})};
+  \node[box, text width=2.3cm] (rr)  at (6.6,-5.4)  {Cross-encoder\\rerank top-50};
+  \draw[arr] (clip) -- (rrf);
+  \draw[arr] (rrf) -- (rr);
+  % training (offline)
+  \node[train] (t3) at (2.3,-4.6) {Plateau-centre target $\alpha^{o}(q)$\\(0.5 if no signal)};
+  \node[train] (t2) at (2.3,-5.6) {Sweep $\alpha\in\{0,0.1,\dots,1\}$:\\nDCG@10 of fused list};
+  \node[train] (t1) at (2.3,-6.55) {SciFact-dev + FiQA-dev queries};
+  \draw[arr] (t1) -- (t2);
+  \draw[arr] (t2) -- (t3);
+  \draw[arr] (t3) -- node[right, pos=0.4]{fit Ridge} (ridge);
+  \node[draw, dashed, rounded corners=3pt, inner sep=3pt, fit=(t1)(t2)(t3)] (tr) {};
+  \node[anchor=north west, inner sep=1pt] at (tr.south west) {\scriptsize training (offline)};
+\end{tikzpicture}
+\caption{QAF at query time (top and right) and its offline training (dashed
+box). The four feature groups together hold the 12 features of
+Table~\ref{tab:features}.}
+\label{fig:qaf}
+\end{figure}
+
 
 \begin{table}[t]
 \centering

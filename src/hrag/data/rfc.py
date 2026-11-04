@@ -123,9 +123,14 @@ def load_rfc_corpus(chunker: str = "semantic") -> tuple[
     queries: dict[str, str] = {}
     qrels: Qrels = {}
     answers: dict[str, list[str]] = {}
+    required = {"qid", "question", "answer", "gold_chunk_id", "answer_start", "answer_end", "verified"}
     with qpath.open(newline="", encoding="utf-8") as f:
-        for row in csv.DictReader(f):
-            if row["verified"].strip() != "1":
+        reader = csv.DictReader(f)
+        missing = required - set(reader.fieldnames or [])
+        if missing:
+            raise ValueError(f"{qpath} is missing columns: {sorted(missing)}")
+        for row in reader:
+            if (row["verified"] or "").strip() != "1":
                 continue
             parent = row["gold_chunk_id"].split("#")[0]
             if parent not in by_parent:
@@ -138,4 +143,6 @@ def load_rfc_corpus(chunker: str = "semantic") -> tuple[
             queries[row["qid"]] = row["question"]
             qrels[row["qid"]] = {c: 1 for c in rel}
             answers[row["qid"]] = [row["answer"]]
+    if not queries:
+        raise ValueError(f"{qpath} has no verified rows (set verified=1 on checked rows)")
     return corpus, queries, qrels, answers

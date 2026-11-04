@@ -225,6 +225,12 @@ def test_load_rejects_blank_offsets_and_unknown_parent(tmp_path, monkeypatch):
                 tmp_path / "questions.csv")
     with pytest.raises(ValueError, match="rfcq001"):
         rfc.load_rfc_corpus("fixed")
+    Q.write_csv([{**base, "verified": "0"}], tmp_path / "questions.csv")
+    with pytest.raises(ValueError, match="no verified rows"):
+        rfc.load_rfc_corpus("fixed")
+    (tmp_path / "questions.csv").write_text("qid,question\nrfcq001,q\n")
+    with pytest.raises(ValueError, match="missing columns"):
+        rfc.load_rfc_corpus("fixed")
 
 
 def test_llm_error_skips_chunk():

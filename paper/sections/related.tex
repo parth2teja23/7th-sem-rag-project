@@ -22,8 +22,7 @@ trade-off on our own collections.
 \subsection{Hybrid retrieval and fusion}
 Because the two families fail on different queries, combining them is an old
 idea. Reciprocal Rank Fusion~\cite{cormack2009rrf} merges ranked lists using
-only ranks and needs no score calibration, which is why it is the default in
-most toolkits. Kuzi et al.~\cite{kuzi2020hybrid} showed that lexical and semantic
+only ranks and needs no score calibration. Kuzi et al.~\cite{kuzi2020hybrid} showed that lexical and semantic
 matching find different relevant documents, so running both raises recall, and Pyserini~\cite{lin2021pyserini} made sparse, dense and hybrid runs
 reproducible with one toolkit. Bruch et al.~\cite{bruch2023fusion} compared
 fusion functions in detail and found that a tuned convex combination of
@@ -41,10 +40,11 @@ labels, with no model call at query time and coefficients that can be read
 directly.
 
 \subsection{Reranking and retrieval-augmented generation}
-Cross-encoders read the query and passage together and are much more accurate
-than bi-encoders, but too slow to run over a whole corpus;
-Nogueira and Cho~\cite{nogueira2019passage} established the now standard
-pattern of reranking a short candidate list with BERT. On the generation side,
+A cross-encoder runs a full transformer pass over every query--passage pair,
+so its cost grows with the number of candidates scored, whereas a bi-encoder
+embeds passages once, offline. Nogueira and Cho~\cite{nogueira2019passage}
+therefore applied BERT only to a short candidate list from a first-stage
+retriever, the pattern we follow. On the generation side,
 DrQA~\cite{chen2017drqa} paired a TF-IDF retriever with a neural reader, and
 RAG~\cite{lewis2020rag} trained a dense retriever and a generator together.
 Gao et al.~\cite{gao2023ragsurvey} survey the pipeline variants that

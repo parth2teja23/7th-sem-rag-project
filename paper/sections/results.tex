@@ -14,8 +14,9 @@
 \subsection{Does query-adaptive fusion help?}
 % TODO: QAF vs Hybrid-fixed with and without rerank (\QAFgainSciFact,
 % \QAFgainFiQA, \QAFgainHotpot, \QAFgainRFC; p-values \QAFpSciFact, \QAFpRFC).
-% Oracle headroom (\OracleHeadroomSciFact, \OracleHeadroomRFC): how much of the
-% gap between alpha* and the oracle QAF closes. Leave-one-dataset-out transfer.
+% Headroom relative to the plateau-centre oracle alpha (\OracleHeadroomSciFact,
+% \OracleHeadroomRFC); not a strict upper bound. How much of the gap between
+% alpha* and that oracle QAF closes. Leave-one-dataset-out transfer.
 % Report honestly if gains are small or not significant.
 \inputfigure{alpha_sweep}{nDCG@10 of fixed-weight fusion as a function of the
 dense weight $\alpha$ on each test collection.}

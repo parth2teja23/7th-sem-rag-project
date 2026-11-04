@@ -21,11 +21,16 @@ the mean noticeably. The RFC questions were drafted by the same model
 (Qwen2.5-7B) that later generates answers, filtered automatically, screened with AI
 assistance and then verified by all three authors. Every row was checked, but
 the set still favours questions that a 7B model finds easy to write, namely
-short identifier lookups, and it has no multi-hop items.
+short identifier lookups, and it has no multi-hop items. RFC~2616, 7230 and
+9110/9112 are successive HTTP/1.1 specifications with overlapping text, so
+retrieving a near-duplicate passage from a superseded RFC counts as a miss.
+Questions whose answer was ambiguous across RFCs were removed during
+verification, but this scoring effect remains for the rest.
 
-QAF is trained on only two development sets. Its features use the BM25 IDF
-table and the encoder vocabulary of the target corpus, so the model is cheap
-to apply anywhere, but the coefficients were fitted on scientific and
+QAF is trained on only two development sets. Its features use the target
+corpus's BM25 IDF table and the dense encoder's tokenizer vocabulary (which is
+fixed by the encoder, not by the corpus), so the model is cheap to apply
+anywhere, but the coefficients were fitted on scientific and
 financial queries and may not suit other domains. % NOTE: revise the next sentence if the DAT-style baseline (Task 16) is run.
 We compare QAF with a fixed
 weight and with the oracle but not with a learned or LLM-based weighting

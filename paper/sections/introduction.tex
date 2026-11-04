@@ -14,11 +14,10 @@ capable it is.
 
 The two common retriever families fail in different places. Dense
 retrievers~\cite{karpukhin2020dpr} match meaning and handle paraphrase well,
-but they often miss exact strings that were rare in their training data:
-error codes, version numbers, header names, acronyms. A question that asks
-which status code or frame type a protocol uses can be answered from one line
-of one specification, and that line may look, to an embedding model, much
-like dozens of other passages on the same topic. BM25~\cite{robertson2009bm25} finds such
+but they often miss exact strings that were rare in their training data,
+such as version numbers or header names. A question about a status code can
+be answered from one line of one specification, and to an embedding model
+that line may look much like dozens of other passages on the same topic. BM25~\cite{robertson2009bm25} finds such
 strings easily, but it fails when the question and the source use different
 words. Hybrid retrieval runs both and merges the results, usually with
 Reciprocal Rank Fusion (RRF)~\cite{cormack2009rrf}. In most systems the
@@ -30,15 +29,14 @@ kinds.
 Choosing the balance per query is not a new idea. DAT~\cite{hsu2025dat} asks
 an LLM to judge the top result of each retriever and sets the weight from
 those judgements. That works, but it puts LLM calls on the retrieval path of
-every query. We ask whether much cheaper signals are enough: how many tokens
-look like identifiers, how rare the query terms are in the corpus, how
-confident each retriever is, and how much the two candidate lists agree. Our
+every query. We ask whether cheap signals from the query text and the two
+candidate lists are enough. Our
 method, Query-Adaptive Fusion (QAF), feeds 12 such features to a ridge
 regression that outputs the fusion weight. It is trained once on development
 queries, needs no LLM at query time, and its coefficients can be read off
 directly.
 
-We build the full pipeline described in our project proposal, from structural
+We build a complete pipeline, from structural
 chunking through BM25 and dense indexing, weighted RRF and cross-encoder
 reranking to a local 7B generator. Everything runs on a single laptop. We test
 it on three public collections and on a new corpus of 20 IETF RFCs, with two
@@ -46,17 +44,18 @@ encoders: BGE-small and Google's recent EmbeddingGemma~2. Our contributions
 are:
 \begin{itemize}
   \item \textbf{QAF}, an LLM-free, interpretable predictor of the per-query
-  dense/sparse fusion weight, together with a plateau-centre definition of
-  the oracle weight that gives stable regression targets for rank-based
-  fusion.
+  dense/sparse fusion weight, trained on a plateau-centre regression
+  target derived from per-query weight sweeps.
   \item \textbf{An identifier-heavy RFC test collection} of 2{,}973 chunks and
   101 questions, generated with a local LLM, filtered automatically and
   checked by all three authors, with relevance labels derived from answer
   spans.
+  % NOTE(results): revise if not run (LODO, Matryoshka sizes).
   \item \textbf{A controlled comparison} of sparse, dense, fixed-weight hybrid
   and QAF retrieval, with and without reranking, on four collections and two
-  encoders, including an oracle upper bound, leave-one-dataset-out transfer,
+  encoders, including a per-query oracle weight, leave-one-dataset-out transfer,
   an ablation, and EmbeddingGemma~2 at four embedding sizes.
+  % NOTE(results): revise if not run (RAGAS faithfulness).
   \item \textbf{An end-to-end account of cost}: per-stage latency and answer
   quality (exact match, F1 and judged faithfulness) on commodity hardware
   with no paid API.

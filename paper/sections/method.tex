@@ -50,9 +50,10 @@ fusion step separately for every query.}
 BEIR and HotpotQA passages are already short and are indexed as they are.
 Chunking matters for the RFC corpus, where one document can run past 100
 pages. Our chunker splits the cleaned text into blocks at blank lines. A
-one-line block is a heading if it is a numbered title of at most 12 words with
-no trailing punctuation (``4.2.1 Frame Header'') or a capitalised line of at
-most 8 words. A heading closes the current chunk and becomes the first line of
+one-line block is a heading if it is a numbered title of at most 12 words that
+does not end in a period, colon or comma (``4.2.1 Frame Header''), or a short
+line of at most 8 words that starts with a capital and contains only letters
+and spaces. A heading closes the current chunk and becomes the first line of
 the next, so section names are indexed with their bodies. Paragraphs are added
 until the chunk would pass 300 words (hard ceiling 380); longer paragraphs are
 split at sentences, then into word windows. Consecutive chunks of the same
@@ -75,9 +76,10 @@ where $f(t,d)$ is the frequency of $t$ in $d$ and
 $\mathrm{idf}(t)=\ln\bigl(1+\frac{N-n_t+0.5}{n_t+0.5}\bigr)$ for $N$ passages,
 $n_t$ of which contain $t$~\cite{robertson2009bm25}; $k_1=1.2$, $b=0.75$.
 
-The tokenizer is where we departed most from defaults. A standard word
-tokenizer splits \texttt{TLS1.3} into \texttt{tls} and \texttt{1}, losing
-exactly the strings our RFC questions ask about. Ours lowercases the text and
+The tokenizer is where we departed most from defaults. The default
+\texttt{bm25s} tokenizer keeps only runs of two or more word characters, so
+\texttt{HTTP/2} becomes \texttt{http} and the version number, often exactly
+what an RFC question asks about, is lost. Ours lowercases the text and
 first matches compounds, alphanumeric runs joined by \texttt{.}, \texttt{\_},
 \texttt{/}, \texttt{:} or \texttt{-}, and emits each compound both whole and as
 its parts (\texttt{http/2} gives \texttt{http/2}, \texttt{http}, \texttt{2}).
@@ -86,7 +88,7 @@ stemmer; tokens with a digit or separator are never stemmed or dropped. The
 same function serves documents, queries and the IDF look-ups used by QAF.
 
 \subsection{Dense retrieval}
-We compare two bi-encoders: BGE-small-en-v1.5~\cite{xiao2024cpack}
+We compare two bi-encoders: BGE-small-en-v1.5~\cite{xiao2024cpack,baai2023bgesmall}
 (384 dimensions) and EmbeddingGemma~2~\cite{vera2026embeddinggemma2}, the
 successor of EmbeddingGemma~\cite{vera2025embeddinggemma}, whose 768-dimensional
 vectors are trained with a Matryoshka objective~\cite{kusupati2022matryoshka}
@@ -137,7 +139,7 @@ Feature & Definition \\
 \texttt{caps\_ratio} & all-capital tokens of length $\ge 2$ (acronyms) \\
 \texttt{len\_tokens} & number of tokens \\
 \texttt{mean\_idf}, \texttt{max\_idf} & BM25 IDF of the query terms in the target corpus \\
-\texttt{oov\_ratio} & tokens absent from the dense encoder's whole-word vocabulary \\
+\texttt{oov\_ratio} & tokens absent from the dense encoder's tokenizer vocabulary (whole-word entries) \\
 \texttt{sparse\_top}, \texttt{sparse\_margin} & top BM25 score and its gap to the second \\
 \texttt{dense\_top}, \texttt{dense\_margin} & top cosine score and its gap to the second \\
 \texttt{overlap\_at10} & share of the dense top-10 also in the sparse top-10 \\
@@ -162,8 +164,10 @@ RFC and HotpotQA collections are never seen in training. A linear model was a
 deliberate choice, since its 12 coefficients say directly which query
 properties move the weight toward either side and can be checked against
 intuition (identifier-heavy queries should lower $\alpha$). Every feature comes
-from the query string, the two candidate lists or the BM25 document
-frequencies, all available when fusion runs, so QAF adds feature extraction and
+from the query string, the two candidate lists, the BM25 document frequencies
+or, for \texttt{oov\_ratio}, the dense encoder's tokenizer vocabulary (a
+property of the encoder, not of the corpus). All of these are available when
+fusion runs, so QAF adds feature extraction and
 a 12-term dot product, with no model call.
 
 \subsection{Reranking, post-processing and generation}

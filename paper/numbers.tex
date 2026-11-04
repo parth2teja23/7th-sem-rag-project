@@ -22,7 +22,7 @@
 \newcommand{\BestNDCGRFC}{\TBD}
 \newcommand{\BestNDCGSciFact}{\TBD}
 \newcommand{\BMndcgSciFact}{\TBD}    % sanity check against published BEIR BM25
-% --- oracle headroom (oracle alpha minus fixed alpha*, nDCG@10)
+% --- headroom relative to the plateau-centre oracle alpha (oracle minus fixed alpha*, nDCG@10); not a strict upper bound
 \newcommand{\OracleHeadroomSciFact}{\TBD}
 \newcommand{\OracleHeadroomRFC}{\TBD}
 % --- reranking and latency
@@ -32,6 +32,10 @@
 % --- Matryoshka (EmbeddingGemma 2)
 \newcommand{\MatryoshkaDropTwoFiftySix}{\TBD} % nDCG@10 drop from 768 to 256 dims
 \newcommand{\MatryoshkaIndexMBOneTwentyEight}{\TBD}
+% --- encoding throughput (from results/indexes/build_times.json, docs_per_s / seconds)
+\newcommand{\GemmaDocsPerSec}{\TBD}    % EmbeddingGemma 2 passages/s on MPS
+\newcommand{\BGEDocsPerSec}{\TBD}      % BGE-small passages/s (a range across collections is fine)
+\newcommand{\FiQAEncodeMinGemma}{\TBD} % minutes to encode the FiQA subset with EmbeddingGemma 2
 % --- generation
 \newcommand{\GenN}{\TBD}             % questions per dataset in generation eval
 \newcommand{\RagasN}{\TBD}           % RAGAS sample size

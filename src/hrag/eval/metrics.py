@@ -36,11 +36,16 @@ def ndcg_at_k(ranking: Ranking, rel: dict[str, int], k: int) -> float:
 def evaluate_run(
     run: dict[str, Ranking], qrels: Qrels, ks=(5, 10, 20)
 ) -> tuple[dict[str, float], dict[str, dict[str, float]]]:
+    """Mean and per-query metrics over every query in qrels.
+
+    Queries without qrels in `run` are skipped; queries in qrels but missing
+    from `run` count as an empty ranking (all metrics 0).
+    """
     per_query: dict[str, dict[str, float]] = {}
-    for qid, ranking in run.items():
-        rel = qrels.get(qid)
+    for qid, rel in qrels.items():
         if not rel:
             continue
+        ranking = run.get(qid, [])
         m: dict[str, float] = {}
         for k in ks:
             m[f"recall@{k}"] = recall_at_k(ranking, rel, k)

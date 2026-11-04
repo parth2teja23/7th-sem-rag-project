@@ -49,3 +49,11 @@ def test_evaluate_run_skips_missing_qrels():
     assert mean["recall@2"] == 1.0
     assert mean["recall@1"] == 0.0
     assert "mrr@2" in mean and "ndcg@1" in mean
+
+
+def test_evaluate_run_missing_query_counts_as_zero():
+    qrels = {"q1": {"d2": 1}, "q2": {"d1": 1}}
+    mean, per_q = evaluate_run({"q2": RANK}, qrels, ks=(2,))
+    assert set(per_q) == {"q1", "q2"}
+    assert per_q["q1"]["recall@2"] == 0.0
+    assert mean["recall@2"] == 0.5

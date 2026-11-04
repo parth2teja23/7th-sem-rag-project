@@ -92,22 +92,23 @@ def metric(R, ds, enc, cfg, m="ndcg@10"):
     return None if d is None else d["metrics"].get(m)
 
 
-def better_encoder(R: dict, ds: str | None = None) -> str | None:
-    """Encoder with the higher mean qaf+rr nDCG@10 (fallbacks: hybrid_fixed+rr, any config)."""
+def headline_encoder(results: Path, R: dict) -> tuple[str | None, str]:
+    """Encoder used for every headline number, chosen WITHOUT test results: the one with the
+    higher pooled dev nDCG@10 at alpha* (hybrid_fixed, results/qaf/alpha_star_<enc>.json).
+    Falls back to bge-small when any encoder lacks that dev score. -> (encoder, how)."""
     encs = encoders_of(R)
     if not encs:
-        return None
-    dss = [ds] if ds else [d for d in DATASETS if d in R]
-    for cfg in ("qaf+rr", REF, "qaf", "hybrid_fixed", "dense"):
-        sc = {}
-        for e in encs:
-            v = [metric(R, d, e, cfg) for d in dss]
-            v = [x for x in v if x is not None]
-            if v:
-                sc[e] = float(np.mean(v))
-        if sc:
-            return max(sc, key=lambda e: (sc[e], -encs.index(e)))
-    return encs[0]
+        return None, "none"
+    sc = {}
+    for e in encs:
+        a = _read(Path(results) / "qaf" / f"alpha_star_{e}.json")
+        try:
+            sc[e] = float(max(a["pooled_dev_ndcg@10"].values()))
+        except (TypeError, KeyError, ValueError):
+            pass
+    if len(sc) == len(encs):
+        return max(encs, key=lambda e: (sc[e], -encs.index(e))), "dev"
+    return ("bge-small" if "bge-small" in encs else encs[0]), "fixed"
 
 
 def _pq(data: dict, m: str) -> dict:
@@ -115,14 +116,23 @@ def _pq(data: dict, m: str) -> dict:
 
 
 def paired(a: dict | None, b: dict | None, m: str = "ndcg@10"):
-    """Aligned per-query metric lists (a, b) over the common qids, or None."""
+    """Aligned per-query metric lists (a, b), or None unless both runs cover exactly the same
+    qids and every value is a finite number (never intersect: a mismatch is a bug upstream)."""
     if a is None or b is None:
         return None
-    pa, pb = _pq(a, m), _pq(b, m)
-    ids = sorted(set(pa) & set(pb))
-    if not ids:
+    qa, qb = a.get("per_query") or {}, b.get("per_query") or {}
+    if not qa or set(qa) != set(qb):
         return None
-    return [pa[q] for q in ids], [pb[q] for q in ids]
+    ids = sorted(qa)
+    x, y = [], []
+    for q in ids:
+        va = qa[q].get(m) if isinstance(qa[q], dict) else None
+        vb = qb[q].get(m) if isinstance(qb[q], dict) else None
+        if va is None or vb is None or not np.isfinite(va) or not np.isfinite(vb):
+            return None
+        x.append(va)
+        y.append(vb)
+    return x, y
 
 
 def compare(a: dict | None, b: dict | None, m: str = "ndcg@10") -> dict | None:
@@ -255,54 +265,64 @@ COMPARISONS = (
 
 
 def significance_stats(R: dict) -> dict:
-    """{(comparison_key, dataset): {delta, lo, hi, p_boot, p_t, n, encoder}}; encoder = encoder
-    used (better encoder per dataset) or None for the encoder comparison."""
+    """{(comparison_key, dataset, encoder): {delta, lo, hi, p_boot, p_t, n}}; comparisons 1-3 are
+    computed for every encoder, the encoder comparison has encoder None."""
     out: dict = {}
     for ds in DATASETS:
         if ds not in R:
             continue
-        e = better_encoder(R, ds)
         g = lambda enc, cfg: get(R, ds, enc, cfg)  # noqa: E731
         trials = {}
-        if e:
-            trials["qaf_rr_vs_fixed_rr"] = (e, g(e, REF), g(e, "qaf+rr"))
+        for e in encoders_of(R):
+            trials[("qaf_rr_vs_fixed_rr", e)] = (g(e, REF), g(e, "qaf+rr"))
             single = [(metric(R, ds, e, c), c) for c in ("dense", "bm25")]
             single = [(v, c) for v, c in single if v is not None]
             if single:
-                best = max(single)[1]
-                trials["hybrid_vs_single"] = (e, g(e, best), g(e, "hybrid_fixed"))
-            trials["rr_vs_norr"] = (e, g(e, "qaf"), g(e, "qaf+rr"))
-        trials["gemma_vs_bge"] = (None, g("bge-small", "qaf+rr"), g("gemma", "qaf+rr"))
-        for key, (enc, a, b) in trials.items():
+                trials[("hybrid_vs_single", e)] = (g(e, max(single)[1]), g(e, "hybrid_fixed"))
+            trials[("rr_vs_norr", e)] = (g(e, "qaf"), g(e, "qaf+rr"))
+        trials[("gemma_vs_bge", None)] = (g("bge-small", "qaf+rr"), g("gemma", "qaf+rr"))
+        for (key, enc), (a, b) in trials.items():
             r = compare(a, b)
             if r:
-                out[(key, ds)] = {**r, "encoder": enc}
+                out[(key, ds, enc)] = r
     return out
 
 
-def significance_table(R: dict) -> str | None:
+def _head_note(head: tuple | None) -> str:
+    if not head or not head[0]:
+        return ""
+    enc = ENC_LABEL.get(head[0], tex(head[0]))
+    if head[1] == "dev":
+        return (f"Headline numbers in the text use {enc}, chosen by pooled dev nDCG@10 of Hybrid-fixed "
+                "(not on test results).")
+    return f"Headline numbers in the text use {enc}, fixed a priori (no dev score available)."
+
+
+def significance_table(R: dict, head: tuple | None = None) -> str | None:
     sig = significance_stats(R)
     if not sig:
         return None
     body: list[str] = []
     first = True
     for key, label in COMPARISONS:
-        rows = [(ds, sig[(key, ds)]) for ds in DATASETS if (key, ds) in sig]
+        rows = [(ds, e, sig[(key, ds, e)]) for ds in DATASETS for e in [*encoders_of(R), None]
+                if (key, ds, e) in sig]
         if not rows:
             continue
         if not first:
             body.append("\\midrule")
         first = False
         body.append(f"\\multicolumn{{6}}{{l}}{{\\textit{{{label}}}}} \\\\")
-        for ds, r in rows:
-            enc = f" ({ENC_LABEL.get(r['encoder'], tex(r['encoder']))})" if r["encoder"] else ""
+        for ds, e, r in rows:
+            enc = f" ({ENC_LABEL.get(e, tex(e))})" if e else ""
             d = sgn(r["delta"]) + (DAG if r["p_boot"] < ALPHA else "")
             body.append(f"{DS_LABEL[ds]}{enc} & {d} & {fmt_ci(r['lo'], r['hi'])} & "
                         f"{fmt_p(r['p_boot'])} & {fmt_p(r['p_t'])} & {r['n']} \\\\")
     header = ["Dataset & $\\Delta$nDCG@10 & 95\\% CI & $p$ (boot.) & $p$ ($t$-test) & $n$ \\\\"]
     cap = ("Paired significance of the main comparisons (treatment minus baseline, nDCG@10). CI: 95\\% "
            "paired-bootstrap interval (10{,}000 resamples, seed 42); $p$: one-sided, treatment better than "
-           "baseline. $\\dagger$: bootstrap $p<0.05$. Rows 1--3 use the better encoder per dataset.")
+           "baseline, floored at $10^{-4}$ by the 10{,}000 resamples. $\\dagger$: bootstrap $p<0.05$. "
+           "Comparisons 1--3 are shown for each encoder. " + _head_note(head))
     return table("significance", cap, "lccccr", header, body, resize=True)
 
 
@@ -397,15 +417,20 @@ def generation_table(results: Path) -> str | None:
     return table("generation", cap, "l" + "c" * len(cols), [head1, cmid, head2], body, resize=True)
 
 
-def latency_stats(R: dict, enc: str | None = None) -> dict:
-    """{config: {stage: (mean_ms, p95_ms)}} averaged over datasets, for one encoder."""
-    enc = enc or better_encoder(R)
+def latency_stats(R: dict, enc: str | None) -> dict:
+    """{config: {stage: (mean_ms, p95_ms)}} for one encoder, averaged over the datasets on which
+    ALL compared configs have latency (a common dataset set, so configs stay comparable)."""
+    cfgs = ("dense", REF, "qaf+rr")
+    have = {c: {ds for ds in R if (get(R, ds, enc, c) or {}).get("latency_ms")} for c in cfgs}
+    present = [c for c in cfgs if have[c]]
+    if not present:
+        return {}
+    common = set.intersection(*(have[c] for c in present))
     out: dict = {}
-    for cfg in ("dense", REF, "qaf+rr"):
+    for cfg in present:
         acc: dict = {}
-        for ds in R:
-            lat = (get(R, ds, enc, cfg) or {}).get("latency_ms") or {}
-            for st, v in lat.items():
+        for ds in common:
+            for st, v in get(R, ds, enc, cfg)["latency_ms"].items():
                 if isinstance(v, dict) and "mean" in v:
                     acc.setdefault(st, []).append((v["mean"], v.get("p95", v["mean"])))
         if acc:
@@ -414,13 +439,12 @@ def latency_stats(R: dict, enc: str | None = None) -> dict:
     return out
 
 
-def latency_table(R: dict) -> str | None:
-    L = latency_stats(R)
+def latency_table(R: dict, enc: str | None) -> str | None:
+    L = latency_stats(R, enc)
     cfgs = [c for c in ("dense", REF, "qaf+rr") if c in L]
     if not cfgs:
         return None
     stages = [s for s in STAGES if any(s in L[c] and (s == "total" or L[c][s][0] > 0) for c in cfgs)]
-    enc = better_encoder(R)
     head1 = "Stage & " + " & ".join(f"\\multicolumn{{2}}{{c}}{{{CFG_LABEL[c]}}}" for c in cfgs) + " \\\\"
     cmid = " ".join(f"\\cmidrule(lr){{{2 + 2 * i}-{3 + 2 * i}}}" for i in range(len(cfgs)))
     head2 = " & " + " & ".join("mean & p95" for _ in cfgs) + " \\\\"
@@ -509,9 +533,10 @@ def load_matryoshka(results: Path) -> list[dict]:
         if not isinstance(data, dict) or not isinstance(data.get("metrics"), dict) or parts[0] not in DATASETS:
             continue
         dim = _dim_of("_".join(parts[1:]), data)
-        cfg = (data.get("config") or {}).get("name") or parts[-1]
-        cfg = "qaf+rr" if "qaf" in cfg else "dense" if "dense" in cfg else cfg
-        if dim is None:
+        cfg = (data.get("config") or {}).get("name")
+        if cfg not in ("dense", "qaf+rr"):
+            cfg = parts[-1]
+        if dim is None or cfg not in ("dense", "qaf+rr"):
             continue
         mb = data.get("index_mb", data.get("index_size_mb", (data.get("config") or {}).get("index_mb")))
         lat = (data.get("latency_ms") or {}).get("total", {})
@@ -611,10 +636,10 @@ def _save(fig, path: Path) -> None:
 
 
 def fig_alpha_sweep(results: Path, R: dict, out: Path) -> bool:
+    enc = headline_encoder(results, R)[0]
     d = Path(results) / "alpha_sweep"
     if not d.is_dir():
         return False
-    enc = better_encoder(R) if R else None
     curves = {}
     for ds in DATASETS:
         cands = sorted(d.glob(f"{ds}__*.json"))
@@ -657,7 +682,7 @@ def query_types(results: Path, ds: str, per_query: dict) -> dict[str, bool]:
 
 def predicted_alphas(results: Path, R: dict):
     """-> (id_heavy_alphas, natural_alphas, grouping) with grouping 'query' or 'dataset'."""
-    enc = better_encoder(R)
+    enc = headline_encoder(results, R)[0]
     idh, nat, ds_alpha = [], [], {}
     typed = False
     for ds in DATASETS:
@@ -701,8 +726,8 @@ def fig_qaf_hist(results: Path, R: dict, out: Path) -> bool:
     return True
 
 
-def fig_latency(R: dict, out: Path) -> bool:
-    L = latency_stats(R)
+def fig_latency(R: dict, enc: str | None, out: Path) -> bool:
+    L = latency_stats(R, enc)
     cfgs = [c for c in ("dense", REF, "qaf+rr") if c in L]
     if not cfgs:
         return False
@@ -771,14 +796,15 @@ def compute_macros(results: Path, R: dict) -> dict[str, str]:
     """{macro name: LaTeX value}; only macros whose inputs exist."""
     M: dict[str, str] = {}
     results = Path(results)
-    gen_enc = better_encoder(R) if R else None
+    H = headline_encoder(results, R)[0] if R else None
+    gen_enc = H
 
     # alpha* and QAF training
     for key, enc in (("Bge", "bge-small"), ("Gemma", "gemma")):
         a = _read(results / "qaf" / f"alpha_star_{enc}.json")
         if isinstance(a, dict) and a.get("alpha_star") is not None:
             M[f"AlphaStar{key}"] = f"{a['alpha_star']:.1f}"
-    pick = gen_enc if gen_enc and (results / "qaf" / f"coefficients_{gen_enc}.json").exists() else None
+    pick = H if H and (results / "qaf" / f"coefficients_{H}.json").exists() else None
     pick = pick or next((e for e in ENCODERS if (results / "qaf" / f"coefficients_{e}.json").exists()), None)
     c = _read(results / "qaf" / f"coefficients_{pick}.json") if pick else None
     if isinstance(c, dict):
@@ -791,56 +817,61 @@ def compute_macros(results: Path, R: dict) -> dict[str, str]:
             top = max(c["coefficients"].items(), key=lambda kv: abs(kv[1]))[0]
             M["QAFtopFeature"] = f"\\texttt{{{tex(top)}}}"
 
-    # retrieval-derived
-    lat = latency_stats(R, gen_enc) if R else {}
+    # latency (headline encoder, common dataset set)
+    lat = latency_stats(R, H) if R else {}
     if "qaf+rr" in lat:
-        feats = lat["qaf+rr"].get("features", (None,))[0]
-        base = lat.get(REF, {}).get("features", (0.0,))[0]
-        if feats is not None:
-            M["QAFlatencyMs"] = f"{max(feats - base, 0.0):.1f}"
         if "rerank" in lat["qaf+rr"]:
             M["RerankLatencyMs"] = fmt_ms(lat["qaf+rr"]["rerank"][0])
         if "total" in lat["qaf+rr"]:
             M["TotalLatencyMs"] = fmt_ms(lat["qaf+rr"]["total"][0])
+    # added alpha-decision latency: only on datasets where qaf+rr has the stage AND the fixed
+    # baseline has latency recorded.  The pipeline leaves "features" at 0 for fixed alpha and
+    # common.latency_stats drops all-zero stages, so a recorded baseline without the stage = 0.
+    diffs = []
+    for ds in R:
+        q, f = get(R, ds, H, "qaf+rr"), get(R, ds, H, REF)
+        ql, fl = (q or {}).get("latency_ms") or {}, (f or {}).get("latency_ms") or {}
+        if "features" in ql and fl:
+            diffs.append(ql["features"]["mean"] - fl.get("features", {"mean": 0.0})["mean"])
+    if diffs:
+        M["QAFlatencyMs"] = f"{max(float(np.mean(diffs)), 0.0):.1f}"
 
     sig = significance_stats(R) if R else {}
     for ds in DATASETS:
         k = DS_MACRO[ds]
-        s = sig.get(("qaf_rr_vs_fixed_rr", ds))
-        if s:
-            M[f"QAFgain{k}"] = sgn(s["delta"])
-            M[f"QAFp{k}"] = fmt_p(s["p_boot"])
-            M[f"QAFgainCI{k}"] = fmt_ci(s["lo"], s["hi"])
-        e = better_encoder(R, ds) if ds in R else None
-        data = get(R, ds, e, "qaf+rr") if e else None
+        s_ = sig.get(("qaf_rr_vs_fixed_rr", ds, H))
+        if s_:
+            M[f"QAFgain{k}"] = sgn(s_["delta"])
+            M[f"QAFp{k}"] = fmt_p(s_["p_boot"])
+            M[f"QAFgainCI{k}"] = fmt_ci(s_["lo"], s_["hi"])
+        data = get(R, ds, H, "qaf+rr") if ds in R else None
         if data:
-            v = list(_pq(data, "ndcg@10").values())
-            if len(v) > 1:
+            v = [x.get("ndcg@10") for x in (data.get("per_query") or {}).values() if isinstance(x, dict)]
+            if len(v) > 1 and all(x is not None and np.isfinite(x) for x in v):
                 M[f"NDCGsd{k}"] = f"{float(np.std(v, ddof=1)):.3f}"
     for ds in ("rfc",):
-        e = better_encoder(R, ds) if ds in R else None
-        if e:
-            h, d, b = (metric(R, ds, e, x) for x in ("hybrid_fixed", "dense", "bm25"))
+        if ds in R:
+            h, d, b = (metric(R, ds, H, x) for x in ("hybrid_fixed", "dense", "bm25"))
             if h is not None and d is not None:
                 M["HybridGainOverDenseRFC"] = sgn(h - d)
             if h is not None and b is not None:
                 M["HybridGainOverBMRFC"] = sgn(h - b)
+    main_cfgs = [c for c in CONFIGS if c != "oracle_upper_bound"]
     for ds, k in (("rfc", "RFC"), ("scifact", "SciFact")):
-        best = [metric(R, ds, e, cfg) for e in encoders_of(R) for cfg in CONFIGS if cfg != "oracle_upper_bound"]
-        best = [b for b in best if b is not None]
-        if best:
-            M[f"BestNDCG{k}"] = f"{max(best):.3f}"
-        e = better_encoder(R, ds) if ds in R else None
-        if e:
-            o, h = metric(R, ds, e, "oracle_upper_bound"), metric(R, ds, e, "hybrid_fixed")
+        # every main config must be present for every encoder of the dataset, else TBD
+        allv = [[metric(R, ds, e, cfg) for cfg in main_cfgs] for e in encoders_of(R)]
+        if allv and all(v is not None for row in allv for v in row):
+            M[f"BestNDCG{k}"] = f"{max(v for row in allv for v in row):.3f}"
+        if ds in R:
+            o, h = metric(R, ds, H, "oracle_upper_bound"), metric(R, ds, H, "hybrid_fixed")
             if o is not None and h is not None:
                 M[f"OracleHeadroom{k}"] = sgn(o - h)
     bm = metric(R, "scifact", None, "bm25") if "scifact" in R else None
     if bm is not None:
         M["BMndcgSciFact"] = f"{bm:.3f}"
-    s = sig.get(("rr_vs_norr", "scifact"))
-    if s:
-        M["RerankGainSciFact"] = sgn(s["delta"])
+    s_ = sig.get(("rr_vs_norr", "scifact", H))
+    if s_:
+        M["RerankGainSciFact"] = sgn(s_["delta"])
 
     # Matryoshka
     mrows = load_matryoshka(results)
@@ -880,7 +911,7 @@ def compute_macros(results: Path, R: dict) -> dict[str, str]:
         n = [x for x in n if x]
         if n:
             M["GenN"] = str(max(n))
-        fa = {}
+        fa: dict = {}
         cnt = []
         for ds in G.values():
             for cfg, d in ds.items():
@@ -889,20 +920,23 @@ def compute_macros(results: Path, R: dict) -> dict[str, str]:
                 if v:
                     fa.setdefault(cfg, []).extend(v)
                     cnt.append(len(v))
-                elif d["metrics"].get("faithfulness") is not None:
-                    fa.setdefault(cfg, []).append(d["metrics"]["faithfulness"])
         if cnt:
             M["RagasN"] = str(max(cnt))
         for cfg, k in (("qaf+rr", "QAF"), ("dense", "Dense")):
             if cfg in fa:
                 M[f"Faith{k}"] = f"{float(np.mean(fa[cfg])):.2f}"
-        for cfg, k in (("qaf+rr", "QAF"), ("dense", "Dense")):
-            f1 = _mean([ds[cfg]["metrics"].get("f1") for ds in G.values() if cfg in ds])
-            if f1 is not None:
-                M[f"GenFone{k}"] = f"{f1:.3f}"
-        em = _mean([ds["qaf+rr"]["metrics"].get("em") for ds in G.values() if "qaf+rr" in ds])
-        if em is not None:
-            M["GenEMQAF"] = f"{em:.3f}"
+        both = [ds for ds in G.values() if "qaf+rr" in ds and "dense" in ds]  # same datasets for both
+        if both:
+            def avg(cfg, m):
+                v = [ds[cfg]["metrics"].get(m) for ds in both]
+                return float(np.mean(v)) if all(x is not None for x in v) else None
+            for cfg, k in (("qaf+rr", "QAF"), ("dense", "Dense")):
+                f1 = avg(cfg, "f1")
+                if f1 is not None:
+                    M[f"GenFone{k}"] = f"{f1:.3f}"
+            em = avg("qaf+rr", "em")
+            if em is not None:
+                M["GenEMQAF"] = f"{em:.3f}"
     return M
 
 
@@ -995,11 +1029,12 @@ def compute_dataset_stats(results: Path) -> dict:
 def generate(results: Path, out: Path) -> dict[str, list[str]]:
     results, out = Path(results), Path(out)
     R = load_retrieval(results)
+    head = headline_encoder(results, R)
     written = {"tables": [], "figures": [], "numbers": []}
     tables = {
-        "main_results": lambda: main_results_table(R), "significance": lambda: significance_table(R),
+        "main_results": lambda: main_results_table(R), "significance": lambda: significance_table(R, head),
         "ablation": lambda: ablation_table(results), "generation": lambda: generation_table(results),
-        "latency": lambda: latency_table(R), "qaf_coefficients": lambda: qaf_coef_table(results),
+        "latency": lambda: latency_table(R, head[0]), "qaf_coefficients": lambda: qaf_coef_table(results),
         "dataset_stats": lambda: dataset_stats_table(results), "matryoshka": lambda: matryoshka_table(results),
         "dat": lambda: dat_table(results), "pageindex": lambda: pageindex_table(results)}
     for name, fn in tables.items():
@@ -1008,7 +1043,7 @@ def generate(results: Path, out: Path) -> dict[str, list[str]]:
             write_text(out / "tables" / f"{name}.tex", s)
             written["tables"].append(name)
     figs = {"alpha_sweep": lambda: fig_alpha_sweep(results, R, out), "qaf_alpha_hist": lambda: fig_qaf_hist(results, R, out),
-            "latency_breakdown": lambda: fig_latency(R, out), "matryoshka": lambda: fig_matryoshka(results, out)}
+            "latency_breakdown": lambda: fig_latency(R, head[0], out), "matryoshka": lambda: fig_matryoshka(results, out)}
     for name, fn in figs.items():
         if fn():
             written["figures"].append(name)

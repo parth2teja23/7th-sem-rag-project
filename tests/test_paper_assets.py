@@ -181,7 +181,8 @@ def test_numbers_values_and_build_times(toy, tmp_path):
     _write(res / "qaf" / "coefficients_gemma.json", {
         "trained_on": {"scifact-dev": 162, "fiqa-dev": 500}, "train_r2_clipped": 0.1234,
         "coefficients": {"id_ratio": 0.01, "dense_top": -0.09, "len_tokens": 0.03}, "intercept": 0.6})
-    _write(res / "qaf" / "alpha_star_gemma.json", {"alpha_star": 0.7})
+    _write(res / "qaf" / "alpha_star_gemma.json", {"alpha_star": 0.7, "pooled_dev_ndcg@10": {"0.6": 0.5, "0.7": 0.6}})
+    _write(res / "qaf" / "alpha_star_bge-small.json", {"alpha_star": 0.9, "pooled_dev_ndcg@10": {"0.9": 0.55}})
     out = tmp_path / "paper"
     mpa.generate(res, out)
     num = (out / "numbers.tex").read_text()
@@ -189,7 +190,7 @@ def test_numbers_values_and_build_times(toy, tmp_path):
     assert val("FiQAEncodeMinGemma") == "20"
     assert val("GemmaDocsPerSec") == "5.8--16.3"
     assert val("BGEDocsPerSec") == "65--169"
-    assert val("AlphaStarGemma") == "0.7" and val("AlphaStarBge") == "\\TBD"
+    assert val("AlphaStarGemma") == "0.7" and val("AlphaStarBge") == "0.9"
     assert val("QAFnDev") == "662" and val("QAFtrainRsq") == "0.12"
     assert val("QAFtopFeature") == "\\texttt{dense\\_top}"
     assert val("QAFlatencyMs") == "3.0"          # features(qaf+rr) - features(hybrid_fixed+rr)
@@ -216,31 +217,32 @@ def test_significance_values(toy, tmp_path):
     tex = (out / "tables" / "significance.tex").read_text()
     assert "\\label{tab:significance}" in tex
     sig = mpa.significance_stats(mpa.load_retrieval(res))
+    G = "gemma"
 
     # 1: qaf+rr vs hybrid_fixed+rr (gemma is the better encoder)
     a = srt(vecs[("scifact", "gemma", "hybrid_fixed+rr")]).tolist()
     b = srt(vecs[("scifact", "gemma", "qaf+rr")]).tolist()
-    s = sig[("qaf_rr_vs_fixed_rr", "scifact")]
+    s = sig[("qaf_rr_vs_fixed_rr", "scifact", G)]
     d, lo, hi = paired_bootstrap_ci(a, b)
     assert (s["delta"], s["lo"], s["hi"]) == pytest.approx((d, lo, hi))
     assert s["delta"] == pytest.approx(np.mean(b) - np.mean(a))
     assert s["p_boot"] == paired_bootstrap(a, b) and s["p_t"] == paired_ttest(a, b) and s["n"] == N
-    assert s["encoder"] == "gemma"
+    assert ("qaf_rr_vs_fixed_rr", "scifact", "bge-small") in sig  # both encoders shown
     # 2: hybrid_fixed vs best single retriever: dense (b-0.05) beats bm25 (base-0.10) for gemma
     #    gemma b = base+0.05 -> dense = base; bm25 = base - 0.10 -> best single = dense
-    s2 = sig[("hybrid_vs_single", "rfc")]
+    s2 = sig[("hybrid_vs_single", "rfc", G)]
     assert s2["delta"] == pytest.approx(0.05)
     # 3: +rr vs no-rr (qaf)
-    s3 = sig[("rr_vs_norr", "rfc")]
+    s3 = sig[("rr_vs_norr", "rfc", G)]
     assert s3["delta"] == pytest.approx(0.05)
     # 4: Gemma vs BGE: constant shift 0.05 -> degenerate CI, p ~ 0
-    s4 = sig[("gemma_vs_bge", "scifact")]
+    s4 = sig[("gemma_vs_bge", "scifact", None)]
     assert (s4["delta"], s4["lo"], s4["hi"]) == pytest.approx((0.05, 0.05, 0.05))
-    assert s4["p_boot"] == 0.0 and s4["p_t"] == 0.0 and s4["encoder"] is None
+    assert s4["p_boot"] == 0.0 and s4["p_t"] == 0.0
     # the rendered row carries delta, CI, p and n, with the dagger on significant deltas
     row = [l for l in tex.splitlines() if l.startswith("SciFact (Gemma)")][0]
     assert f"$+{d:.3f}$" in row and "\\dagger" in row and f"[{lo:.3f}" in row and row.rstrip(" \\\\").endswith(str(N))
-    assert tex.count("\\multicolumn{6}{l}") == 4
+    assert tex.count("\\multicolumn{6}{l}") == 4 and "SciFact (BGE-small)" in tex and "fixed a priori" in tex and "10^{-4}" in tex
     assert "$<\\!0.0001$" in tex or "0.0000" not in tex
 
 
@@ -250,7 +252,7 @@ def test_significance_skips_missing_comparisons(tmp_path):
     _write(res / "retrieval" / "scifact__bge-small__hybrid_fixed+rr.json", _result(v))
     _write(res / "retrieval" / "scifact__bge-small__qaf+rr.json", _result(v + 0.05))
     sig = mpa.significance_stats(mpa.load_retrieval(res))
-    assert set(sig) == {("qaf_rr_vs_fixed_rr", "scifact")}
+    assert set(sig) == {("qaf_rr_vs_fixed_rr", "scifact", "bge-small")}
 
 
 def _extra_inputs(res: Path):
@@ -350,3 +352,148 @@ def test_numbers_tex_compiles(toy, tmp_path):
                                "\\end{document}\n")
     r = subprocess.run(["tectonic", "n.tex"], cwd=out, capture_output=True, text=True, timeout=300)
     assert r.returncode == 0, r.stderr[-2000:]
+
+
+def _run(vals, qids=QIDS):
+    return {"metrics": {}, "per_query": {q: {"ndcg@10": float(v)} for q, v in zip(qids, vals)}}
+
+
+def test_paired_rejects_misaligned_or_bad_values():
+    v = _rng(5).uniform(0.2, 0.8, N)
+    a = _run(v)
+    assert mpa.paired(a, _run(v + 0.1)) is not None
+    b = _run(v + 0.1)
+    del b["per_query"]["q3"]
+    assert mpa.paired(a, b) is None and mpa.compare(a, b) is None  # never intersect
+    c = _run(v + 0.1)
+    c["per_query"]["q4"]["ndcg@10"] = float("nan")
+    assert mpa.paired(a, c) is None
+    d = _run(v + 0.1)
+    d["per_query"]["q5"]["ndcg@10"] = None
+    assert mpa.paired(a, d) is None
+
+
+def test_misaligned_pair_gives_dashes_and_tbd(tmp_path):
+    res = tmp_path / "results"
+    v = _rng(6).uniform(0.3, 0.7, N)
+    r = _result(v + 0.05, name="q")
+    ref = _result(v, name="r")
+    del r["per_query"]["q7"]
+    _write(res / "retrieval" / "scifact__bge-small__hybrid_fixed+rr.json", ref)
+    _write(res / "retrieval" / "scifact__bge-small__qaf+rr.json", r)
+    w = mpa.generate(res, tmp_path / "paper")
+    assert "significance" not in w["tables"]
+    tex = (tmp_path / "paper" / "tables" / "main_results.tex").read_text()
+    assert "\\dagger" not in [l for l in tex.splitlines() if l.startswith("QAF+RR &")][0]
+    num = (tmp_path / "paper" / "numbers.tex").read_text()
+    assert "\\newcommand{\\QAFgainSciFact}{\\TBD}" in num
+
+
+def test_headline_encoder_chosen_on_dev_not_test(toy):
+    res, _ = toy  # test results favour gemma
+    R = mpa.load_retrieval(res)
+    assert mpa.headline_encoder(res, R) == ("bge-small", "fixed")
+    _write(res / "qaf" / "alpha_star_bge-small.json", {"alpha_star": 0.9, "pooled_dev_ndcg@10": {"0.9": 0.9}})
+    _write(res / "qaf" / "alpha_star_gemma.json", {"alpha_star": 0.5, "pooled_dev_ndcg@10": {"0.5": 0.4}})
+    assert mpa.headline_encoder(res, R) == ("bge-small", "dev")  # dev says BGE even though test says Gemma
+
+
+def test_headline_macros_use_headline_encoder(toy, tmp_path):
+    res, vecs = toy
+    out = tmp_path / "paper"
+    mpa.generate(res, out)
+    num = (out / "numbers.tex").read_text()
+    a, b = srt(vecs[("scifact", "bge-small", "hybrid_fixed+rr")]), srt(vecs[("scifact", "bge-small", "qaf+rr")])
+    d, _, _ = paired_bootstrap_ci(a.tolist(), b.tolist())
+    assert f"\\newcommand{{\\QAFgainSciFact}}{{$+{d:.3f}$}}" in num
+
+
+def test_ci_percentile_hand_computed_and_narrow_for_correlated():
+    a = [0.1, 0.4, 0.2, 0.9, 0.5, 0.3, 0.7, 0.6]
+    b = [0.2, 0.3, 0.5, 1.0, 0.4, 0.6, 0.9, 0.5]
+    mean, lo, hi = paired_bootstrap_ci(a, b, n_resamples=2000, seed=7)
+    d = np.asarray(b) - np.asarray(a)
+    idx = np.random.default_rng(7).integers(0, d.size, size=(2000, d.size))
+    m = np.sort(d[idx].mean(axis=1))
+    assert (lo, hi) == pytest.approx((np.percentile(m, 2.5), np.percentile(m, 97.5)))
+    assert mean == pytest.approx(d.mean())
+    # strongly correlated pairs (huge between-query spread, tiny paired noise): narrow CI
+    base = _rng(8).uniform(0, 1, 200)
+    _, lo2, hi2 = paired_bootstrap_ci(base.tolist(), (base + 0.05 + _rng(9).normal(0, 0.005, 200)).tolist())
+    assert hi2 - lo2 < 0.005
+
+
+def test_treatment_clearly_loses():
+    from hrag.eval.stats import paired_bootstrap as pb
+    a = _run(_rng(2).uniform(0.4, 0.8, N))
+    b = {"metrics": {}, "per_query": {q: {"ndcg@10": v["ndcg@10"] - 0.1} for q, v in a["per_query"].items()}}
+    r = mpa.compare(a, b)
+    assert r["p_boot"] > 0.95 and r["p_t"] > 0.95 and r["delta"] == pytest.approx(-0.1)
+    assert pb([0.0] * 20, [-0.1] * 20) > 0.95
+
+
+def test_tie_bolds_both_cells(tmp_path):
+    res = tmp_path / "results"
+    v = _rng(11).uniform(0.3, 0.7, N)
+    _write(res / "retrieval" / "scifact__bge-small__hybrid_fixed+rr.json", _result(v, name="r"))
+    _write(res / "retrieval" / "scifact__bge-small__qaf+rr.json", _result(v, name="q"))
+    mpa.generate(res, tmp_path / "paper")
+    lines = (tmp_path / "paper" / "tables" / "main_results.tex").read_text().splitlines()
+    rows = [l for l in lines if l.startswith(("QAF+RR &", "Hybrid-fixed+RR &"))]
+    assert len(rows) == 2 and all(r.split(" & ")[1].startswith("\\textbf{") for r in rows)
+
+
+def test_partial_macros_stay_tbd(toy, tmp_path):
+    res, _ = toy
+    # drop one main config of one encoder -> BestNDCGRFC must be TBD
+    (res / "retrieval" / "rfc__gemma__qaf.json").unlink()
+    # latency missing on one dataset for the reference -> compared only on the common set
+    r = json.loads((res / "retrieval" / "rfc__bge-small__hybrid_fixed+rr.json").read_text())
+    r["latency_ms"] = {}
+    _write(res / "retrieval" / "rfc__bge-small__hybrid_fixed+rr.json", r)
+    R = mpa.load_retrieval(res)
+    L = mpa.latency_stats(R, "bge-small")
+    assert set(L) == {"dense", "hybrid_fixed+rr", "qaf+rr"}
+    out = tmp_path / "paper"
+    mpa.generate(res, out)
+    num = (out / "numbers.tex").read_text()
+    assert "\\newcommand{\\BestNDCGRFC}{\\TBD}" in num
+    assert "\\newcommand{\\BestNDCGSciFact}{\\TBD}" not in num
+    # QAFlatencyMs: only scifact has both -> value from scifact alone (3.0), not rfc
+    assert "\\newcommand{\\QAFlatencyMs}{3.0}" in num
+
+
+def test_qaf_latency_tbd_without_baseline_latency(toy, tmp_path):
+    res, _ = toy
+    for ds in ("scifact", "rfc"):
+        f = res / "retrieval" / f"{ds}__bge-small__hybrid_fixed+rr.json"
+        r = json.loads(f.read_text())
+        r["latency_ms"] = {}
+        _write(f, r)
+    mpa.generate(res, tmp_path / "paper")
+    assert "\\newcommand{\\QAFlatencyMs}{\\TBD}" in (tmp_path / "paper" / "numbers.tex").read_text()
+
+
+def test_generation_macros_use_common_datasets_and_per_query_faith(tmp_path):
+    res = tmp_path / "results"
+    def gen(ds, cfg, f1, faith=None):
+        pq = {"a": {"f1": 0.1}} if faith is None else {"a": {"f1": 0.1, "faithfulness": faith}}
+        _write(res / "generation" / f"{ds}__{cfg}.json", {"config": {"name": cfg}, "metrics": {"em": 0.1, "f1": f1, "faithfulness": 0.99}, "per_query": pq})
+    gen("hotpot", "qaf+rr", 0.5, 1.0); gen("hotpot", "dense", 0.3, 0.0)
+    gen("rfc", "qaf+rr", 0.9)  # no dense on rfc -> excluded from both averages
+    mpa.generate(res, tmp_path / "paper")
+    num = (tmp_path / "paper" / "numbers.tex").read_text()
+    assert "\\newcommand{\\GenFoneQAF}{0.500}" in num and "\\newcommand{\\GenFoneDense}{0.300}" in num
+    assert "\\newcommand{\\FaithQAF}{1.00}" in num and "\\newcommand{\\FaithDense}{0.00}" in num  # not 0.99
+    # no dataset has both -> TBD
+    (res / "generation" / "hotpot__dense.json").unlink()
+    mpa.generate(res, tmp_path / "paper")
+    assert "\\newcommand{\\GenFoneQAF}{\\TBD}" in (tmp_path / "paper" / "numbers.tex").read_text()
+
+
+def test_matryoshka_exact_config_names(tmp_path):
+    res = tmp_path / "results"
+    _write(res / "matryoshka" / "scifact__256__qaf+rr.json", {"config": {"name": "qaf+rr", "dim": 256}, "metrics": {"ndcg@10": 0.5}})
+    _write(res / "matryoshka" / "scifact__256__undense.json", {"config": {"name": "undense", "dim": 256}, "metrics": {"ndcg@10": 0.9}})
+    rows = mpa.load_matryoshka(res)
+    assert [r["config"] for r in rows] == ["qaf+rr"]

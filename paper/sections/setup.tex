@@ -3,31 +3,11 @@
 
 \subsection{Datasets}
 \label{sec:data}
-Table~\ref{tab:data} lists the four test collections: scientific claims,
-informal financial questions, multi-hop questions with short answers, and a
-corpus full of protocol identifiers.
-
-\begin{table}[t]
-\centering
-\caption{Test collections. Dev-query counts and length statistics are in
-Table~\ref{tab:dataset_stats}; dev queries are used only to fit QAF and to
-choose the fixed weight $\alpha^{*}$.}
-\label{tab:data}
-\small
-\begin{tabular}{@{}lrrl@{}}
-\toprule
-Collection & Passages & Test q. & Used for \\
-\midrule
-SciFact & 5{,}183 & 300 & retrieval \\
-FiQA (subset) & 20{,}000 & 648 & retrieval \\
-HotpotQA (distr.) & 4{,}955 & 500 & retrieval, QA \\
-RFC (ours) & 2{,}973 & 101 & retrieval, QA \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Table~\ref{tab:dataset_stats} adds per-collection statistics: mean passage and
-query length in words and the mean number of relevant passages per query.
+We use four test collections: SciFact (5{,}183 passages, 300 test queries),
+a FiQA subset (20{,}000; 648), HotpotQA distractor paragraphs (4{,}955; 500)
+and our RFC set (2{,}973 chunks; 101). Table~\ref{tab:dataset_stats} gives
+dev-query counts, lengths and relevant passages per query; dev queries only
+fit QAF and choose $\alpha^{*}$.
 \inputtable{dataset_stats}
 
 \textit{SciFact}~\cite{wadden2020scifact} and \textit{FiQA}~\cite{maia2018fiqa}
@@ -46,17 +26,13 @@ identifiers; Fig.~\ref{fig:rfcdata} summarises how it was built. It holds 20 IET
 RFCs, from IP and TCP (RFC~791, 793) through DNS, HTTP/1.1, URI syntax, IPv6,
 SMTP, WebSocket, OAuth~2.0, JWT, JSON and TLS~1.3 to QUIC and the 2022 HTTP
 documents (RFC~9110, 9112, 9113). After removing page headers and footers, the
-chunker of Section~\ref{sec:chunking} yields 2{,}973 chunks of about 180 words
-on average. Qwen2.5-7B drafted one question per sampled chunk with at least
-two identifier-like tokens, whose answer (at most eight words) had to be
-copied verbatim from the chunk. Automatic filters rejected malformed answers,
-questions pointing at the text itself (``this document''), duplicates, and
-answers occurring more than once in their chunk or more than three times in
-the parent RFC. All three authors checked the 180 surviving drafts against the
-RFC text after an AI-assisted screening pass, and kept 101. For example, one question asks for the
-length of the interface identifier in IPv6 unicast addresses (``64 bits'').
-A chunk is relevant if its character span overlaps the answer span in the
-source, which covers answers that fall inside an overlap region.
+chunker of Section~\ref{sec:chunking} yields 2{,}973 chunks. Each question's
+answer (at most eight words) is copied verbatim from its chunk; the filters
+reject, among others, answers that occur more than once in their chunk or more
+than three times in the parent RFC, and all three authors checked every
+surviving draft against the RFC text. A typical question asks for the length
+of the interface identifier in IPv6 unicast addresses (``64 bits''). A chunk
+is relevant if its character span overlaps the answer span.
 
 \begin{figure}[t]
 \centering
@@ -98,19 +74,17 @@ value with the best mean nDCG@10 over the pooled SciFact and FiQA dev queries
 (ties go to the value nearest 0.5) and is applied unchanged to all test sets
 ($\alpha^{*}=\AlphaStarBge$ for BGE, $\AlphaStarGemma$ for EmbeddingGemma~2).
 We also sweep the fixed $\alpha$ over the grid on every test set.
-% Leave-one-dataset-out QAF runs exist (results/qaf/lodo_*.json) but are not
-% reported: make_paper_assets emits no table for them.
-% NOTE(results, part 2): revise if not run (ablation).
-The ablation removes one component at a time from the
-full system: structural chunking (RFC only), query expansion, QAF (replaced by
-$\alpha^{*}$) and the reranker.
-% NOTE(results, part 2): revise if not run (Matryoshka).
-For EmbeddingGemma~2 we repeat Dense and QAF+RR at 512, 256 and 128
-dimensions; at each size QAF is retrained on the same pooled dev queries and
-$\alpha^{*}$ is re-selected.
-% NOTE(results, part 2): revise if not run (generation).
-Generation is evaluated on HotpotQA and
-RFC for BM25, Dense (stronger encoder), Hybrid-fixed+RR and QAF+RR.
+The ablation, on SciFact and RFC with EmbeddingGemma~2, removes one component
+at a time from the full system (structural chunks, QAF, reranking): QAF is
+replaced by $\alpha^{*}$, reranking is dropped, and on RFC the structural
+chunks are replaced by fixed 256-word windows, with relevance re-derived from
+answer-span overlap. Query expansion is implemented but was not evaluated.
+For the embedding-size study we truncate the stored EmbeddingGemma~2 vectors
+to 512, 256 and 128 dimensions, renormalise them, rebuild the HNSW index with
+the same settings, and retrain QAF and re-select $\alpha^{*}$ on the pooled
+dev queries at each size. Answers are generated with EmbeddingGemma~2 for
+BM25, Dense, Hybrid-fixed+RR and QAF+RR on \GenN{} sampled HotpotQA questions
+and all 101 RFC questions.
 
 \subsection{Metrics}
 Retrieval is scored with Recall@$k$ ($k\in\{5,10,20\}$), MRR@10 and
@@ -122,18 +96,13 @@ where $\mathit{rel}_i$ is the graded relevance at rank $i$ and IDCG@$k$ is the
 same sum for the ideal ordering~\cite{jarvelin2002ndcg}. A query with no
 returned passages scores zero rather than being dropped. Answers are scored by
 SQuAD-style~\cite{rajpurkar2016squad} exact match (EM) and token F1 after
-lowercasing and removing punctuation and articles, and we record whether any
-cited passage is relevant.
-% NOTE(results, part 2): revise if not run (RAGAS).
-Faithfulness to the retrieved context is judged with
-RAGAS~\cite{es2024ragas} on \RagasN{} answers, with the local Qwen2.5-7B as
-judge. Every gain is reported as a mean per-query difference in nDCG@10 with a 95\%
-paired-bootstrap confidence interval (10{,}000 resamples, seed 42). We test
-whether a gain exceeds zero with a one-sided paired bootstrap on the same
-resamples and a one-sided paired $t$-test, at significance level $0.05$. The
-comparisons are QAF+RR against Hybrid-fixed+RR, Hybrid-fixed against the
-better single retriever, +RR against no reranking, and EmbeddingGemma~2
-against BGE; we also report the per-query standard deviation of nDCG@10.
+lowercasing and removing punctuation and articles; the \texttt{[n]}
+citation markers are stripped first. We also record whether a cited passage
+is relevant (``Cite''). As a side analysis, RAGAS~\cite{es2024ragas}
+faithfulness is scored for Dense and QAF+RR on the first \RagasN{} HotpotQA
+questions (by id), with Qwen2.5-7B as judge. Every gain is reported as a mean per-query difference in nDCG@10 with a 95\%
+paired-bootstrap confidence interval (10{,}000 resamples, seed 42) and tested
+with a one-sided paired bootstrap and paired $t$-test at level $0.05$.
 
 \subsection{Implementation and hardware}
 Everything runs on one Apple M5 MacBook with 32\,GB of memory, with encoders

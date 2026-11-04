@@ -1,13 +1,12 @@
 \section{Results}
 \label{sec:results}
 % Every number in this section comes from tables/*.tex, figures/*.pdf or a
-% numbers.tex macro. Values read off a table are marked NOTE(macro).
+% numbers.tex macro.
 
-Table~\ref{tab:main_results} gives retrieval scores for every configuration
-and Table~\ref{tab:significance} the paired tests behind the comparisons we
-discuss. Unless we say otherwise, ``gain'' means the mean per-query
-difference in nDCG@10, and headline numbers use EmbeddingGemma~2, the encoder
-with the better pooled-dev score for Hybrid-fixed. Our BM25 reaches
+Tables~\ref{tab:main_results} and~\ref{tab:significance} give retrieval
+scores and paired tests. ``Gain'' means the mean per-query difference in
+nDCG@10; headline numbers use EmbeddingGemma~2, the encoder with the better
+pooled-dev score for Hybrid-fixed. Our BM25 reaches
 \BMndcgSciFact{} nDCG@10 on SciFact, close to the BM25 figure reported for
 BEIR~\cite{thakur2021beir}, which we take as a check that indexing and
 evaluation are sound.
@@ -20,15 +19,12 @@ Fixed-weight fusion is significantly better than the stronger single
 retriever on FiQA with both encoders, and on SciFact and HotpotQA with
 BGE-small (second block of Table~\ref{tab:significance}). With EmbeddingGemma~2
 on SciFact and HotpotQA it brings nothing: the dense run alone is already
-strong (\BestNDCGSciFact{} on SciFact), and adding BM25 leaves the score
-unchanged or slightly lower. The RFC collection reverses the usual picture.
-BM25 is the best single retriever there, well ahead of either dense encoder
-(Table~\ref{tab:main_results}), and Hybrid-fixed without reranking trails it
-(\HybridGainOverBMRFC{} with EmbeddingGemma~2) while still improving on the
-dense run by \HybridGainOverDenseRFC. Fig.~\ref{fig:alpha_sweep} shows why.
-On SciFact and HotpotQA, nDCG@10 rises almost monotonically toward the dense
-end. FiQA peaks in the interior. RFC peaks near the sparse end and falls as
-the dense weight grows, so $\alpha^{*}=\AlphaStarGemma$, chosen on the SciFact
+strong (\BestNDCGSciFact{} on SciFact). On RFC, BM25 is the best single
+retriever, well ahead of either dense encoder, and Hybrid-fixed without
+reranking trails it by \HybridGainOverBMRFC{} while improving on dense by
+\HybridGainOverDenseRFC. Fig.~\ref{fig:alpha_sweep} shows why: SciFact and
+HotpotQA improve toward the dense end, FiQA peaks in the interior, and RFC
+peaks near the sparse end, so $\alpha^{*}=\AlphaStarGemma$, chosen on the SciFact
 and FiQA dev queries, sits on the wrong side of the curve for RFC. Fusion
 helps most when the two retrievers are comparably strong and fail on
 different queries; when one of them dominates, a fixed weight tuned elsewhere
@@ -45,32 +41,28 @@ Hybrid-fixed+RR is \QAFgainSciFact{} on SciFact (95\% CI
 on HotpotQA (\QAFgainCIHotpot) and \QAFgainRFC{} on RFC (\QAFgainCIRFC,
 $p=\QAFpRFC$). Only on RFC is the difference sizeable in QAF's favour, and even there the
 interval includes zero. With BGE-small, QAF+RR wins narrowly on SciFact
-(first block of Table~\ref{tab:significance}) and is also ahead on RFC, both
-with and without reranking. Without reranking, QAF with EmbeddingGemma~2 is
-below Hybrid-fixed on SciFact and HotpotQA and above it on RFC
-(Table~\ref{tab:main_results}). The per-query spread is wide on every
+(first block of Table~\ref{tab:significance}) and is ahead on RFC. The
+per-query spread is wide on every
 collection (standard deviation of nDCG@10 for QAF+RR: \NDCGsdSciFact{} on
 SciFact, \NDCGsdRFC{} on RFC), so mean differences of this size are hard to
 separate from noise with our query counts.
 
 There is room for a better weight. The plateau-centre oracle, which picks
 each query's weight from its own test labels, beats $\alpha^{*}$ by
-\OracleHeadroomSciFact{} on SciFact and \OracleHeadroomRFC{} on RFC. This
-oracle is a reference for headroom, not an upper bound, but it shows that the
-choice of $\alpha$ matters for many individual queries. QAF recovers little
-of that headroom.
+\OracleHeadroomSciFact{} on SciFact and \OracleHeadroomRFC{} on RFC. It is
+a headroom reference, not an upper bound, and QAF recovers little of it.
 
 \subsection{What QAF learned}
 The ridge model explains little of the variance in the oracle targets:
 training $R^2$ is \QAFtrainRsq{} on \QAFnDev{} pooled dev queries with
-EmbeddingGemma~2 (Table~\ref{tab:qaf_coefficients}). The largest coefficient
+EmbeddingGemma~2. Among the standardised coefficients, the largest
 belongs to \QAFtopFeature: a confident dense retriever pushes the weight
 toward the dense side. Several features push it the other way, among them the
 BM25 margin, the overlap between the two lists and, less intuitively, the
 dense margin. The identifier share, which motivated the method,
 has a coefficient close to zero. As a result, predictions stay close to the
-intercept. Fig.~\ref{fig:qaf_alpha_hist} shows that nearly all predicted
-weights sit close to their mean of \QAFpredMean{} (standard deviation \QAFpredSd{}), and that identifier-heavy queries get almost
+intercept: on the test queries the predicted weight has mean \QAFpredMean{}
+and standard deviation \QAFpredSd{}, and identifier-heavy queries get almost
 the same distribution as natural-language ones. In practice QAF behaves like a
 constant that has been shrunk from $\alpha^{*}=\AlphaStarGemma$ toward the
 middle of the range. That shift is probably what helps on RFC, whose sweep
@@ -79,9 +71,7 @@ The targets explain part of the difficulty: \QAFinsensitivePct\% of training que
 have the same nDCG@10 at every grid weight and therefore carry the neutral
 target 0.5.
 
-\inputtable{qaf_coefficients}
-\inputfigure{qaf_alpha_hist}{Predicted dense weight $\alpha$ for
-identifier-heavy and natural-language test queries.}
+% Coefficient table (tables/qaf_coefficients.tex) omitted for space.
 
 \subsection{Reranking and latency}
 The cross-encoder is not a uniform win. Over QAF it adds large, significant
@@ -89,17 +79,13 @@ gains on HotpotQA and RFC with both encoders (third block of
 Table~\ref{tab:significance}), but it hurts strong first stages:
 \RerankGainSciFact{} on SciFact with EmbeddingGemma~2, and a significant loss
 on FiQA with BGE-small. A general-purpose reranker over the top 50 can undo a
-good dense ranking when its own notion of relevance differs from the
-collection's labels. EmbeddingGemma~2's dense SciFact score may also be
-helped by overlap between its training data and this public benchmark; we
-cannot check this, so we do not read too much into the size of that loss.
+good dense ranking when its notion of relevance differs from the collection's
+labels. EmbeddingGemma~2's dense SciFact score may also be helped by overlap
+between its training data and this public benchmark, which we cannot check.
 
-Reranking dominates cost. With EmbeddingGemma~2, it takes
-\RerankLatencyMs{}~ms of the \TotalLatencyMs{}~ms mean per-query latency of
-QAF+RR, while the QAF decision itself takes \QAFlatencyMs{}~ms and fusion is
-cheaper still; dense retrieval alone answers in a small fraction of that time.
-% Per-stage table (tables/latency.tex) omitted for space; numbers above are
-% from numbers.tex. Re-add \inputtable{latency} if space allows.
+Reranking dominates cost: with EmbeddingGemma~2 it takes \RerankLatencyMs{}~ms
+of the \TotalLatencyMs{}~ms mean per-query latency of QAF+RR, while the QAF
+decision takes \QAFlatencyMs{}~ms.
 
 \subsection{Statistical caveats}
 Table~\ref{tab:significance} reports 28 one-sided tests without correction
@@ -107,27 +93,47 @@ for multiple comparisons. Under a Bonferroni threshold of $0.05/28$, only the
 results with $p<0.0001$ would survive: Hybrid-fixed over the best single
 retriever on FiQA with EmbeddingGemma~2, reranking on HotpotQA with both
 encoders and on RFC with BGE-small, and EmbeddingGemma~2 over BGE-small on
-HotpotQA. None of the QAF comparisons survive. RFC has only 101 queries, so
-its intervals are wide. FiQA scores are computed on a 20{,}000-passage subset
-that contains every dev and test positive, which makes retrieval easier than on
-the full corpus; only relative comparisons on FiQA are meaningful.
+HotpotQA. None of the QAF comparisons survive. FiQA scores come from a
+20{,}000-passage subset that keeps every dev and test positive, so only
+relative comparisons on FiQA are meaningful.
 
-% ---------------------------------------------------------------------------
-% Part 2 (Tasks 14/15): ablation, embedding size, answer quality.
-% \subsection{Ablation}  (uncomment in part 2)
-% TODO(part 2): Table ablation (SciFact + RFC, better encoder): -chunking
-% (RFC only), -expansion, -QAF, -rerank. Say which tiers were run.
-\IfFileExists{tables/ablation.tex}{\input{tables/ablation}}{}
+\subsection{Ablation}
+Table~\ref{tab:ablation} removes one component at a time from the full
+EmbeddingGemma~2 system. Dropping the reranker raises SciFact, in line with
+the reranking results above, but costs RFC most of its gain. Replacing QAF by
+$\alpha^{*}$ changes little: SciFact moves slightly up and RFC slightly down.
+On RFC, fixed 256-word windows score clearly below structural chunks. This
+comparison changes two things at once, chunk boundaries and the size of the
+retrieval unit, and its relevance labels were re-derived from answer spans,
+so we read it as evidence for structure-aware chunking on RFC rather than as
+a clean measurement of it. Query expansion was not evaluated.
 
-% \subsection{Embedding size}  (uncomment in part 2)
-% TODO(part 2): EmbeddingGemma 2 at 768/512/256/128 dims: nDCG@10, index size,
-% query latency (\MatryoshkaDropTwoFiftySix, \MatryoshkaIndexMBOneTwentyEight).
-% Drop this subsection if not run.
-\IfFileExists{tables/matryoshka.tex}{\input{tables/matryoshka}}{}
+\inputtable{ablation}
 
-% \subsection{Answer quality}  (uncomment in part 2)
-% TODO(part 2): Table generation (HotpotQA + RFC, \GenN questions each; EM, F1,
-% citation hit) for BM25, Dense, Hybrid-fixed+RR, QAF+RR (\GenFoneQAF,
-% \GenFoneDense, \GenEMQAF). RAGAS faithfulness on \RagasN answers
-% (\FaithQAF vs \FaithDense).
-\IfFileExists{tables/generation.tex}{\input{tables/generation}}{}
+\subsection{Embedding size}
+Truncating EmbeddingGemma~2 hurts dense retrieval gradually. From 768 to 256
+dimensions dense nDCG@10 drops by \MatryoshkaDropTwoFiftySix{} on average over
+SciFact and RFC, with RFC losing more, and the loss grows at 128
+(Table~\ref{tab:matryoshka}). After fusion and reranking the curve is almost
+flat, so on these two collections a 256-dimensional index costs nothing
+measurable in the full pipeline.
+The index file shrinks less than the dimension does, because the HNSW graph,
+which does not depend on the dimension, is part of it. The query times in the
+table barely change with the dimension.
+
+\inputtable{matryoshka}
+
+\subsection{Answer quality}
+Answer quality does not follow retrieval quality on HotpotQA
+(Table~\ref{tab:generation}). There, Dense gives the best answers and is
+significantly better in F1 than Hybrid-fixed+RR, although the reranked hybrids
+retrieve better. On RFC the two hybrid configurations give the best EM, F1 and
+citation accuracy, ahead of Dense and BM25. QAF+RR is not significantly
+better than Hybrid-fixed+RR on either collection. In the RAGAS side analysis
+on HotpotQA, Dense answers are judged slightly more faithful than QAF+RR
+answers (\FaithDense{} against \FaithQAF). The judge is the same 7B model that
+wrote the answers, so this comparison may suffer from self-preference and we
+give it little weight. A sheet of sampled answers for manual faithfulness labelling is provided
+with the code; the team has not yet completed it.
+
+\inputtable{generation}

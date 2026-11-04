@@ -17,8 +17,9 @@ per-query oracle shows \OracleHeadroomRFC{} of headroom there. The features
 explain little of the oracle weight. Cross-encoder reranking gives the largest
 gains on HotpotQA and RFC but lowers scores on strong first stages and
 accounts for almost all of the latency.
-% NOTE(results, part 2): add one sentence on answer quality (EM/F1,
-% faithfulness) once Task 15 finishes.
+Better retrieval did not always mean better answers: with a local 7B
+generator, dense retrieval gave the best answers on HotpotQA, while the hybrid
+configurations did on RFC.
 \end{abstract}
 
 \begin{IEEEkeywords}

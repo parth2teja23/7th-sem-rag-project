@@ -3,47 +3,44 @@
 
 \subsection{Why per-query weighting is hard to learn}
 We expected identifier-heavy queries to want a low dense weight and cheap
-features to detect them. The first half holds at the collection level, since
-the RFC sweep favours the sparse side; the second does not, as the identifier
-share carries almost no signal. We see three reasons. Many training queries
-have the same nDCG@10 at every weight, presumably because both retrievers
-already rank a relevant passage first or neither finds one, so their targets
-are uninformative. The oracle is defined on a coarse grid of a rank-based
-fusion, where small rank changes can move the longest plateau, so the targets
-are likely noisy. And the model was trained on SciFact and FiQA, where the
-dense side is usually right, never on text like RFC. A predictor with some
-in-domain labels, or with post-retrieval evidence as in DAT~\cite{hsu2025dat},
-may close more of the headroom; pre-retrieval lexical statistics alone did not.
+features to detect them. The first half holds at the collection level, but the
+identifier share carries almost no signal. Three factors likely contribute:
+\QAFinsensitivePct\% of training targets are uninformative because nDCG@10 does
+not change with the weight; plateau centres on a coarse grid of a rank-based
+fusion are noisy targets; and the model never saw text like RFC. In-domain
+labels or post-retrieval evidence, as in DAT~\cite{hsu2025dat}, may close
+more of the headroom; pre-retrieval statistics alone did not.
 
 \subsection{Cost and deployment guidance}
-Three practical points follow. Sweep $\alpha$ on a small labelled sample of
+Four practical points follow. Sweep $\alpha$ on a small labelled sample of
 the target collection before fixing it, since a weight chosen on other domains
 landed on the wrong side of the curve for RFC. Keep BM25 for identifier-heavy
 text even with a strong dense encoder. Measure the reranker before adopting
 it: on our laptop it multiplies latency many times over and lowered nDCG@10
 where the first stage was already strong. QAF costs well under a millisecond,
-but on our evidence it does not replace tuning.
-% NOTE(results, part 2): add encoder / Matryoshka-size advice once Task 14 runs.
+but on our evidence it does not replace tuning. Finally, a 256-dimensional
+EmbeddingGemma~2 index is a safe saving inside a reranked hybrid pipeline,
+but not for dense retrieval on its own.
 
 \subsection{Limitations}
-Several choices limit how far our results generalise. All experiments run on
-subsets (FiQA 20{,}000 passages, HotpotQA 500 questions with their own
+All experiments run on subsets (FiQA 20{,}000 passages, HotpotQA 500 questions with their own
 paragraphs as the corpus, RFC 101 questions), so absolute scores are not
-comparable with full-benchmark numbers (Section~\ref{sec:results}). The RFC questions were drafted by the same model
-(Qwen2.5-7B) that later generates answers, filtered automatically, screened with AI
-assistance and then verified by all three authors. Every row was checked, but
-the set still favours questions that a 7B model finds easy to write, namely
-short identifier lookups, and it has no multi-hop items. RFC~2616, 7230 and
-9110/9112 are successive HTTP/1.1 specifications with overlapping text, so
-retrieving a near-duplicate passage from a superseded RFC counts as a miss.
-Questions whose answer was ambiguous across RFCs were removed during
-verification, but this scoring effect remains for the rest.
+comparable with full-benchmark numbers (Section~\ref{sec:results}). The RFC questions were drafted by Qwen2.5-7B, the same model that
+generates answers, and every row was verified by all three authors, but the
+set favours questions that a 7B model finds easy to write, namely
+short identifier lookups without multi-hop items. RFC~2616, 7230 and
+9110/9112 are successive HTTP/1.1 specifications with overlapping text, so a
+near-duplicate passage from a superseded RFC counts as a miss, even though
+questions ambiguous across RFCs were removed.
 
-QAF was fitted on scientific and financial dev queries only. % NOTE: revise the next sentence if the DAT-style baseline (Task 16) is run.
-We compare it with a fixed weight and the oracle but not with an LLM-based
-scheme such as DAT, so we cannot say how much accuracy the LLM-free design
-gives up. Answers and their faithfulness are judged by the same local 7B model,
-so we treat RAGAS scores only as a relative signal. Latencies come from one
+QAF was fitted on scientific and financial dev queries only, and we compare
+it with a fixed weight and the oracle but not with an LLM-based scheme such as
+DAT, so we cannot say how much accuracy the LLM-free design gives up. Query
+expansion was implemented but not evaluated. The RAGAS judge is the same 7B
+model that wrote the answers and covers only two configurations on
+HotpotQA, and the manual faithfulness check is still pending, so we make no
+claim about faithfulness beyond that side analysis. The 28 significance tests
+are uncorrected, and RFC has only 101 questions. Latencies come from one
 laptop and will differ elsewhere in absolute terms. We also cannot rule out
 that EmbeddingGemma~2 saw SciFact or HotpotQA text during training, which would
 flatter its dense scores there.

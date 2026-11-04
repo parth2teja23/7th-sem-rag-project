@@ -58,11 +58,9 @@ the next, so section names are indexed with their bodies. Paragraphs are added
 until the chunk would pass 300 words (hard ceiling 380); longer paragraphs are
 split at sentences, then into word windows. Consecutive chunks of the same
 section share 50 words of overlap. Each chunk is a verbatim slice of its source
-and stores its character offsets, which we use for relevance labels
-(Section~\ref{sec:data}). The chunker can also break between paragraphs whose
-embeddings have cosine similarity below 0.55, but this option was off in every
-reported run, so chunk boundaries follow document structure only. The chunking
-ablation replaces this with fixed 256-word windows without overlap.
+and stores its character offsets, which we use for relevance labels. An
+optional break on low embedding similarity between paragraphs was off in every
+reported run, so boundaries follow document structure only.
 
 \subsection{Sparse retrieval}
 BM25 scores the title and text of each passage with the Lucene variant
@@ -100,9 +98,7 @@ EmbeddingGemma~2 uses ``task: search result \textbar{} query:'' for queries
 and ``title: \{title or none\} \textbar{} text: \{passage\}'' for passages.
 Vectors are L2-normalised and stored in a FAISS~\cite{johnson2021faiss} HNSW
 graph~\cite{malkov2020hnsw} ($M=32$, $\mathit{efConstruction}=200$,
-$\mathit{efSearch}=128$) searched by inner product. At our corpus sizes an
-exact index would also be fast, but a deployed system would use approximate
-search, and we wanted our latency figures to include it.
+$\mathit{efSearch}=128$) searched by inner product.
 
 \subsection{Weighted reciprocal rank fusion}
 BM25 scores and cosine similarities are on different scales, so we fuse
@@ -213,15 +209,12 @@ carries no signal and gets $0.5$.
 \textit{Model and cost.} Standardised features feed a ridge regression
 (regularisation $1.0$) whose output, clipped to $[0,1]$, is used as $\alpha$.
 We fit one model per encoder on the pooled SciFact and FiQA dev queries; the
-RFC and HotpotQA collections are never seen in training. A linear model was a
-deliberate choice, since its 12 coefficients say directly which query
-properties move the weight toward either side and can be checked against
-intuition (identifier-heavy queries should lower $\alpha$). Every feature comes
-from the query string, the two candidate lists, the BM25 document frequencies
-or, for \texttt{oov\_ratio}, the dense encoder's tokenizer vocabulary (a
-property of the encoder, not of the corpus). All of these are available when
-fusion runs, so QAF adds feature extraction and
-a 12-term dot product, with no model call.
+RFC and HotpotQA collections are never seen in training. We chose a linear
+model so that its coefficients can be read and checked against intuition.
+Every feature comes from the query, the two candidate lists, the BM25
+document frequencies or, for \texttt{oov\_ratio}, the encoder's tokenizer
+vocabulary, so QAF adds feature extraction and a 12-term dot product, with no
+model call.
 
 \subsection{Reranking, post-processing and generation}
 The first 50 passages of the fused list are rescored by the BGE-reranker-base

@@ -51,23 +51,18 @@ are:
   101 questions, generated with a local LLM, filtered automatically and
   checked by all three authors, with relevance labels derived from answer
   spans.
-  % NOTE(results, part 2): add "an ablation" / "EmbeddingGemma 2 at four
-  % embedding sizes" back to this bullet only if Task 14 produces them.
   \item \textbf{A controlled comparison} of sparse, dense, fixed-weight hybrid
   and QAF retrieval, with and without reranking, on four collections and two
   encoders, with paired bootstrap tests. It shows that fusion helps when the
   two retrievers are comparably strong, that BM25 is the strongest single
   retriever on identifier-heavy RFC text, and that reranking can hurt a
-  strong first stage.
-  % NOTE(results, part 2): keep "answer quality ... judged faithfulness" only if
-  % Task 15 (generation, RAGAS) produces results.
-  \item \textbf{An end-to-end account of cost}: per-stage latency and answer
-  quality (exact match, F1 and judged faithfulness) on commodity hardware
-  with no paid API.
+  strong first stage. It includes an ablation and EmbeddingGemma~2 at four
+  embedding sizes.
+  \item \textbf{An end-to-end account} of per-stage latency and answer
+  quality (exact match, F1, citation accuracy) on a laptop with no paid API,
+  showing that better retrieval does not always give better answers.
 \end{itemize}
 
-Section~\ref{sec:related} reviews related work. Section~\ref{sec:method}
-describes the pipeline and QAF, and Section~\ref{sec:setup} the data,
-configurations and metrics. Section~\ref{sec:results} reports results,
-Section~\ref{sec:discussion} discusses them along with the limitations of the
-study, and Section~\ref{sec:conclusion} concludes.
+Sections~\ref{sec:related}--\ref{sec:setup} cover related work, method and
+setup; Sections~\ref{sec:results}--\ref{sec:conclusion} give results,
+discussion with limitations, and conclusions.

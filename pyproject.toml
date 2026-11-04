@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hrag"
+version = "0.1.0"
+description = "Hybrid-retrieval RAG research project"
+requires-python = ">=3.12"
+dependencies = [
+  "sentence-transformers>=6.1.0",
+  "transformers>=5",
+  "torch",
+  "faiss-cpu",
+  "bm25s",
+  "PyStemmer",
+  "scikit-learn",
+  "scipy",
+  "numpy",
+  "datasets",
+  "ollama",
+  "ragas",
+  "streamlit",
+  "matplotlib",
+  "pandas",
+  "joblib",
+  "requests",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["slow: slow tests (model loading, network)"]

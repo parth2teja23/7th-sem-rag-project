@@ -1,2 +1,10 @@
 .superpowers/
 .DS_Store
+data/raw
+indexes/
+results/cache
+.venv
+__pycache__
+*.pyc
+*.egg-info
+.pytest_cache

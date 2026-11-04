@@ -378,7 +378,7 @@ def ablation_table(results: Path) -> str | None:
     head2 = " & " + " & ".join(lab for _ in dss for _, lab in ms) + " \\\\"
     body = [f"{ABL_LABEL[k]} & " + " & ".join(cell(vals[k][j], flags[j][i]) for j in range(len(cols))) + " \\\\"
             for i, k in enumerate(keys)]
-    cap = "Ablation of the full system (better encoder); best value per column in bold."
+    cap = ("Ablation of the full system (EmbeddingGemma 2, the dev-selected encoder; query expansion not evaluated). Each row removes one component; best value per column in bold.")
     return table("ablation", cap, "l" + "c" * len(cols), [head1, cmid, head2], body, resize=True)
 
 
@@ -556,18 +556,18 @@ def matryoshka_table(results: Path) -> str | None:
             for dm in dims for p in pairs}
     flags = {p: dict(zip(dims, best_flags([vals[(dm, p)] for dm in dims]))) for p in pairs}
 
-    def avg(dm, key):
-        v = [r[key] for r in rows if r["dim"] == dm and r[key] is not None]
+    def avg(dm, key, cfg=None):
+        v = [r[key] for r in rows if r["dim"] == dm and r[key] is not None and (cfg is None or r["config"] == cfg)]
         return float(np.mean(v)) if v else None
 
     body = []
     for dm in dims:
         cells = [cell(vals[(dm, p)], flags[p][dm]) for p in pairs]
-        cells += [cell(avg(dm, "index_mb"), fmt=lambda x: f"{x:.1f}"), cell(avg(dm, "query_ms"), fmt=fmt_ms)]
+        cells += [cell(avg(dm, "index_mb"), fmt=lambda x: f"{x:.1f}"), cell(avg(dm, "query_ms", "dense") if any(r["config"] == "dense" for r in rows) else avg(dm, "query_ms"), fmt=fmt_ms)]
         body.append(f"{dm} & " + " & ".join(cells) + " \\\\")
     head = ["Dims & " + " & ".join(f"{DS_LABEL[d]} {CFG_LABEL.get(c, tex(c))}" for d, c in pairs)
             + " & Index MB & Query ms \\\\"]
-    cap = "EmbeddingGemma 2 with Matryoshka truncation: nDCG@10 (best per column in bold), mean dense-index size (FAISS HNSW file) and query latency."
+    cap = ("EmbeddingGemma 2 with Matryoshka truncation: nDCG@10 (best per column in bold). Index MB: dense FAISS HNSW file (vectors plus graph), mean over the datasets shown. Query ms: mean dense-retrieval latency per query, mean over the datasets shown.")
     return table("matryoshka", cap, "l" + "c" * (len(pairs) + 2), head, body, resize=True)
 
 
@@ -901,7 +901,6 @@ def compute_macros(results: Path, R: dict) -> dict[str, str]:
         if drops:
             M["MatryoshkaDropTwoFiftySix"] = f"{float(np.mean(drops)):.3f}"
         mb = [r for r in mrows if r["dim"] == 128 and r["index_mb"] is not None]
-        mb = [r for r in mb if r["dataset"] == "scifact"] or mb
         if mb:
             M["MatryoshkaIndexMBOneTwentyEight"] = f"{float(np.mean([r['index_mb'] for r in mb])):.1f}"
 

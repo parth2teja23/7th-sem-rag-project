@@ -174,7 +174,7 @@ def test_numbers_tex_keeps_every_macro(toy, tmp_path):
 
 def test_numbers_values_and_build_times(toy, tmp_path):
     res, vecs = toy
-    _write(res / "indexes" / "build_times.json", {
+    _write(res / "index_build_times.json", {
         "scifact": {"gemma": {"seconds": 900.0, "docs_per_s": 5.75}, "bge-small": {"seconds": 80, "docs_per_s": 65.34}},
         "fiqa": {"gemma": {"seconds": 1230.0, "docs_per_s": 16.26}, "bge-small": {"seconds": 179, "docs_per_s": 111.63}},
         "hotpot": {"bge-small": {"seconds": 29, "docs_per_s": 168.63}}})

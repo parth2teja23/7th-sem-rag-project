@@ -890,7 +890,7 @@ def compute_macros(results: Path, R: dict) -> dict[str, str]:
             M["MatryoshkaIndexMBOneTwentyEight"] = f"{float(np.mean([r['index_mb'] for r in mb])):.1f}"
 
     # build times
-    bt = _read(results / "indexes" / "build_times.json")
+    bt = _read(results / "index_build_times.json")
     if isinstance(bt, dict):
         def col(enc, key):
             return [v[enc][key] for v in bt.values() if isinstance(v, dict) and isinstance(v.get(enc), dict) and key in v[enc]]

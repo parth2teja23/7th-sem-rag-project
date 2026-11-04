@@ -100,3 +100,41 @@ def test_generate_answer_real_ollama():
     print("latency_s", time.time() - t)
     assert "Paris" in ans.text
     assert ans.cited == ["d1"]
+
+
+def test_empty_reply_not_cached(monkeypatch):
+    c = _patch_client(monkeypatch, FakeClient("  "))
+    llm.chat("p")
+    llm.chat("p")
+    assert len(c.calls) == 2
+
+
+def test_stored_empty_is_miss(monkeypatch):
+    c = _patch_client(monkeypatch, FakeClient("ok"))
+    llm._cache_put(llm._key(llm.DEFAULT_MODEL, "", "p", False), "")
+    assert llm.chat("p") == "ok"
+    assert len(c.calls) == 1
+
+
+def test_timeout_maps_to_unavailable(monkeypatch):
+    _patch_client(monkeypatch, FakeClient(exc=httpx.ConnectTimeout("t")))
+    with pytest.raises(llm.OllamaUnavailable):
+        llm.chat("hi")
+
+
+def test_unrelated_404_not_mapped(monkeypatch):
+    _patch_client(monkeypatch, FakeClient(exc=ollama.ResponseError("boom", 500)))
+    with pytest.raises(ollama.ResponseError):
+        llm.chat("hi")
+
+
+def test_cache_path_anchored():
+    from pathlib import Path
+    import hrag.llm as m
+    assert Path(m.__file__).resolve().parents[2].joinpath("results/cache/llm.sqlite").name == "llm.sqlite"
+
+
+def test_generate_answer_grouped_citations(monkeypatch):
+    monkeypatch.setattr(generate, "chat", lambda *a, **k: "X [1, 2] and [2,3] [7]")
+    ps = [Doc("a", "t"), Doc("b", "t"), Doc("c", "t")]
+    assert generate.generate_answer("q", ps).cited == ["a", "b", "c"]

@@ -8,7 +8,7 @@ import httpx
 import ollama
 
 DEFAULT_MODEL = "qwen2.5:7b-instruct"
-CACHE_PATH = Path("results/cache/llm.sqlite")
+CACHE_PATH = Path(__file__).resolve().parents[2] / "results" / "cache" / "llm.sqlite"
 _HINT = "Start Ollama with `ollama serve` and run `ollama pull qwen2.5:7b-instruct`"
 
 
@@ -38,7 +38,7 @@ def _cache_get(key: str) -> str | None:
         row = con.execute("SELECT response FROM cache WHERE key = ?", (key,)).fetchone()
     finally:
         con.close()
-    return row[0] if row else None
+    return row[0] if row and row[0].strip() else None
 
 
 def _cache_put(key: str, response: str) -> None:
@@ -65,12 +65,14 @@ def chat(prompt: str, system: str = "", model: str = DEFAULT_MODEL, json_mode: b
             options={"temperature": 0, "seed": 42},
             format="json" if json_mode else None,
         )
-    except (httpx.ConnectError, ConnectionError) as e:
+    except (httpx.TransportError, ConnectionError) as e:
         raise OllamaUnavailable(_HINT) from e
     except ollama.ResponseError as e:
-        if e.status_code == 404 or "not found" in str(e).lower():
+        msg = str(e).lower()
+        if e.status_code == 404 or ("model" in msg and "not found" in msg):
             raise OllamaUnavailable(_HINT) from e
         raise
     out = resp["message"]["content"]
-    _cache_put(key, out)
+    if out.strip():
+        _cache_put(key, out)
     return out

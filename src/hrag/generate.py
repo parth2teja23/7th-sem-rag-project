@@ -24,8 +24,13 @@ def generate_answer(question: str, passages: list[Doc]) -> Answer:
     prompt = f"Passages:\n{block}\n\nQuestion: {question}\nAnswer:"
     text = chat(prompt, system=_SYSTEM).strip()
     cited: list[str] = []
-    for m in re.finditer(r"\[(\d+)\]", text):
-        n = int(m.group(1))
+    nums = [
+        int(x)
+        for m in re.finditer(r"\[([\d,\s]+)\]", text)
+        for x in m.group(1).split(",")
+        if x.strip().isdigit()
+    ]
+    for n in nums:
         if 1 <= n <= len(passages) and passages[n - 1].id not in cited:
             cited.append(passages[n - 1].id)
     return Answer(text=text, cited=cited)
